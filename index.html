@@ -2155,12 +2155,7 @@ const CRASH_DATA = {
     location:'PackageInstaller.java:284',
     sev:'critical', regression:true,
     occ:'4,821', users:'1,847', app:'BRImo v8.4.1', first:'23m ago',
-    stack:'java.lang.RuntimeException: InstallPackageException
-  at android.content.pm.PackageInstaller.commitSession(PackageInstaller.java:284)
-  at com.bri.brimo.update.OTAInstaller.commit(OTAInstaller.kt:142)
-  at com.bri.brimo.update.UpdateManager.apply(UpdateManager.kt:89)
-Caused by: SecurityException: APK signature mismatch
-  at android.content.pm.PackageParser.parseSignatures(PackageParser.java:4021)',
+    stack:'java.lang.RuntimeException: InstallPackageException\n  at android.content.pm.PackageInstaller.commitSession(PackageInstaller.java:284)\n  at com.bri.brimo.update.OTAInstaller.commit(OTAInstaller.kt:142)\n  at com.bri.brimo.update.UpdateManager.apply(UpdateManager.kt:89)\nCaused by: SecurityException: APK signature mismatch\n  at android.content.pm.PackageParser.parseSignatures(PackageParser.java:4021)',
     versions:['v8.4.1'],
     devices:[
       {name:'Android 12', pct:68, color:'var(--err)'},
@@ -2173,10 +2168,7 @@ Caused by: SecurityException: APK signature mismatch
     location:'OkHttpClient.kt:142',
     sev:'high', regression:false,
     occ:'892', users:'341', app:'IFG Life v3.11.2', first:'2d ago',
-    stack:'java.net.SocketException: Connection reset
-  at java.net.SocketInputStream.read(SocketInputStream.java:210)
-  at okhttp3.internal.http1.Http1ExchangeCodec.readResponseHeaders(Http1ExchangeCodec.kt:142)
-  at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain(RealCall.kt:219)',
+    stack:'java.net.SocketException: Connection reset\n  at java.net.SocketInputStream.read(SocketInputStream.java:210)\n  at okhttp3.internal.http1.Http1ExchangeCodec.readResponseHeaders(Http1ExchangeCodec.kt:142)\n  at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain(RealCall.kt:219)',
     versions:['v3.11.2','v3.11.1'],
     devices:[
       {name:'Android', pct:71, color:'var(--red)'},
@@ -2188,10 +2180,7 @@ Caused by: SecurityException: APK signature mismatch
     location:'AuthManager.swift:67',
     sev:'medium', regression:true,
     occ:'234', users:'89', app:'IFG InvestNow v1.8.2', first:'5d ago',
-    stack:'Fatal error: Unexpectedly found nil while unwrapping an Optional value
-  AuthManager.swift:67 in AuthManager.validateSession()
-  SessionCoordinator.swift:34 in SessionCoordinator.refresh()
-  AppDelegate.swift:112 in AppDelegate.applicationDidBecomeActive(_:)',
+    stack:'Fatal error: Unexpectedly found nil while unwrapping an Optional value\n  AuthManager.swift:67 in AuthManager.validateSession()\n  SessionCoordinator.swift:34 in SessionCoordinator.refresh()\n  AppDelegate.swift:112 in AppDelegate.applicationDidBecomeActive(_:)',
     versions:['v1.8.2','v1.8.1'],
     devices:[
       {name:'iOS 17', pct:54, color:'var(--gold)'},
@@ -2204,11 +2193,7 @@ Caused by: SecurityException: APK signature mismatch
     location:'HomePage.dart:203',
     sev:'low', regression:false,
     occ:'67', users:'21', app:'PNM Mekaar v4.0.9', first:'1w ago',
-    stack:'FlutterError: A RenderFlex overflowed by 12 pixels on the right.
-  The relevant error-causing widget was:
-    Row widgets/home_page.dart:203:16
-  The overflowing RenderFlex has an orientation of Axis.horizontal.
-  Consider applying a flex factor (e.g. using an Expanded widget)',
+    stack:'FlutterError: A RenderFlex overflowed by 12 pixels on the right.\n  The relevant error-causing widget was:\n    Row widgets/home_page.dart:203:16\n  The overflowing RenderFlex has an orientation of Axis.horizontal.\n  Consider applying a flex factor (e.g. using an Expanded widget)',
     versions:['v4.0.9'],
     devices:[
       {name:'Small screens <360dp', pct:82, color:'var(--gold)'},
