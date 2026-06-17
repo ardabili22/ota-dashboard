@@ -539,8 +539,8 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 <nav id="sidebar">
   <div class="sb-logo">
     <div class="sb-logo-mark">OTA</div>
-    <div style="min-width:0;flex:1">
-      <div class="sb-logo-text">IFG OTA Deploy</div>
+    <div style="min-width:0;flex:1;cursor:pointer" onclick="openModal('modal-workspace')">
+      <div class="sb-logo-text" style="display:flex;align-items:center;gap:5px">IFG OTA Deploy <i class="ti ti-selector" style="font-size:11px;color:var(--text-3)"></i></div>
       <div class="sb-logo-sub">Enterprise Platform</div>
     </div>
     <div class="sb-toggle-top" onclick="toggleSidebar()" id="sb-toggle-btn" title="Collapse sidebar">
@@ -2199,6 +2199,62 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
+
+<!-- ══ MODAL: WORKSPACE SWITCHER ══ -->
+<div class="modal-overlay" id="modal-workspace" onclick="if(event.target===this)closeModal('modal-workspace')">
+  <div class="modal" style="width:420px">
+    <div class="modal-hdr">
+      <h2><i class="ti ti-building" style="color:var(--red);margin-right:8px"></i>Switch Workspace</h2>
+      <div class="modal-close" onclick="closeModal('modal-workspace')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body" style="gap:8px;padding:16px">
+      <div style="position:relative;margin-bottom:4px">
+        <i class="ti ti-search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-3);font-size:14px"></i>
+        <input class="form-input" placeholder="Search workspaces…" style="padding-left:32px" oninput="filterWorkspaces(this.value)">
+      </div>
+      <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-3);padding:4px 2px">Current</div>
+      <div onclick="switchWorkspace('ifglife')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;border:2px solid var(--red);background:var(--red-10);cursor:pointer" class="workspace-item" data-name="IFG Life Insurance">
+        <div style="width:36px;height:36px;border-radius:9px;background:var(--red);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;flex-shrink:0">IFG</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:700;color:var(--text)">IFG Life Insurance</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:1px">6 apps · 13.5M devices · Enterprise</div>
+        </div>
+        <i class="ti ti-circle-check" style="color:var(--red);font-size:18px"></i>
+      </div>
+      <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-3);padding:8px 2px 4px">Other workspaces</div>
+      <div onclick="switchWorkspace('bri')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;border:2px solid var(--border);cursor:pointer;transition:all var(--transition)" class="workspace-item" data-name="PT Bank Rakyat Indonesia" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
+        <div style="width:36px;height:36px;border-radius:9px;background:#005BAC;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;flex-shrink:0">BRI</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:700;color:var(--text)">PT Bank Rakyat Indonesia</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:1px">1 app · 8.2M devices · Enterprise</div>
+        </div>
+        <i class="ti ti-arrow-right" style="color:var(--text-3);font-size:15px"></i>
+      </div>
+      <div onclick="switchWorkspace('askrindo')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;border:2px solid var(--border);cursor:pointer;transition:all var(--transition)" class="workspace-item" data-name="PT Askrindo" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
+        <div style="width:36px;height:36px;border-radius:9px;background:#E67E22;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;flex-shrink:0">AS</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:700;color:var(--text)">PT Askrindo</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:1px">1 app · 420K devices · Business</div>
+        </div>
+        <i class="ti ti-arrow-right" style="color:var(--text-3);font-size:15px"></i>
+      </div>
+      <div onclick="switchWorkspace('pnm')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;border:2px solid var(--border);cursor:pointer;transition:all var(--transition)" class="workspace-item" data-name="PT Permodalan Nasional Madani" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
+        <div style="width:36px;height:36px;border-radius:9px;background:#16A34A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;flex-shrink:0">PNM</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:700;color:var(--text)">PT Permodalan Nasional Madani</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:1px">1 app · 2.8M devices · Enterprise</div>
+        </div>
+        <i class="ti ti-arrow-right" style="color:var(--text-3);font-size:15px"></i>
+      </div>
+      <div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px">
+        <div onclick="closeModal('modal-workspace')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;cursor:pointer;color:var(--red);font-size:13px;font-weight:600" onmouseover="this.style.background='var(--red-10)'" onmouseout="this.style.background=''">
+          <i class="ti ti-plus" style="font-size:16px"></i>Create new workspace
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 const titles={billing:'Billing',overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
@@ -2933,6 +2989,35 @@ function switchEnv(env) {
   document.getElementById('env-dev').style.background = env==='development' ? 'var(--blue-10)' : '';
   closeModal('modal-env-switch');
   showToast('Switched to ' + cfg.label + ' environment');
+}
+
+
+const WORKSPACES = {
+  ifglife:  {name:'IFG Life Insurance',   abbr:'IFG', color:'var(--red)',  apps:'6 apps',  devices:'13.5M devices'},
+  bri:      {name:'BRI',                  abbr:'BRI', color:'#005BAC',     apps:'1 app',   devices:'8.2M devices'},
+  askrindo: {name:'Askrindo',             abbr:'AS',  color:'#E67E22',     apps:'1 app',   devices:'420K devices'},
+  pnm:      {name:'PNM Mekaar',           abbr:'PNM', color:'#16A34A',     apps:'1 app',   devices:'2.8M devices'},
+};
+
+function switchWorkspace(id) {
+  const w = WORKSPACES[id];
+  if (!w) return;
+  // Update logo
+  const logoText = document.querySelector('.sb-logo-text');
+  if (logoText) logoText.innerHTML = w.name + ' <i class="ti ti-selector" style="font-size:11px;color:var(--text-3)"></i>';
+  const logoMark = document.querySelector('.sb-logo-mark');
+  if (logoMark) { logoMark.textContent = w.abbr; logoMark.style.background = w.color; }
+  // Update sub
+  const logoSub = document.querySelector('.sb-logo-sub');
+  if (logoSub) logoSub.textContent = w.apps + ' · ' + w.devices;
+  closeModal('modal-workspace');
+  showToast('Switched to ' + w.name);
+}
+
+function filterWorkspaces(q) {
+  document.querySelectorAll('.workspace-item').forEach(function(el) {
+    el.style.display = el.dataset.name.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
+  });
 }
 
 function filterTab(el){
