@@ -460,6 +460,32 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 .login-spinner{width:36px;height:36px;border:3px solid var(--gray-15);border-top-color:var(--red);border-radius:50%;animation:spin 0.8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .login-loading p{font-size:13px;color:var(--text-2);font-weight:500}
+
+/* ── ONBOARDING ── */
+#onboarding-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+#onboarding-overlay.open{display:flex}
+.ob-modal{background:#fff;border-radius:16px;width:560px;max-width:92vw;box-shadow:0 24px 80px rgba(0,0,0,0.2);overflow:hidden;display:flex;flex-direction:column}
+.ob-progress{height:3px;background:var(--gray-15)}
+.ob-progress-fill{height:100%;background:var(--red);transition:width 0.4s ease}
+.ob-body{padding:36px 40px;display:flex;flex-direction:column;gap:20px}
+.ob-step-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:var(--text-3)}
+.ob-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.ob-title{font-size:22px;font-weight:800;color:var(--text);letter-spacing:-0.5px;line-height:1.2}
+.ob-desc{font-size:13.5px;color:var(--text-2);line-height:1.7}
+.ob-checklist{display:flex;flex-direction:column;gap:10px}
+.ob-check{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--gray-10);border-radius:9px;cursor:pointer;transition:all var(--transition)}
+.ob-check:hover{background:var(--gray-15)}
+.ob-check.done{background:var(--green-10)}
+.ob-check-icon{width:24px;height:24px;border-radius:50%;border:2px solid var(--gray-20);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;transition:all var(--transition)}
+.ob-check.done .ob-check-icon{background:var(--green);border-color:var(--green);color:#fff}
+.ob-check-label{font-size:13px;font-weight:500;color:var(--text)}
+.ob-check.done .ob-check-label{color:var(--text-2);text-decoration:line-through}
+.ob-footer{padding:20px 40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.ob-skip{font-size:12px;color:var(--text-3);cursor:pointer;font-weight:500;border:none;background:none;font-family:var(--font)}
+.ob-skip:hover{color:var(--text)}
+.ob-dots{display:flex;gap:6px}
+.ob-dot{width:6px;height:6px;border-radius:50%;background:var(--gray-20);transition:all var(--transition)}
+.ob-dot.active{background:var(--red);width:18px;border-radius:3px}
 </style>
 </head>
 <body>
@@ -2255,6 +2281,20 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
+
+<!-- ══ ONBOARDING ══ -->
+<div id="onboarding-overlay">
+  <div class="ob-modal">
+    <div class="ob-progress"><div class="ob-progress-fill" id="ob-progress-fill" style="width:20%"></div></div>
+    <div class="ob-body" id="ob-body"></div>
+    <div class="ob-footer">
+      <button class="ob-skip" onclick="skipOnboarding()">Skip setup</button>
+      <div class="ob-dots" id="ob-dots"></div>
+      <button class="btn-primary" id="ob-next-btn" onclick="obNext()">Continue <i class="ti ti-arrow-right"></i></button>
+    </div>
+  </div>
+</div>
+
 <script>
 const titles={billing:'Billing',overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
@@ -2898,6 +2938,154 @@ window.submitConfirm = function() {
 };
 
 
+
+const OB_STEPS = [
+  {
+    icon:'🚀', iconBg:'var(--red-10)',
+    label:'Step 1 of 5 — Welcome',
+    title:'Welcome to OTA Deploy',
+    desc:"Your enterprise mobile deployment platform is ready. Lets get you set up in a few quick steps so your team can start deploying with confidence.",
+    type:'intro',
+    cta:'Get started'
+  },
+  {
+    icon:'📱', iconBg:'#EFF8FF',
+    label:'Step 2 of 5 — Register your first app',
+    title:'Register your mobile apps',
+    desc:'Connect your React Native, Flutter, or Cordova apps to start managing OTA deployments. Each app gets its own deployment pipeline and analytics.',
+    type:'checklist',
+    items:[
+      {label:'Add BRImo SuperApp', done:true},
+      {label:'Add IFG Life Portal', done:true},
+      {label:'Add Askrindo Mobile', done:false},
+      {label:'Add PNM Mekaar', done:false},
+    ],
+    cta:'Continue'
+  },
+  {
+    icon:'👥', iconBg:'#EDE9FE',
+    label:'Step 3 of 5 — Invite your team',
+    title:'Bring your team onboard',
+    desc:'Assign roles to your Release Managers, DevOps engineers, and stakeholders. Each role has fine-grained permissions over apps and deployment actions.',
+    type:'checklist',
+    items:[
+      {label:'Invite Release Manager', done:true},
+      {label:'Invite DevOps Engineer', done:true},
+      {label:'Add external stakeholder (Viewer)', done:false},
+    ],
+    cta:'Continue'
+  },
+  {
+    icon:'🔗', iconBg:'var(--blue-10)',
+    label:'Step 4 of 5 — Connect integrations',
+    title:'Connect your tools',
+    desc:'Integrate with GitHub for push-triggered deployments, Slack for alerts, and Datadog for observability. Takes less than 2 minutes each.',
+    type:'checklist',
+    items:[
+      {label:'Connect GitHub repository', done:true},
+      {label:'Connect Slack workspace', done:true},
+      {label:'Connect Datadog', done:false},
+      {label:'Configure Jira for incident tracking', done:false},
+    ],
+    cta:'Continue'
+  },
+  {
+    icon:'🎉', iconBg:'var(--green-10)',
+    label:"Step 5 of 5 — Youre ready",
+    title:'Platform is ready to deploy',
+    desc:'Everything is set up. Your first deployment is waiting — BRImo v8.4.1 is queued and ready to roll out. Start with a canary deployment for maximum safety.',
+    type:'complete',
+    cta:'Go to dashboard'
+  },
+];
+
+let obStep = 0;
+
+function renderObStep() {
+  const step = OB_STEPS[obStep];
+  const total = OB_STEPS.length;
+  const pct = Math.round(((obStep + 1) / total) * 100);
+  document.getElementById('ob-progress-fill').style.width = pct + '%';
+
+  // Dots
+  let dots = '';
+  for (let i = 0; i < total; i++) {
+    dots += '<div class="ob-dot' + (i === obStep ? ' active' : '') + '"></div>';
+  }
+  document.getElementById('ob-dots').innerHTML = dots;
+
+  // CTA
+  document.getElementById('ob-next-btn').innerHTML = step.cta + (obStep < total - 1 ? ' <i class="ti ti-arrow-right"></i>' : '');
+
+  // Body
+  let html = '<div class="ob-step-label">' + step.label + '</div>';
+  html += '<div style="display:flex;align-items:flex-start;gap:16px">';
+  html += '<div class="ob-icon" style="background:' + step.iconBg + '">' + step.icon + '</div>';
+  html += '<div><div class="ob-title">' + step.title + '</div><div class="ob-desc" style="margin-top:8px">' + step.desc + '</div></div></div>';
+
+  if (step.type === 'checklist') {
+    html += '<div class="ob-checklist">';
+    step.items.forEach(function(item, idx) {
+      html += '<div class="ob-check' + (item.done ? ' done' : '') + '" onclick="toggleObCheck(this,' + obStep + ',' + idx + ')">';
+      html += '<div class="ob-check-icon">' + (item.done ? '<i class="ti ti-check"></i>' : '') + '</div>';
+      html += '<span class="ob-check-label">' + item.label + '</span></div>';
+    });
+    html += '</div>';
+  }
+
+  if (step.type === 'complete') {
+    html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">';
+    const metrics = [
+      {val:'6', label:'Apps registered'},
+      {val:'4', label:'Team members'},
+      {val:'3', label:'Integrations active'},
+      {val:'0', label:'Pending issues'},
+    ];
+    metrics.forEach(function(m) {
+      html += '<div style="background:var(--gray-10);border-radius:10px;padding:14px;text-align:center">';
+      html += '<div style="font-size:26px;font-weight:800;font-family:var(--mono);color:var(--text);letter-spacing:-1px">' + m.val + '</div>';
+      html += '<div style="font-size:11px;color:var(--text-3);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px">' + m.label + '</div></div>';
+    });
+    html += '</div>';
+  }
+
+  document.getElementById('ob-body').innerHTML = html;
+}
+
+function toggleObCheck(el, stepIdx, itemIdx) {
+  OB_STEPS[stepIdx].items[itemIdx].done = !OB_STEPS[stepIdx].items[itemIdx].done;
+  el.classList.toggle('done');
+  const icon = el.querySelector('.ob-check-icon');
+  icon.innerHTML = OB_STEPS[stepIdx].items[itemIdx].done ? '<i class="ti ti-check"></i>' : '';
+  el.querySelector('.ob-check-label').style.textDecoration = OB_STEPS[stepIdx].items[itemIdx].done ? 'line-through' : '';
+  el.style.background = OB_STEPS[stepIdx].items[itemIdx].done ? 'var(--green-10)' : '';
+}
+
+function obNext() {
+  if (obStep < OB_STEPS.length - 1) {
+    obStep++;
+    renderObStep();
+  } else {
+    skipOnboarding();
+  }
+}
+
+function skipOnboarding() {
+  document.getElementById('onboarding-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  localStorage.setItem('ob_done','1');
+}
+
+function startOnboarding() {
+  obStep = 0;
+  renderObStep();
+  document.getElementById('onboarding-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// Trigger onboarding after login (modify doSSO)
+const _origDoSSO = window.doSSO;
+
 function doSSO(provider) {
   document.getElementById('login-form-wrap').style.display = 'none';
   const loading = document.getElementById('login-loading');
@@ -2911,6 +3099,8 @@ function doSSO(provider) {
   setTimeout(() => {
     document.getElementById('login-page').classList.add('hidden');
     document.body.style.overflow = '';
+    // Show onboarding for first-time users
+    if (!localStorage.getItem('ob_done')) { setTimeout(startOnboarding, 400); }
   }, 2000);
 }
 
