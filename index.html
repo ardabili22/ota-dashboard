@@ -1871,9 +1871,12 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
       <div class="modal-close" onclick="closeModal('modal-integration')"><i class="ti ti-x"></i></div>
     </div>
     <div class="modal-body" id="int-modal-body"></div>
-    <div class="modal-footer">
-      <button class="btn-ghost" onclick="closeModal('modal-integration')">Cancel</button>
-      <button class="btn-primary" id="int-modal-cta" onclick="submitIntegration()">Save</button>
+    <div class="modal-footer" style="justify-content:space-between">
+      <button class="btn-ghost" id="int-disconnect-btn" style="color:var(--err);border-color:var(--err-10);display:none" onclick="disconnectIntegration()"><i class="ti ti-plug-x"></i>Disconnect</button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <button class="btn-ghost" onclick="closeModal('modal-integration')">Cancel</button>
+        <button class="btn-primary" id="int-modal-cta" onclick="submitIntegration()">Save</button>
+      </div>
     </div>
   </div>
 </div>
@@ -3078,22 +3081,51 @@ const INT_DATA = {
 let _currentIntegration = null;
 function openIntegrationModal(id, isConfigured) {
   _currentIntegration = id;
-  const d = INT_DATA[id]; if(!d) return;
-  document.getElementById('int-modal-title').innerHTML = `<span style="font-size:18px;margin-right:8px">${d.emoji}</span>${isConfigured ? 'Configure' : 'Connect'} ${d.name}`;
+  const d = MASTER_DATA.integrations.find(function(i){return i.id===id;}) || INT_DATA[id];
+  if(!d) return;
+  document.getElementById('int-modal-title').innerHTML = '<span style="font-size:18px;margin-right:8px">'+d.emoji+'</span>'+(isConfigured?'Configure':'Connect')+' '+d.name;
   document.getElementById('int-modal-body').innerHTML =
-    `<p style="font-size:12.5px;color:var(--text-2);margin-bottom:4px">${d.desc}</p>` +
-    d.fields.map(f =>
-      `<div class="form-group"><div class="form-label">${f.label}</div><input class="form-input" value="${f.val}" placeholder="${f.ph}"></div>`
-    ).join('');
+    '<p style="font-size:12.5px;color:var(--text-2);margin-bottom:4px">'+d.desc+'</p>' +
+    d.fields.map(function(f){
+      return '<div class="form-group"><div class="form-label">'+f.label+'</div><input class="form-input" value="'+(f.val||'')+'" placeholder="'+(f.ph||'')+'"></div>';
+    }).join('');
   const cta = document.getElementById('int-modal-cta');
   cta.textContent = isConfigured ? 'Save Changes' : 'Connect';
+  const disconnectBtn = document.getElementById('int-disconnect-btn');
+  if (disconnectBtn) disconnectBtn.style.display = isConfigured ? '' : 'none';
   openModal('modal-integration');
 }
 
 function submitIntegration() {
+  const idx = MASTER_DATA.integrations.findIndex(function(i){return i.id===_currentIntegration;});
+  if (idx !== -1) {
+    // Collect field values from modal inputs
+    const inputs = document.querySelectorAll('#int-modal-body .form-input');
+    inputs.forEach(function(input, i) {
+      if (MASTER_DATA.integrations[idx].fields[i]) {
+        MASTER_DATA.integrations[idx].fields[i].val = input.value;
+      }
+    });
+    MASTER_DATA.integrations[idx].connected = true;
+  }
   closeModal('modal-integration');
-  const d = INT_DATA[_currentIntegration];
-  showToast(d ? `${d.name} ${d.connected ? 'settings saved' : 'connected successfully'}` : 'Saved');
+  renderIntegrationsScreen();
+  renderMDIntegrations();
+  const d = MASTER_DATA.integrations.find(function(i){return i.id===_currentIntegration;});
+  showToast(d ? d.name + ' settings saved' : 'Saved');
+}
+
+function disconnectIntegration() {
+  const idx = MASTER_DATA.integrations.findIndex(function(i){return i.id===_currentIntegration;});
+  const d = idx !== -1 ? MASTER_DATA.integrations[idx] : null;
+  if (!d) return;
+  if (confirm('Disconnect ' + d.name + '? This will stop all events and webhooks.')) {
+    MASTER_DATA.integrations[idx].connected = false;
+    closeModal('modal-integration');
+    renderIntegrationsScreen();
+    renderMDIntegrations();
+    showToast(d.name + ' disconnected');
+  }
 }
 
 // ── TEAM ──
