@@ -2396,6 +2396,57 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
+
+<!-- ══ MODAL: EDIT APP ══ -->
+<div class="modal-overlay" id="modal-md-edit-app" onclick="if(event.target===this)closeModal('modal-md-edit-app')">
+  <div class="modal">
+    <div class="modal-hdr"><h2><i class="ti ti-edit" style="color:var(--red);margin-right:8px"></i>Edit App</h2><div class="modal-close" onclick="closeModal('modal-md-edit-app')"><i class="ti ti-x"></i></div></div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:14px;padding:14px;background:var(--gray-10);border-radius:10px;margin-bottom:4px">
+        <div id="edit-app-icon" style="width:44px;height:44px;border-radius:11px;background:var(--red);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0"></div>
+        <div><div id="edit-app-preview-name" style="font-size:14px;font-weight:700;color:var(--text)"></div><div id="edit-app-preview-org" style="font-size:11px;color:var(--text-3);margin-top:2px"></div></div>
+      </div>
+      <input type="hidden" id="edit-app-id">
+      <div class="form-row">
+        <div class="form-group"><div class="form-label">App Name <span>*</span></div><input class="form-input" id="edit-app-name" oninput="document.getElementById('edit-app-preview-name').textContent=this.value"></div>
+        <div class="form-group"><div class="form-label">Organization <span>*</span></div><input class="form-input" id="edit-app-org" oninput="document.getElementById('edit-app-preview-org').textContent=this.value"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><div class="form-label">Framework</div>
+          <select class="form-select" id="edit-app-fw"><option>React Native</option><option>Flutter</option><option>Cordova</option></select>
+        </div>
+        <div class="form-group"><div class="form-label">Platform</div>
+          <select class="form-select" id="edit-app-platform"><option>iOS + Android</option><option>Android only</option><option>iOS only</option></select>
+        </div>
+      </div>
+      <div class="form-group"><div class="form-label">Bundle ID</div><input class="form-input" id="edit-app-bundle" style="font-family:var(--mono)"></div>
+      <div class="form-group">
+        <div class="form-label">Brand Color</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap" id="edit-app-colors">
+          ${['#ED1C24','#005BAC','#E67E22','#1E6FA8','#16A34A','#7C3AED','#0284C7','#DB2777','#374151','#92400E'].map(c=>`<div onclick="selectEditAppColor(this,'${c}')" style="width:28px;height:28px;border-radius:6px;background:${c};cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="${c}"></div>`).join('')}
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Status</div>
+        <select class="form-select" id="edit-app-status">
+          <option value="live">Live</option>
+          <option value="rolling">Rolling</option>
+          <option value="canary">Canary</option>
+          <option value="paused">Paused</option>
+          <option value="complete">Complete</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer" style="justify-content:space-between">
+      <button class="btn-ghost" style="color:var(--err);border-color:var(--err-10)" onclick="deleteMDApp(document.getElementById('edit-app-id').value);closeModal('modal-md-edit-app')"><i class="ti ti-trash"></i>Delete App</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn-ghost" onclick="closeModal('modal-md-edit-app')">Cancel</button>
+        <button class="btn-primary" onclick="submitEditApp()"><i class="ti ti-check"></i>Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 const titles={masterdata:'Master Data',billing:'Billing',overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
@@ -3618,11 +3669,7 @@ function submitAddApp() {
   showToast(name + ' added successfully');
 }
 
-function editMDApp(id) {
-  const app = MASTER_DATA.apps.find(a=>a.id===id);
-  if (!app) return;
-  showToast('Edit ' + app.name + ' — form coming soon');
-}
+// editMDApp now defined below
 
 function deleteMDApp(id) {
   const app = MASTER_DATA.apps.find(a=>a.id===id);
@@ -3646,6 +3693,68 @@ function deleteMDMember(id, name) {
 
 // Trigger MD render when navigating to masterdata screen
 const _origNav = window.nav;
+
+
+let editAppSelectedColor = '#ED1C24';
+
+function editMDApp(id) {
+  const app = MASTER_DATA.apps.find(a => a.id === id);
+  if (!app) return;
+  editAppSelectedColor = app.color;
+  document.getElementById('edit-app-id').value = app.id;
+  document.getElementById('edit-app-name').value = app.name;
+  document.getElementById('edit-app-org').value = app.org;
+  document.getElementById('edit-app-bundle').value = app.bundleId || '';
+  document.getElementById('edit-app-preview-name').textContent = app.name;
+  document.getElementById('edit-app-preview-org').textContent = app.org;
+  document.getElementById('edit-app-icon').textContent = app.abbr;
+  document.getElementById('edit-app-icon').style.background = app.color;
+  // Set fw
+  const fwSel = document.getElementById('edit-app-fw');
+  [...fwSel.options].forEach(o => o.selected = o.value === app.fw || o.text === app.fw);
+  // Set platform
+  const platSel = document.getElementById('edit-app-platform');
+  [...platSel.options].forEach(o => o.selected = o.value === app.platform || o.text === app.platform);
+  // Set status
+  const statusSel = document.getElementById('edit-app-status');
+  [...statusSel.options].forEach(o => o.selected = o.value === app.status);
+  // Set color swatches
+  document.querySelectorAll('#edit-app-colors [data-color]').forEach(el => {
+    el.style.border = el.dataset.color === app.color ? '2px solid var(--text)' : '2px solid transparent';
+  });
+  openModal('modal-md-edit-app');
+}
+
+function selectEditAppColor(el, color) {
+  editAppSelectedColor = color;
+  document.querySelectorAll('#edit-app-colors [data-color]').forEach(e => e.style.border = '2px solid transparent');
+  el.style.border = '2px solid var(--text)';
+  document.getElementById('edit-app-icon').style.background = color;
+}
+
+function submitEditApp() {
+  const id   = document.getElementById('edit-app-id').value;
+  const name = document.getElementById('edit-app-name').value.trim();
+  const org  = document.getElementById('edit-app-org').value.trim();
+  const fw   = document.getElementById('edit-app-fw').value;
+  const platform = document.getElementById('edit-app-platform').value;
+  const bundle   = document.getElementById('edit-app-bundle').value.trim();
+  const status   = document.getElementById('edit-app-status').value;
+  if (!name || !org) { showToast('Name and organization are required'); return; }
+  const idx = MASTER_DATA.apps.findIndex(a => a.id === id);
+  if (idx === -1) return;
+  const abbr = name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 3);
+  MASTER_DATA.apps[idx] = {
+    ...MASTER_DATA.apps[idx],
+    name, org, fw, platform, status,
+    abbr, color: editAppSelectedColor,
+    bundleId: bundle || MASTER_DATA.apps[idx].bundleId,
+  };
+  closeModal('modal-md-edit-app');
+  renderAppsScreen();
+  renderMDApps();
+  showToast(name + ' updated successfully');
+}
 
 function filterTab(el){
   el.closest('.dep-filters').querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
