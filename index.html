@@ -578,14 +578,14 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 
     <!-- ══════════ APPS ══════════ -->
     <div id="screen-apps" class="screen">
-      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Apps</h1><p>6 applications · 13.51M total users</p></div><button class="btn-primary"><i class="ti ti-plus"></i>Register App</button></div></div>
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Apps</h1><p>6 applications · 13.51M total users</p></div><button class="btn-primary" onclick="openModal('modal-register-app')"><i class="ti ti-plus"></i>Register App</button></div></div>
       <div class="apps-grid">
-        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#005BAC">BR</div><div><div class="app-name">BRImo SuperApp</div><div class="app-meta">PT Bank Rakyat Indonesia</div></div></div><span class="badge paused"><span class="dot"></span>Paused</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-brand-android" style="font-size:11px;color:#3DDC84"></i>Android</span><span class="fw rn">React Native</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">8.2M</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v8.4.1</div><div class="app-stat-label">Live version</div></div></div></div>
-        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:var(--red)">IFG</div><div><div class="app-name">IFG Life Portal</div><div class="app-meta">IFG Life Insurance</div></div></div><span class="badge rolling"><span class="dot"></span>Rolling</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw flutter">Flutter</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">1.1M</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v3.12.0</div><div class="app-stat-label">Live version</div></div></div></div>
-        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#E67E22">AS</div><div><div class="app-name">Askrindo Mobile</div><div class="app-meta">PT Askrindo</div></div></div><span class="badge rolling"><span class="dot"></span>Rolling</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw flutter">Flutter</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">420K</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v2.4.5</div><div class="app-stat-label">Live version</div></div></div></div>
-        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#1E6FA8">JW</div><div><div class="app-name">Jiwasraya Connect</div><div class="app-meta">PT Asuransi Jiwasraya</div></div></div><span class="badge live"><span class="dot"></span>Live</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw rn">React Native</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">680K</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v5.2.1</div><div class="app-stat-label">Live version</div></div></div></div>
-        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#16A34A">PM</div><div><div class="app-name">PNM Mekaar</div><div class="app-meta">PT Permodalan Nasional</div></div></div><span class="badge canary"><span class="dot"></span>Canary</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw flutter">Flutter</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">2.8M</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v4.1.0</div><div class="app-stat-label">Live version</div></div></div></div>
-        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#7C3AED">IN</div><div><div class="app-name">IFG InvestNow</div><div class="app-meta">IFG Securities</div></div></div><span class="badge complete"><span class="dot"></span>Complete</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw rn">React Native</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">310K</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v1.8.3</div><div class="app-stat-label">Live version</div></div></div></div>
+        <div class="app-card" onclick="openAppDrawer('brimo')" style="cursor:pointer"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#005BAC">BR</div><div><div class="app-name">BRImo SuperApp</div><div class="app-meta">PT Bank Rakyat Indonesia</div></div></div><span class="badge paused"><span class="dot"></span>Paused</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-brand-android" style="font-size:11px;color:#3DDC84"></i>Android</span><span class="fw rn">React Native</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">8.2M</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v8.4.1</div><div class="app-stat-label">Live version</div></div></div></div>
+        <div class="app-card" onclick="openAppDrawer('ifglife')" style="cursor:pointer"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:var(--red)">IFG</div><div><div class="app-name">IFG Life Portal</div><div class="app-meta">IFG Life Insurance</div></div></div><span class="badge rolling"><span class="dot"></span>Rolling</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw flutter">Flutter</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">1.1M</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v3.12.0</div><div class="app-stat-label">Live version</div></div></div></div>
+        <div class="app-card" onclick="openAppDrawer('askrindo')" style="cursor:pointer"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#E67E22">AS</div><div><div class="app-name">Askrindo Mobile</div><div class="app-meta">PT Askrindo</div></div></div><span class="badge rolling"><span class="dot"></span>Rolling</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw flutter">Flutter</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">420K</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v2.4.5</div><div class="app-stat-label">Live version</div></div></div></div>
+        <div class="app-card" onclick="openAppDrawer('jiwasraya')" style="cursor:pointer"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#1E6FA8">JW</div><div><div class="app-name">Jiwasraya Connect</div><div class="app-meta">PT Asuransi Jiwasraya</div></div></div><span class="badge live"><span class="dot"></span>Live</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw rn">React Native</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">680K</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v5.2.1</div><div class="app-stat-label">Live version</div></div></div></div>
+        <div class="app-card" onclick="openAppDrawer('pnm')" style="cursor:pointer"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#16A34A">PM</div><div><div class="app-name">PNM Mekaar</div><div class="app-meta">PT Permodalan Nasional</div></div></div><span class="badge canary"><span class="dot"></span>Canary</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw flutter">Flutter</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">2.8M</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v4.1.0</div><div class="app-stat-label">Live version</div></div></div></div>
+        <div class="app-card" onclick="openAppDrawer('investnow')" style="cursor:pointer"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#7C3AED">IN</div><div><div class="app-name">IFG InvestNow</div><div class="app-meta">IFG Securities</div></div></div><span class="badge complete"><span class="dot"></span>Complete</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw rn">React Native</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">310K</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v1.8.3</div><div class="app-stat-label">Live version</div></div></div></div>
       </div>
     </div>
 
@@ -1169,6 +1169,101 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
+
+<!-- ══ DRAWER: APP DETAIL ══ -->
+<div class="drawer-overlay" id="drawer-app" onclick="if(event.target===this)closeDrawer('drawer-app')">
+  <div class="drawer">
+    <div class="drawer-hdr">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div id="app-drawer-icon" style="width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800"></div>
+        <div>
+          <div id="app-drawer-name" style="font-size:15px;font-weight:700;color:var(--text)"></div>
+          <div id="app-drawer-org" style="font-size:12px;color:var(--text-3);margin-top:1px"></div>
+        </div>
+      </div>
+      <div class="modal-close" onclick="closeDrawer('drawer-app')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="drawer-body">
+      <div style="display:flex;gap:8px;flex-wrap:wrap" id="app-drawer-chips"></div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-box-val" id="app-drawer-users"></div><div class="stat-box-label">Active Users</div></div>
+        <div class="stat-box"><div class="stat-box-val" id="app-drawer-ver"></div><div class="stat-box-label">Live Version</div></div>
+        <div class="stat-box"><div class="stat-box-val" id="app-drawer-cfr"></div><div class="stat-box-label">Crash-Free Rate</div></div>
+        <div class="stat-box"><div class="stat-box-val" id="app-drawer-date"></div><div class="stat-box-label">Last Release</div></div>
+      </div>
+      <div class="drawer-section">
+        <div class="drawer-section-title">Version History</div>
+        <table class="data-table" style="border:1px solid var(--border);border-radius:8px;overflow:hidden">
+          <thead><tr><th>Version</th><th>Status</th><th>Crash-Free</th><th>Released</th></tr></thead>
+          <tbody id="app-drawer-versions"></tbody>
+        </table>
+      </div>
+      <div class="drawer-section">
+        <div class="drawer-section-title">Recent Activity</div>
+        <div id="app-drawer-activity" style="display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden"></div>
+      </div>
+    </div>
+    <div class="drawer-footer">
+      <button class="btn-ghost" onclick="closeDrawer('drawer-app');openModal('modal-new-deploy')"><i class="ti ti-rocket"></i>New Deployment</button>
+      <button class="btn-ghost" onclick="closeDrawer('drawer-app')"><i class="ti ti-settings"></i>App Settings</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: REGISTER APP ══ -->
+<div class="modal-overlay" id="modal-register-app" onclick="if(event.target===this)closeModal('modal-register-app')">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h2><i class="ti ti-apps" style="color:var(--red);margin-right:8px"></i>Register App</h2>
+      <div class="modal-close" onclick="closeModal('modal-register-app')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <div class="form-label">App Name <span>*</span></div>
+          <input class="form-input" placeholder="e.g. MyApp Mobile">
+        </div>
+        <div class="form-group">
+          <div class="form-label">Organization <span>*</span></div>
+          <input class="form-input" placeholder="e.g. PT Example Corp">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <div class="form-label">Framework <span>*</span></div>
+          <select class="form-select">
+            <option value="">Select framework…</option>
+            <option>React Native</option>
+            <option>Flutter</option>
+            <option>Cordova</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Platform <span>*</span></div>
+          <select class="form-select">
+            <option>iOS + Android</option>
+            <option>Android only</option>
+            <option>iOS only</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">App Identifier</div>
+        <input class="form-input" placeholder="com.example.myapp" style="font-family:var(--mono)">
+        <div class="form-hint">Bundle ID (iOS) or Package Name (Android)</div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Initial Version</div>
+        <input class="form-input" placeholder="v1.0.0" style="font-family:var(--mono)">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-register-app')">Cancel</button>
+      <button class="btn-primary" onclick="submitRegisterApp()"><i class="ti ti-check"></i>Register App</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const titles={overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
@@ -1199,6 +1294,141 @@ function submitNewDeploy(){
   banner.innerHTML='<i class="ti ti-circle-check" style="color:#32C997;font-size:18px"></i>Deployment queued — canary phase starting';
   document.body.appendChild(banner);
   setTimeout(()=>banner.remove(),3500);
+}
+
+
+const APP_DATA = {
+  brimo: {
+    name:'BRImo SuperApp', org:'PT Bank Rakyat Indonesia', color:'#005BAC', abbr:'BR',
+    platform:'Android', fw:'React Native', fwClass:'rn',
+    users:'8.2M', ver:'v8.4.1', cfr:'99.1%', date:'Today',
+    status:'paused',
+    versions:[
+      {v:'v8.4.1', status:'paused', cfr:'94.1%', date:'Today'},
+      {v:'v8.4.0', status:'live', cfr:'99.8%', date:'14 Jun'},
+      {v:'v8.3.9', status:'complete', cfr:'99.7%', date:'1 Jun'},
+    ],
+    activity:[
+      {color:'var(--err)', msg:'AutoDetect paused rollout — install failure rate 5.9%', time:'23 min ago'},
+      {color:'var(--blue)', msg:'Rollout DEP-4821 started by R. Ananda', time:'2h 31m ago'},
+      {color:'var(--green)', msg:'v8.4.0 deployment complete — 8.2M devices', time:'3d ago'},
+    ]
+  },
+  ifglife: {
+    name:'IFG Life Portal', org:'IFG Life Insurance', color:'#ED1C24', abbr:'IFG',
+    platform:'iOS + Android', fw:'Flutter', fwClass:'flutter',
+    users:'1.1M', ver:'v3.12.0', cfr:'99.6%', date:'Today',
+    status:'rolling',
+    versions:[
+      {v:'v3.12.0', status:'rolling', cfr:'99.6%', date:'Today'},
+      {v:'v3.11.2', status:'live', cfr:'99.7%', date:'10 Jun'},
+      {v:'v3.11.1', status:'complete', cfr:'99.5%', date:'28 May'},
+    ],
+    activity:[
+      {color:'var(--blue)', msg:'v3.12.0 rollout reached 68% — on schedule', time:'41 min ago'},
+      {color:'var(--blue)', msg:'Stage 2 → Stage 3 auto-promoted', time:'1h 20m ago'},
+      {color:'var(--green)', msg:'Canary phase passed — crash-free 99.9%', time:'3h ago'},
+    ]
+  },
+  askrindo: {
+    name:'Askrindo Mobile', org:'PT Askrindo', color:'#E67E22', abbr:'AS',
+    platform:'iOS + Android', fw:'Flutter', fwClass:'flutter',
+    users:'420K', ver:'v2.4.5', cfr:'99.9%', date:'16 Jun',
+    status:'rolling',
+    versions:[
+      {v:'v2.4.5', status:'rolling', cfr:'99.9%', date:'16 Jun'},
+      {v:'v2.4.4', status:'live', cfr:'99.8%', date:'5 Jun'},
+    ],
+    activity:[
+      {color:'var(--blue)', msg:'v2.4.5 final stage — 91% rollout', time:'1h 38m ago'},
+      {color:'var(--green)', msg:'Stage 3 passed, promoting to full rollout', time:'2h ago'},
+    ]
+  },
+  jiwasraya: {
+    name:'Jiwasraya Connect', org:'PT Asuransi Jiwasraya', color:'#1E6FA8', abbr:'JW',
+    platform:'iOS + Android', fw:'React Native', fwClass:'rn',
+    users:'680K', ver:'v5.2.1', cfr:'99.7%', date:'10 Jun',
+    status:'live',
+    versions:[
+      {v:'v5.2.1', status:'live', cfr:'99.7%', date:'10 Jun'},
+      {v:'v5.2.0', status:'complete', cfr:'99.5%', date:'25 May'},
+    ],
+    activity:[
+      {color:'var(--green)', msg:'v5.2.1 fully deployed — 680K devices', time:'7d ago'},
+      {color:'var(--green)', msg:'v5.2.0 retired from active tracking', time:'8d ago'},
+    ]
+  },
+  pnm: {
+    name:'PNM Mekaar', org:'PT Permodalan Nasional', color:'#16A34A', abbr:'PM',
+    platform:'iOS + Android', fw:'Flutter', fwClass:'flutter',
+    users:'2.8M', ver:'v4.1.0', cfr:'100%', date:'Today',
+    status:'canary',
+    versions:[
+      {v:'v4.1.0', status:'canary', cfr:'100%', date:'Today'},
+      {v:'v4.0.9', status:'live', cfr:'99.5%', date:'8 Jun'},
+    ],
+    activity:[
+      {color:'var(--purple)', msg:'Canary deployment started — 5% of users', time:'6h 30m ago'},
+      {color:'var(--gray-30)', msg:'R. Ananda created deployment DEP-4816', time:'6h 31m ago'},
+    ]
+  },
+  investnow: {
+    name:'IFG InvestNow', org:'IFG Securities', color:'#7C3AED', abbr:'IN',
+    platform:'iOS + Android', fw:'React Native', fwClass:'rn',
+    users:'310K', ver:'v1.8.3', cfr:'99.9%', date:'15 Jun',
+    status:'complete',
+    versions:[
+      {v:'v1.8.3', status:'complete', cfr:'99.9%', date:'15 Jun'},
+      {v:'v1.8.2', status:'complete', cfr:'99.7%', date:'2 Jun'},
+    ],
+    activity:[
+      {color:'var(--green)', msg:'v1.8.3 complete — 310K devices updated', time:'1h 12m ago'},
+      {color:'var(--green)', msg:'Full rollout approved by B. Wicaksono', time:'4h ago'},
+    ]
+  }
+};
+
+const STATUS_BADGE = {
+  live:'<span class="badge live"><span class="dot"></span>Live</span>',
+  rolling:'<span class="badge rolling"><span class="dot"></span>Rolling</span>',
+  canary:'<span class="badge canary"><span class="dot"></span>Canary</span>',
+  paused:'<span class="badge paused"><span class="dot"></span>Paused</span>',
+  complete:'<span class="badge complete"><span class="dot"></span>Complete</span>',
+  failed:'<span class="badge failed"><span class="dot"></span>Failed</span>',
+};
+
+function openAppDrawer(appId) {
+  const app = APP_DATA[appId];
+  if (!app) return;
+  document.getElementById('app-drawer-icon').style.background = app.color;
+  document.getElementById('app-drawer-icon').textContent = app.abbr;
+  document.getElementById('app-drawer-name').textContent = app.name;
+  document.getElementById('app-drawer-org').textContent = app.org;
+  document.getElementById('app-drawer-users').textContent = app.users;
+  document.getElementById('app-drawer-ver').innerHTML = '<span style="font-family:var(--mono)">' + app.ver + '</span>';
+  document.getElementById('app-drawer-cfr').textContent = app.cfr;
+  document.getElementById('app-drawer-date').textContent = app.date;
+  const fwLabel = app.fwClass === 'rn' ? 'React Native' : app.fwClass === 'flutter' ? 'Flutter' : 'Cordova';
+  document.getElementById('app-drawer-chips').innerHTML =
+    '<span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>' + app.platform + '</span>' +
+    '<span class="fw ' + app.fwClass + '">' + fwLabel + '</span>' +
+    STATUS_BADGE[app.status];
+  document.getElementById('app-drawer-versions').innerHTML = app.versions.map(v =>
+    '<tr><td><span class="mono">' + v.v + '</span></td><td>' + STATUS_BADGE[v.status] + '</td><td><span class="mono" style="font-size:12px">' + v.cfr + '</span></td><td><span style="font-size:12px;color:var(--text-3)">' + v.date + '</span></td></tr>'
+  ).join('');
+  document.getElementById('app-drawer-activity').innerHTML = app.activity.map(a =>
+    '<div class="activity-item"><div class="activity-dot" style="background:' + a.color + '"></div><div><div class="activity-msg">' + a.msg + '</div><div class="activity-time">' + a.time + '</div></div></div>'
+  ).join('');
+  openDrawer('drawer-app');
+}
+
+function submitRegisterApp() {
+  closeModal('modal-register-app');
+  const banner = document.createElement('div');
+  banner.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#1A1A1A;color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:500;z-index:300;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.2);animation:fadeUp 0.3s ease';
+  banner.innerHTML = '<i class="ti ti-circle-check" style="color:#32C997;font-size:18px"></i>App registered successfully';
+  document.body.appendChild(banner);
+  setTimeout(() => banner.remove(), 3500);
 }
 
 function filterTab(el){
