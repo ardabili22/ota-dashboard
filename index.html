@@ -1852,6 +1852,202 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
+
+<!-- ══ DRAWER: PROFILE & ACCOUNT ══ -->
+<div class="drawer-overlay" id="drawer-profile" onclick="if(event.target===this)closeDrawer('drawer-profile')">
+  <div class="drawer">
+    <div class="drawer-hdr">
+      <div style="font-size:15px;font-weight:700;color:var(--text)">Profile & Account</div>
+      <div class="modal-close" onclick="closeDrawer('drawer-profile')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="drawer-body" style="gap:0;padding:0">
+
+      <!-- Profile header -->
+      <div style="padding:24px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--red);color:#fff;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative">
+          RA
+          <div style="position:absolute;bottom:0;right:0;width:14px;height:14px;background:var(--green);border-radius:50%;border:2px solid #fff"></div>
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:15px;font-weight:700;color:var(--text)">R. Ananda</div>
+          <div style="font-size:12px;color:var(--text-3);margin-top:2px">r.ananda@ifg.co.id</div>
+          <div style="margin-top:6px"><span class="role-badge admin">Platform Admin</span></div>
+        </div>
+        <button class="btn-ghost" style="height:30px;font-size:11px" onclick="closeDrawer('drawer-profile');openModal('modal-edit-profile')"><i class="ti ti-edit"></i>Edit</button>
+      </div>
+
+      <!-- Quick stats -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border)">
+        <div style="padding:16px;text-align:center;border-right:1px solid var(--border)">
+          <div style="font-size:18px;font-weight:700;font-family:var(--mono);color:var(--text)">24</div>
+          <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px">Deployments</div>
+        </div>
+        <div style="padding:16px;text-align:center;border-right:1px solid var(--border)">
+          <div style="font-size:18px;font-weight:700;font-family:var(--mono);color:var(--text)">6</div>
+          <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px">Apps</div>
+        </div>
+        <div style="padding:16px;text-align:center">
+          <div style="font-size:18px;font-weight:700;font-family:var(--mono);color:var(--text)">142d</div>
+          <div style="font-size:10.5px;color:var(--text-3);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px">Active since</div>
+        </div>
+      </div>
+
+      <!-- Menu items -->
+      <div style="display:flex;flex-direction:column;padding:8px">
+        <div onclick="closeDrawer('drawer-profile');openModal('modal-edit-profile')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:8px;cursor:pointer;transition:background var(--transition)" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
+          <i class="ti ti-user" style="font-size:16px;color:var(--text-3);width:20px"></i>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--text)">Edit Profile</div><div style="font-size:11px;color:var(--text-3)">Name, email, avatar</div></div>
+          <i class="ti ti-chevron-right" style="font-size:14px;color:var(--text-3)"></i>
+        </div>
+        <div onclick="closeDrawer('drawer-profile');nav(document.querySelector('[data-screen=settings]'))" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:8px;cursor:pointer;transition:background var(--transition)" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
+          <i class="ti ti-settings" style="font-size:16px;color:var(--text-3);width:20px"></i>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--text)">Platform Settings</div><div style="font-size:11px;color:var(--text-3)">Automation, notifications, preferences</div></div>
+          <i class="ti ti-chevron-right" style="font-size:14px;color:var(--text-3)"></i>
+        </div>
+        <div onclick="closeDrawer('drawer-profile');openModal('modal-api-keys')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:8px;cursor:pointer;transition:background var(--transition)" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
+          <i class="ti ti-key" style="font-size:16px;color:var(--text-3);width:20px"></i>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--text)">API Keys</div><div style="font-size:11px;color:var(--text-3)">Manage personal access tokens</div></div>
+          <i class="ti ti-chevron-right" style="font-size:14px;color:var(--text-3)"></i>
+        </div>
+        <div onclick="closeDrawer('drawer-profile');openModal('modal-notif-pref')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:8px;cursor:pointer;transition:background var(--transition)" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
+          <i class="ti ti-bell" style="font-size:16px;color:var(--text-3);width:20px"></i>
+          <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--text)">Notification Preferences</div><div style="font-size:11px;color:var(--text-3)">Email, Slack, SMS alerts</div></div>
+          <i class="ti ti-chevron-right" style="font-size:14px;color:var(--text-3)"></i>
+        </div>
+        <div style="height:1px;background:var(--border);margin:8px 0"></div>
+        <div onclick="showToast('Signing out…');setTimeout(()=>{document.getElementById('login-page').classList.remove('hidden');document.getElementById('login-form-wrap').style.display='';document.getElementById('login-loading').style.display='none';closeDrawer('drawer-profile')},500)" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:8px;cursor:pointer;transition:background var(--transition)" onmouseover="this.style.background='var(--err-10)'" onmouseout="this.style.background=''">
+          <i class="ti ti-logout" style="font-size:16px;color:var(--err);width:20px"></i>
+          <div style="font-size:13px;font-weight:600;color:var(--err)">Sign out</div>
+        </div>
+      </div>
+
+      <!-- Session info -->
+      <div style="margin:8px 16px 16px;background:var(--gray-10);border-radius:8px;padding:12px 14px">
+        <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-3);margin-bottom:8px">Current Session</div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text-2)">Signed in via</span><span style="font-weight:600;color:var(--text)">Microsoft SSO</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text-2)">Environment</span><span style="font-weight:600;color:var(--green)">Production</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text-2)">Session started</span><span style="font-weight:600;color:var(--text);font-family:var(--mono)">17 Jun 2026 18:35</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--text-2)">IP Address</span><span style="font-weight:600;color:var(--text);font-family:var(--mono)">180.241.xx.xx</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: EDIT PROFILE ══ -->
+<div class="modal-overlay" id="modal-edit-profile" onclick="if(event.target===this)closeModal('modal-edit-profile')">
+  <div class="modal" style="width:460px">
+    <div class="modal-hdr">
+      <h2><i class="ti ti-user" style="color:var(--red);margin-right:8px"></i>Edit Profile</h2>
+      <div class="modal-close" onclick="closeModal('modal-edit-profile')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:16px;padding:16px;background:var(--gray-10);border-radius:10px">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--red);color:#fff;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center">RA</div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px">Profile Photo</div><button class="btn-ghost" style="height:28px;font-size:11px"><i class="ti ti-upload"></i>Upload photo</button></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <div class="form-label">First Name</div>
+          <input class="form-input" value="R.">
+        </div>
+        <div class="form-group">
+          <div class="form-label">Last Name</div>
+          <input class="form-input" value="Ananda">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Email</div>
+        <input class="form-input" value="r.ananda@ifg.co.id" readonly style="background:var(--gray-10);color:var(--text-3)">
+        <div class="form-hint">Email managed by Microsoft SSO — contact IT to change</div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Display Name</div>
+        <input class="form-input" value="R. Ananda">
+      </div>
+      <div class="form-group">
+        <div class="form-label">Job Title</div>
+        <input class="form-input" value="Platform Admin — IFG Life">
+      </div>
+      <div class="form-group">
+        <div class="form-label">Timezone</div>
+        <select class="form-select">
+          <option selected>Asia/Jakarta (WIB, UTC+7)</option>
+          <option>Asia/Makassar (WITA, UTC+8)</option>
+          <option>Asia/Jayapura (WIT, UTC+9)</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-edit-profile')">Cancel</button>
+      <button class="btn-primary" onclick="closeModal('modal-edit-profile');showToast('Profile updated')"><i class="ti ti-check"></i>Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: NOTIFICATION PREFERENCES ══ -->
+<div class="modal-overlay" id="modal-notif-pref" onclick="if(event.target===this)closeModal('modal-notif-pref')">
+  <div class="modal" style="width:460px">
+    <div class="modal-hdr">
+      <h2><i class="ti ti-bell" style="color:var(--red);margin-right:8px"></i>Notification Preferences</h2>
+      <div class="modal-close" onclick="closeModal('modal-notif-pref')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body" style="padding:0">
+      <div style="padding:14px 20px;background:var(--gray-10);border-bottom:1px solid var(--border)">
+        <div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:8px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-3)">
+          <div>Event</div><div style="text-align:center">Email</div><div style="text-align:center">Slack</div><div style="text-align:center">SMS</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:8px;padding:13px 20px;border-bottom:1px solid var(--gray-15);align-items:center">
+          <span style="font-size:13px;font-weight:500">Deployment failed</span>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+        </div><div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:8px;padding:13px 20px;border-bottom:1px solid var(--gray-15);align-items:center">
+          <span style="font-size:13px;font-weight:500">Deployment complete</span>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle " onclick="this.classList.toggle('on')"></div></div>
+        </div><div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:8px;padding:13px 20px;border-bottom:1px solid var(--gray-15);align-items:center">
+          <span style="font-size:13px;font-weight:500">Rollout paused (auto)</span>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+        </div><div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:8px;padding:13px 20px;border-bottom:1px solid var(--gray-15);align-items:center">
+          <span style="font-size:13px;font-weight:500">Rollback triggered</span>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+        </div><div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:8px;padding:13px 20px;border-bottom:1px solid var(--gray-15);align-items:center">
+          <span style="font-size:13px;font-weight:500">P1 incident opened</span>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+        </div><div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:8px;padding:13px 20px;border-bottom:1px solid var(--gray-15);align-items:center">
+          <span style="font-size:13px;font-weight:500">Approval required</span>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle " onclick="this.classList.toggle('on')"></div></div>
+        </div><div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:8px;padding:13px 20px;border-bottom:1px solid var(--gray-15);align-items:center">
+          <span style="font-size:13px;font-weight:500">New team member</span>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle " onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle " onclick="this.classList.toggle('on')"></div></div>
+        </div><div style="display:grid;grid-template-columns:1fr 60px 60px 60px;gap:8px;padding:13px 20px;border-bottom:1px solid var(--gray-15);align-items:center">
+          <span style="font-size:13px;font-weight:500">Weekly digest</span>
+          <div style="display:flex;justify-content:center"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle " onclick="this.classList.toggle('on')"></div></div>
+          <div style="display:flex;justify-content:center"><div class="toggle " onclick="this.classList.toggle('on')"></div></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-notif-pref')">Cancel</button>
+      <button class="btn-primary" onclick="closeModal('modal-notif-pref');showToast('Notification preferences saved')"><i class="ti ti-check"></i>Save</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const titles={overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
