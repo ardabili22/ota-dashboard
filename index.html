@@ -1215,7 +1215,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
       <div id="md-workspaces" style="display:none">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
           <div style="font-size:13px;color:var(--text-2)" id="md-ws-count">4 workspaces</div>
-          <button class="btn-primary" onclick="showToast('New workspace creation coming soon')"><i class="ti ti-plus"></i>New Workspace</button>
+          <button class="btn-primary" onclick="openModal('modal-add-workspace')"><i class="ti ti-plus"></i>New Workspace</button>
         </div>
         <div class="card">
           <table class="data-table">
@@ -2447,6 +2447,80 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
+
+<!-- ══ MODAL: ADD WORKSPACE ══ -->
+<div class="modal-overlay" id="modal-add-workspace" onclick="if(event.target===this)closeModal('modal-add-workspace')">
+  <div class="modal" style="width:460px">
+    <div class="modal-hdr"><h2><i class="ti ti-building" style="color:var(--red);margin-right:8px"></i>Add Workspace</h2><div class="modal-close" onclick="closeModal('modal-add-workspace')"><i class="ti ti-x"></i></div></div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:14px;padding:14px;background:var(--gray-10);border-radius:10px;margin-bottom:4px">
+        <div id="add-ws-icon" style="width:40px;height:40px;border-radius:10px;background:var(--red);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0">NEW</div>
+        <div><div id="add-ws-preview-name" style="font-size:14px;font-weight:700;color:var(--text)">New Workspace</div><div id="add-ws-preview-plan" style="font-size:11px;color:var(--text-3);margin-top:2px">Enterprise</div></div>
+      </div>
+      <div class="form-group"><div class="form-label">Workspace Name <span>*</span></div><input class="form-input" id="add-ws-name" placeholder="e.g. PT Example Corp" oninput="updateAddWsPreview()"></div>
+      <div class="form-row">
+        <div class="form-group"><div class="form-label">Abbreviation <span>*</span></div><input class="form-input" id="add-ws-abbr" placeholder="e.g. EXC" maxlength="4" oninput="document.getElementById('add-ws-icon').textContent=this.value.toUpperCase()||'NEW'"></div>
+        <div class="form-group"><div class="form-label">Plan</div><select class="form-select" id="add-ws-plan"><option>Enterprise</option><option>Business</option><option>Starter</option></select></div>
+      </div>
+      <div class="form-group"><div class="form-label">Brand Color</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap" id="add-ws-colors">
+          <div onclick="selAddWsClr(this,'#ED1C24')" style="width:28px;height:28px;border-radius:6px;background:#ED1C24;cursor:pointer;border:2px solid var(--text)" data-color="#ED1C24"></div>
+          <div onclick="selAddWsClr(this,'#005BAC')" style="width:28px;height:28px;border-radius:6px;background:#005BAC;cursor:pointer;border:2px solid transparent" data-color="#005BAC"></div>
+          <div onclick="selAddWsClr(this,'#E67E22')" style="width:28px;height:28px;border-radius:6px;background:#E67E22;cursor:pointer;border:2px solid transparent" data-color="#E67E22"></div>
+          <div onclick="selAddWsClr(this,'#1E6FA8')" style="width:28px;height:28px;border-radius:6px;background:#1E6FA8;cursor:pointer;border:2px solid transparent" data-color="#1E6FA8"></div>
+          <div onclick="selAddWsClr(this,'#16A34A')" style="width:28px;height:28px;border-radius:6px;background:#16A34A;cursor:pointer;border:2px solid transparent" data-color="#16A34A"></div>
+          <div onclick="selAddWsClr(this,'#7C3AED')" style="width:28px;height:28px;border-radius:6px;background:#7C3AED;cursor:pointer;border:2px solid transparent" data-color="#7C3AED"></div>
+          <div onclick="selAddWsClr(this,'#0284C7')" style="width:28px;height:28px;border-radius:6px;background:#0284C7;cursor:pointer;border:2px solid transparent" data-color="#0284C7"></div>
+          <div onclick="selAddWsClr(this,'#374151')" style="width:28px;height:28px;border-radius:6px;background:#374151;cursor:pointer;border:2px solid transparent" data-color="#374151"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-add-workspace')">Cancel</button>
+      <button class="btn-primary" onclick="submitAddWorkspace()"><i class="ti ti-check"></i>Create Workspace</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: EDIT WORKSPACE ══ -->
+<div class="modal-overlay" id="modal-edit-workspace" onclick="if(event.target===this)closeModal('modal-edit-workspace')">
+  <div class="modal" style="width:460px">
+    <div class="modal-hdr"><h2><i class="ti ti-edit" style="color:var(--red);margin-right:8px"></i>Edit Workspace</h2><div class="modal-close" onclick="closeModal('modal-edit-workspace')"><i class="ti ti-x"></i></div></div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:14px;padding:14px;background:var(--gray-10);border-radius:10px;margin-bottom:4px">
+        <div id="edit-ws-icon" style="width:40px;height:40px;border-radius:10px;background:var(--red);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0"></div>
+        <div><div id="edit-ws-preview-name" style="font-size:14px;font-weight:700;color:var(--text)"></div><div id="edit-ws-preview-plan" style="font-size:11px;color:var(--text-3);margin-top:2px"></div></div>
+      </div>
+      <input type="hidden" id="edit-ws-id">
+      <input type="hidden" id="edit-ws-apps">
+      <div class="form-group"><div class="form-label">Workspace Name <span>*</span></div><input class="form-input" id="edit-ws-name" oninput="document.getElementById('edit-ws-preview-name').textContent=this.value"></div>
+      <div class="form-row">
+        <div class="form-group"><div class="form-label">Abbreviation</div><input class="form-input" id="edit-ws-abbr" maxlength="4" oninput="document.getElementById('edit-ws-icon').textContent=this.value.toUpperCase()"></div>
+        <div class="form-group"><div class="form-label">Plan</div><select class="form-select" id="edit-ws-plan"><option>Enterprise</option><option>Business</option><option>Starter</option></select></div>
+      </div>
+      <div class="form-group"><div class="form-label">Brand Color</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap" id="edit-ws-colors">
+          <div onclick="selEditWsClr(this,'#ED1C24')" style="width:28px;height:28px;border-radius:6px;background:#ED1C24;cursor:pointer;border:2px solid transparent" data-color="#ED1C24"></div>
+          <div onclick="selEditWsClr(this,'#005BAC')" style="width:28px;height:28px;border-radius:6px;background:#005BAC;cursor:pointer;border:2px solid transparent" data-color="#005BAC"></div>
+          <div onclick="selEditWsClr(this,'#E67E22')" style="width:28px;height:28px;border-radius:6px;background:#E67E22;cursor:pointer;border:2px solid transparent" data-color="#E67E22"></div>
+          <div onclick="selEditWsClr(this,'#1E6FA8')" style="width:28px;height:28px;border-radius:6px;background:#1E6FA8;cursor:pointer;border:2px solid transparent" data-color="#1E6FA8"></div>
+          <div onclick="selEditWsClr(this,'#16A34A')" style="width:28px;height:28px;border-radius:6px;background:#16A34A;cursor:pointer;border:2px solid transparent" data-color="#16A34A"></div>
+          <div onclick="selEditWsClr(this,'#7C3AED')" style="width:28px;height:28px;border-radius:6px;background:#7C3AED;cursor:pointer;border:2px solid transparent" data-color="#7C3AED"></div>
+          <div onclick="selEditWsClr(this,'#0284C7')" style="width:28px;height:28px;border-radius:6px;background:#0284C7;cursor:pointer;border:2px solid transparent" data-color="#0284C7"></div>
+          <div onclick="selEditWsClr(this,'#374151')" style="width:28px;height:28px;border-radius:6px;background:#374151;cursor:pointer;border:2px solid transparent" data-color="#374151"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer" style="justify-content:space-between">
+      <button class="btn-ghost" style="color:var(--err);border-color:var(--err-10)" onclick="deleteMDWorkspace(document.getElementById('edit-ws-id').value)"><i class="ti ti-trash"></i>Delete</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn-ghost" onclick="closeModal('modal-edit-workspace')">Cancel</button>
+        <button class="btn-primary" onclick="submitEditWorkspace()"><i class="ti ti-check"></i>Save Changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 const titles={masterdata:'Master Data',billing:'Billing',overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
@@ -3641,7 +3715,7 @@ function renderMDWorkspaces() {
       <td><span class="mono" style="font-size:12px">${w.apps}</span></td>
       <td><span class="mono" style="font-size:12px">${w.devices}</span></td>
       <td>${w.current ? '<span class="badge live"><span class="dot"></span>Current</span>' : '<span style="font-size:11px;color:var(--text-3);background:var(--gray-10);padding:3px 9px;border-radius:20px;font-weight:600">Inactive</span>'}</td>
-      <td><button class="btn-ghost" style="height:28px;font-size:11px" onclick="switchWorkspace('${w.id}')">Switch</button></td>
+      <td><div style="display:flex;gap:6px"><button class="btn-ghost" style="height:28px;font-size:11px" onclick="switchWorkspace('${w.id}')">Switch</button><button class="btn-ghost" style="height:28px;font-size:11px" onclick="editMDWorkspace('${w.id}')"><i class="ti ti-edit"></i>Edit</button></div></td>
     </tr>
   `).join('');
   document.getElementById('md-ws-count').textContent = MASTER_DATA.workspaces.length + ' workspaces';
@@ -3754,6 +3828,89 @@ function submitEditApp() {
   renderAppsScreen();
   renderMDApps();
   showToast(name + ' updated successfully');
+}
+
+
+var addWsColor = '#ED1C24';
+var editWsColor = '#ED1C24';
+
+function updateAddWsPreview() {
+  var name = document.getElementById('add-ws-name').value || 'New Workspace';
+  var plan = document.getElementById('add-ws-plan').value;
+  document.getElementById('add-ws-preview-name').textContent = name;
+  document.getElementById('add-ws-preview-plan').textContent = plan;
+}
+function selAddWsClr(el, color) {
+  addWsColor = color;
+  document.querySelectorAll('#add-ws-colors [data-color]').forEach(function(e){e.style.border='2px solid transparent';});
+  el.style.border = '2px solid var(--text)';
+  document.getElementById('add-ws-icon').style.background = color;
+}
+function submitAddWorkspace() {
+  var name = document.getElementById('add-ws-name').value.trim();
+  var abbr = document.getElementById('add-ws-abbr').value.trim().toUpperCase();
+  var plan = document.getElementById('add-ws-plan').value;
+  if (!name || !abbr) { showToast('Name and abbreviation are required'); return; }
+  var id = name.toLowerCase().replace(/[^a-z0-9]/g,'') + Date.now();
+  MASTER_DATA.workspaces.push({id:id, name:name, abbr:abbr, color:addWsColor, apps:0, devices:'0', plan:plan, current:false});
+  closeModal('modal-add-workspace');
+  renderMDWorkspaces();
+  renderWorkspaceModal();
+  showToast(name + ' workspace created');
+  document.getElementById('add-ws-name').value = '';
+  document.getElementById('add-ws-abbr').value = '';
+}
+
+function editMDWorkspace(id) {
+  var ws = MASTER_DATA.workspaces.find(function(w){return w.id===id;});
+  if (!ws) return;
+  editWsColor = ws.color;
+  document.getElementById('edit-ws-id').value = ws.id;
+  document.getElementById('edit-ws-name').value = ws.name;
+  document.getElementById('edit-ws-abbr').value = ws.abbr;
+  document.getElementById('edit-ws-apps').value = ws.apps;
+  document.getElementById('edit-ws-preview-name').textContent = ws.name;
+  document.getElementById('edit-ws-preview-plan').textContent = ws.plan + ' · ' + ws.apps + ' apps';
+  document.getElementById('edit-ws-icon').textContent = ws.abbr;
+  document.getElementById('edit-ws-icon').style.background = ws.color;
+  var planSel = document.getElementById('edit-ws-plan');
+  Array.from(planSel.options).forEach(function(o){o.selected = o.text===ws.plan;});
+  document.querySelectorAll('#edit-ws-colors [data-color]').forEach(function(el){
+    el.style.border = el.dataset.color===ws.color ? '2px solid var(--text)' : '2px solid transparent';
+  });
+  openModal('modal-edit-workspace');
+}
+function selEditWsClr(el, color) {
+  editWsColor = color;
+  document.querySelectorAll('#edit-ws-colors [data-color]').forEach(function(e){e.style.border='2px solid transparent';});
+  el.style.border = '2px solid var(--text)';
+  document.getElementById('edit-ws-icon').style.background = color;
+}
+function submitEditWorkspace() {
+  var id   = document.getElementById('edit-ws-id').value;
+  var name = document.getElementById('edit-ws-name').value.trim();
+  var abbr = document.getElementById('edit-ws-abbr').value.trim().toUpperCase();
+  var plan = document.getElementById('edit-ws-plan').value;
+  if (!name || !abbr) { showToast('Name and abbreviation are required'); return; }
+  var idx = MASTER_DATA.workspaces.findIndex(function(w){return w.id===id;});
+  if (idx===-1) return;
+  MASTER_DATA.workspaces[idx] = Object.assign({}, MASTER_DATA.workspaces[idx], {name:name, abbr:abbr, color:editWsColor, plan:plan});
+  closeModal('modal-edit-workspace');
+  renderMDWorkspaces();
+  renderWorkspaceModal();
+  showToast(name + ' updated');
+}
+function deleteMDWorkspace(id) {
+  var ws = MASTER_DATA.workspaces.find(function(w){return w.id===id;});
+  if (!ws) return;
+  if (ws.current) { showToast('Cannot delete the current workspace'); return; }
+  if (confirm('Delete workspace ' + ws.name + '? This cannot be undone.')) {
+    MASTER_DATA.workspaces = MASTER_DATA.workspaces.filter(function(w){return w.id!==id;});
+    closeModal('modal-edit-workspace');
+    renderMDWorkspaces();
+    renderWorkspaceModal();
+    showToast(ws.name + ' deleted');
+  }
 }
 
 function filterTab(el){
