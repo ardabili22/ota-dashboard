@@ -1249,7 +1249,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
           <div class="form-group"><div class="form-label">Bundle ID</div><input class="form-input" id="md-app-bundle" placeholder="com.example.myapp" style="font-family:var(--mono)"></div>
           <div class="form-group"><div class="form-label">Brand Color</div>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
-              ${['#ED1C24','#005BAC','#E67E22','#1E6FA8','#16A34A','#7C3AED','#0284C7','#DB2777'].map(c=>`<div onclick="selectAppColor(this,'${c}')" style="width:28px;height:28px;border-radius:6px;background:${c};cursor:pointer;border:2px solid transparent" data-color="${c}"></div>`).join('')}
+              <div onclick="selectAppColor(this,'#ED1C24')" style="width:28px;height:28px;border-radius:6px;background:#ED1C24;cursor:pointer;border:2px solid var(--text);transition:border var(--transition)" data-color="#ED1C24"></div><div onclick="selectAppColor(this,'#005BAC')" style="width:28px;height:28px;border-radius:6px;background:#005BAC;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#005BAC"></div><div onclick="selectAppColor(this,'#E67E22')" style="width:28px;height:28px;border-radius:6px;background:#E67E22;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#E67E22"></div><div onclick="selectAppColor(this,'#1E6FA8')" style="width:28px;height:28px;border-radius:6px;background:#1E6FA8;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#1E6FA8"></div><div onclick="selectAppColor(this,'#16A34A')" style="width:28px;height:28px;border-radius:6px;background:#16A34A;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#16A34A"></div><div onclick="selectAppColor(this,'#7C3AED')" style="width:28px;height:28px;border-radius:6px;background:#7C3AED;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#7C3AED"></div><div onclick="selectAppColor(this,'#0284C7')" style="width:28px;height:28px;border-radius:6px;background:#0284C7;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#0284C7"></div><div onclick="selectAppColor(this,'#DB2777')" style="width:28px;height:28px;border-radius:6px;background:#DB2777;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#DB2777"></div><div onclick="selectAppColor(this,'#374151')" style="width:28px;height:28px;border-radius:6px;background:#374151;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#374151"></div><div onclick="selectAppColor(this,'#92400E')" style="width:28px;height:28px;border-radius:6px;background:#92400E;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#92400E"></div>
             </div>
           </div>
         </div>
@@ -2429,7 +2429,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
       <div class="form-group">
         <div class="form-label">Brand Color</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap" id="edit-app-colors">
-          ${['#ED1C24','#005BAC','#E67E22','#1E6FA8','#16A34A','#7C3AED','#0284C7','#DB2777','#374151','#92400E'].map(c=>`<div onclick="selectEditAppColor(this,'${c}')" style="width:28px;height:28px;border-radius:6px;background:${c};cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="${c}"></div>`).join('')}
+          <div onclick="selectEditAppColor(this,'#ED1C24')" style="width:28px;height:28px;border-radius:6px;background:#ED1C24;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#ED1C24"></div><div onclick="selectEditAppColor(this,'#005BAC')" style="width:28px;height:28px;border-radius:6px;background:#005BAC;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#005BAC"></div><div onclick="selectEditAppColor(this,'#E67E22')" style="width:28px;height:28px;border-radius:6px;background:#E67E22;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#E67E22"></div><div onclick="selectEditAppColor(this,'#1E6FA8')" style="width:28px;height:28px;border-radius:6px;background:#1E6FA8;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#1E6FA8"></div><div onclick="selectEditAppColor(this,'#16A34A')" style="width:28px;height:28px;border-radius:6px;background:#16A34A;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#16A34A"></div><div onclick="selectEditAppColor(this,'#7C3AED')" style="width:28px;height:28px;border-radius:6px;background:#7C3AED;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#7C3AED"></div><div onclick="selectEditAppColor(this,'#0284C7')" style="width:28px;height:28px;border-radius:6px;background:#0284C7;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#0284C7"></div><div onclick="selectEditAppColor(this,'#DB2777')" style="width:28px;height:28px;border-radius:6px;background:#DB2777;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#DB2777"></div><div onclick="selectEditAppColor(this,'#374151')" style="width:28px;height:28px;border-radius:6px;background:#374151;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#374151"></div><div onclick="selectEditAppColor(this,'#92400E')" style="width:28px;height:28px;border-radius:6px;background:#92400E;cursor:pointer;border:2px solid transparent;transition:border var(--transition)" data-color="#92400E"></div>
         </div>
       </div>
       <div class="form-group">
@@ -3758,8 +3758,9 @@ function renderMDWorkspaces() {
 
 function selectAppColor(el, color) {
   mdSelectedColor = color;
-  document.querySelectorAll('[data-color]').forEach(e => e.style.border = '2px solid transparent');
+  document.querySelectorAll('#modal-md-add-app [data-color]').forEach(function(e){e.style.border='2px solid transparent';});
   el.style.border = '2px solid var(--text)';
+  document.getElementById('add-app-icon') && (document.getElementById('add-app-icon').style.background = color);
 }
 
 function submitAddApp() {
@@ -3775,6 +3776,14 @@ function submitAddApp() {
   closeModal('modal-md-add-app');
   renderAppsScreen();
   renderMDApps();
+  // Reset form
+  document.getElementById('md-app-name').value = '';
+  document.getElementById('md-app-org').value = '';
+  document.getElementById('md-app-bundle').value = '';
+  document.getElementById('add-app-icon').textContent = 'APP';
+  document.getElementById('add-app-icon').style.background = '#ED1C24';
+  document.getElementById('add-app-preview-name').textContent = 'New App';
+  document.getElementById('add-app-preview-org').textContent = 'Organization';
   showToast(name + ' added successfully');
 }
 
