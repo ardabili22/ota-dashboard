@@ -947,48 +947,48 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
         <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:14px">
           <div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:8px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;font-size:18px">🐙</div><div><div style="font-size:13px;font-weight:700">GitHub</div><div style="font-size:11px;color:var(--text-3)">Source control</div></div></div><span class="badge live"><span class="dot"></span>Connected</span></div>
           <div style="font-size:12px;color:var(--text-2)">Push-triggered deployments from main branch. Last sync 4m ago.</div>
-          <button class="btn-ghost" style="width:fit-content">Configure</button>
+          <button class="btn-ghost" onclick="openIntegrationModal('github',true)" style="width:fit-content">Configure</button>
         </div>
         <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:14px">
           <div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:8px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;font-size:18px">💬</div><div><div style="font-size:13px;font-weight:700">Slack</div><div style="font-size:11px;color:var(--text-3)">Notifications</div></div></div><span class="badge live"><span class="dot"></span>Connected</span></div>
           <div style="font-size:12px;color:var(--text-2)">Deployment alerts to #platform-ops. Incident escalations to #incidents-p1.</div>
-          <button class="btn-ghost" style="width:fit-content">Configure</button>
+          <button class="btn-ghost" onclick="openIntegrationModal('slack',true)" style="width:fit-content">Configure</button>
         </div>
         <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:14px">
           <div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:8px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;font-size:18px">📊</div><div><div style="font-size:13px;font-weight:700">Datadog</div><div style="font-size:11px;color:var(--text-3)">Observability</div></div></div><span class="badge live"><span class="dot"></span>Connected</span></div>
           <div style="font-size:12px;color:var(--text-2)">APM metrics and crash telemetry forwarded to Datadog dashboards.</div>
-          <button class="btn-ghost" style="width:fit-content">Configure</button>
+          <button class="btn-ghost" onclick="openIntegrationModal('datadog',true)" style="width:fit-content">Configure</button>
         </div>
         <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:14px;opacity:0.6">
           <div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:8px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;font-size:18px">🔵</div><div><div style="font-size:13px;font-weight:700">Jira</div><div style="font-size:11px;color:var(--text-3)">Issue tracking</div></div></div><span style="font-size:11px;color:var(--text-3);background:var(--gray-10);padding:3px 9px;border-radius:20px;font-weight:600">Not connected</span></div>
           <div style="font-size:12px;color:var(--text-2)">Automatically create Jira issues for P1 incidents and failed deployments.</div>
-          <button class="btn-primary" style="width:fit-content">Connect</button>
+          <button class="btn-primary" onclick="openIntegrationModal('jira',false)" style="width:fit-content">Connect</button>
         </div>
         <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:14px;opacity:0.6">
           <div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:8px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;font-size:18px">🟠</div><div><div style="font-size:13px;font-weight:700">PagerDuty</div><div style="font-size:11px;color:var(--text-3)">On-call alerts</div></div></div><span style="font-size:11px;color:var(--text-3);background:var(--gray-10);padding:3px 9px;border-radius:20px;font-weight:600">Not connected</span></div>
           <div style="font-size:12px;color:var(--text-2)">Route critical deployment failures to on-call engineers via PagerDuty.</div>
-          <button class="btn-primary" style="width:fit-content">Connect</button>
+          <button class="btn-primary" onclick="openIntegrationModal('pagerduty',false)" style="width:fit-content">Connect</button>
         </div>
       </div>
     </div>
 
     <!-- ══════════ TEAM & PERMISSIONS ══════════ -->
     <div id="screen-team" class="screen">
-      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Team & Permissions</h1><p>5 members · 3 roles</p></div><button class="btn-primary"><i class="ti ti-plus"></i>Invite Member</button></div></div>
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Team & Permissions</h1><p>5 members · 3 roles</p></div><button class="btn-primary" onclick="openModal('modal-invite')"><i class="ti ti-plus"></i>Invite Member</button></div></div>
       <div class="card">
         <table class="data-table"><thead><tr><th>Member</th><th>Role</th><th>Apps Access</th><th>Last Active</th><th>Status</th><th></th></tr></thead>
         <tbody>
-          <tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">RA</div><div><div style="font-weight:600">R. Ananda</div><div style="font-size:11px;color:var(--text-3)">r.ananda@ifg.co.id</div></div></div></td><td><span class="role-badge admin">Platform Admin</span></td><td><span style="font-size:12px;color:var(--text-2)">All apps</span></td><td><span style="font-size:12px;color:var(--text-3)">Now</span></td><td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td><td><button class="btn-ghost">Edit</button></td></tr>
-          <tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">BW</div><div><div style="font-weight:600">B. Wicaksono</div><div style="font-size:11px;color:var(--text-3)">b.wicaksono@ifg.co.id</div></div></div></td><td><span class="role-badge release">Release Manager</span></td><td><span style="font-size:12px;color:var(--text-2)">BRImo, IFG Life, PNM</span></td><td><span style="font-size:12px;color:var(--text-3)">12m ago</span></td><td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td><td><button class="btn-ghost">Edit</button></td></tr>
-          <tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:#16A34A;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">SH</div><div><div style="font-weight:600">S. Hartono</div><div style="font-size:11px;color:var(--text-3)">s.hartono@ifg.co.id</div></div></div></td><td><span class="role-badge devops">DevOps Engineer</span></td><td><span style="font-size:12px;color:var(--text-2)">All apps</span></td><td><span style="font-size:12px;color:var(--text-3)">2h ago</span></td><td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td><td><button class="btn-ghost">Edit</button></td></tr>
-          <tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:var(--gray-30);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">DM</div><div><div style="font-weight:600">D. Maulana</div><div style="font-size:11px;color:var(--text-3)">d.maulana@bri.co.id</div></div></div></td><td><span class="role-badge viewer">Viewer</span></td><td><span style="font-size:12px;color:var(--text-2)">BRImo only</span></td><td><span style="font-size:12px;color:var(--text-3)">1d ago</span></td><td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td><td><button class="btn-ghost">Edit</button></td></tr>
+          <tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">RA</div><div><div style="font-weight:600">R. Ananda</div><div style="font-size:11px;color:var(--text-3)">r.ananda@ifg.co.id</div></div></div></td><td><span class="role-badge admin">Platform Admin</span></td><td><span style="font-size:12px;color:var(--text-2)">All apps</span></td><td><span style="font-size:12px;color:var(--text-3)">Now</span></td><td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td><td><button class="btn-ghost" onclick="openEditMember('ra')">Edit</button></td></tr>
+          <tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">BW</div><div><div style="font-weight:600">B. Wicaksono</div><div style="font-size:11px;color:var(--text-3)">b.wicaksono@ifg.co.id</div></div></div></td><td><span class="role-badge release">Release Manager</span></td><td><span style="font-size:12px;color:var(--text-2)">BRImo, IFG Life, PNM</span></td><td><span style="font-size:12px;color:var(--text-3)">12m ago</span></td><td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td><td><button class="btn-ghost" onclick="openEditMember('bw')">Edit</button></td></tr>
+          <tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:#16A34A;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">SH</div><div><div style="font-weight:600">S. Hartono</div><div style="font-size:11px;color:var(--text-3)">s.hartono@ifg.co.id</div></div></div></td><td><span class="role-badge devops">DevOps Engineer</span></td><td><span style="font-size:12px;color:var(--text-2)">All apps</span></td><td><span style="font-size:12px;color:var(--text-3)">2h ago</span></td><td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td><td><button class="btn-ghost" onclick="openEditMember('sh')">Edit</button></td></tr>
+          <tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:var(--gray-30);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">DM</div><div><div style="font-weight:600">D. Maulana</div><div style="font-size:11px;color:var(--text-3)">d.maulana@bri.co.id</div></div></div></td><td><span class="role-badge viewer">Viewer</span></td><td><span style="font-size:12px;color:var(--text-2)">BRImo only</span></td><td><span style="font-size:12px;color:var(--text-3)">1d ago</span></td><td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td><td><button class="btn-ghost" onclick="openEditMember('dm')">Edit</button></td></tr>
         </tbody></table>
       </div>
     </div>
 
     <!-- ══════════ AUDIT LOGS ══════════ -->
     <div id="screen-audit" class="screen">
-      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Audit Logs</h1><p>Immutable event log · All actions recorded</p></div><button class="btn-ghost"><i class="ti ti-download"></i>Export CSV</button></div></div>
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Audit Logs</h1><p>Immutable event log · All actions recorded</p></div><button class="btn-ghost" onclick="exportAuditCSV()"><i class="ti ti-download"></i>Export CSV</button></div></div>
       <div class="card">
         <table class="data-table"><thead><tr><th>Timestamp</th><th>Actor</th><th>Action</th><th>Target</th><th>IP</th></tr></thead>
         <tbody>
@@ -1003,13 +1003,13 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 
     <!-- ══════════ API ACCESS ══════════ -->
     <div id="screen-api" class="screen">
-      <div class="page-hdr"><div class="page-hdr-row"><div><h1>API Access</h1><p>Tokens, webhooks & CLI reference</p></div><button class="btn-primary"><i class="ti ti-plus"></i>New Token</button></div></div>
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>API Access</h1><p>Tokens, webhooks & CLI reference</p></div><button class="btn-primary" onclick="openModal('modal-new-token')"><i class="ti ti-plus"></i>New Token</button></div></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
         <div class="card">
           <div class="card-hdr"><div class="card-hdr-title">API Tokens</div></div>
           <div>
-            <div class="token-row"><div style="flex:1"><div style="font-size:13px;font-weight:600">CI/CD Pipeline Token</div><div class="mono" style="font-size:11px;color:var(--text-3);margin-top:2px">ota_live_••••••••••••4f2a</div></div><span style="font-size:11px;color:var(--text-3)">Expires 90d</span><button class="btn-ghost" style="height:28px;font-size:11px">Revoke</button></div>
-            <div class="token-row"><div style="flex:1"><div style="font-size:13px;font-weight:600">Monitoring Token</div><div class="mono" style="font-size:11px;color:var(--text-3);margin-top:2px">ota_live_••••••••••••8c91</div></div><span style="font-size:11px;color:var(--text-3)">Expires 30d</span><button class="btn-ghost" style="height:28px;font-size:11px">Revoke</button></div>
+            <div class="token-row"><div style="flex:1"><div style="font-size:13px;font-weight:600">CI/CD Pipeline Token</div><div class="mono" style="font-size:11px;color:var(--text-3);margin-top:2px">ota_live_••••••••••••4f2a</div></div><span style="font-size:11px;color:var(--text-3)">Expires 90d</span><button class="btn-ghost" onclick="openConfirm('revoke','tok-001','API Token')" style="height:28px;font-size:11px">Revoke</button></div>
+            <div class="token-row"><div style="flex:1"><div style="font-size:13px;font-weight:600">Monitoring Token</div><div class="mono" style="font-size:11px;color:var(--text-3);margin-top:2px">ota_live_••••••••••••8c91</div></div><span style="font-size:11px;color:var(--text-3)">Expires 30d</span><button class="btn-ghost" onclick="openConfirm('revoke','tok-002','API Token')" style="height:28px;font-size:11px">Revoke</button></div>
           </div>
         </div>
         <div class="card">
@@ -1576,6 +1576,175 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
+
+<!-- ══ MODAL: INTEGRATION CONFIG/CONNECT ══ -->
+<div class="modal-overlay" id="modal-integration" onclick="if(event.target===this)closeModal('modal-integration')">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h2 id="int-modal-title"><i class="ti ti-plug" style="color:var(--red);margin-right:8px"></i>Integration</h2>
+      <div class="modal-close" onclick="closeModal('modal-integration')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body" id="int-modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-integration')">Cancel</button>
+      <button class="btn-primary" id="int-modal-cta" onclick="submitIntegration()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: INVITE MEMBER ══ -->
+<div class="modal-overlay" id="modal-invite" onclick="if(event.target===this)closeModal('modal-invite')">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h2><i class="ti ti-user-plus" style="color:var(--red);margin-right:8px"></i>Invite Member</h2>
+      <div class="modal-close" onclick="closeModal('modal-invite')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <div class="form-label">Email Address <span>*</span></div>
+        <input class="form-input" type="email" placeholder="colleague@company.co.id">
+      </div>
+      <div class="form-group">
+        <div class="form-label">Role <span>*</span></div>
+        <select class="form-select">
+          <option value="">Select role…</option>
+          <option>Platform Admin</option>
+          <option>Release Manager</option>
+          <option>DevOps Engineer</option>
+          <option>Viewer</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="form-label">App Access</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--red)"> All apps</label>
+          <div id="app-checkboxes" style="display:none;flex-direction:column;gap:6px;padding-left:20px">
+            <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer"><input type="checkbox" style="accent-color:var(--red)"> BRImo SuperApp</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer"><input type="checkbox" style="accent-color:var(--red)"> IFG Life Portal</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer"><input type="checkbox" style="accent-color:var(--red)"> Askrindo Mobile</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer"><input type="checkbox" style="accent-color:var(--red)"> PNM Mekaar</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer"><input type="checkbox" style="accent-color:var(--red)"> IFG InvestNow</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Message (optional)</div>
+        <textarea class="form-textarea" placeholder="Add a personal note to the invitation email…"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-invite')">Cancel</button>
+      <button class="btn-primary" onclick="submitInvite()"><i class="ti ti-send"></i>Send Invite</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: EDIT MEMBER ══ -->
+<div class="modal-overlay" id="modal-edit-member" onclick="if(event.target===this)closeModal('modal-edit-member')">
+  <div class="modal" style="width:440px">
+    <div class="modal-hdr">
+      <h2 id="edit-member-title"><i class="ti ti-user" style="color:var(--red);margin-right:8px"></i>Edit Member</h2>
+      <div class="modal-close" onclick="closeModal('modal-edit-member')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--gray-10);border-radius:8px">
+        <div id="edit-member-avatar" style="width:36px;height:36px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center"></div>
+        <div><div id="edit-member-name" style="font-size:13px;font-weight:700"></div><div id="edit-member-email" style="font-size:11px;color:var(--text-3)"></div></div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Role</div>
+        <select class="form-select" id="edit-member-role">
+          <option>Platform Admin</option>
+          <option>Release Manager</option>
+          <option>DevOps Engineer</option>
+          <option>Viewer</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="form-label">App Access</div>
+        <select class="form-select" id="edit-member-access">
+          <option>All apps</option>
+          <option>BRImo, IFG Life, PNM</option>
+          <option>BRImo only</option>
+          <option>Custom…</option>
+        </select>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:16px;margin-top:4px">
+        <button class="btn-ghost" style="color:var(--err);border-color:var(--red-10);width:100%;justify-content:center" onclick="closeModal('modal-edit-member');showToast('Member removed from platform')"><i class="ti ti-user-minus"></i>Remove from platform</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-edit-member')">Cancel</button>
+      <button class="btn-primary" onclick="closeModal('modal-edit-member');showToast('Member updated successfully')"><i class="ti ti-check"></i>Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: NEW API TOKEN ══ -->
+<div class="modal-overlay" id="modal-new-token" onclick="if(event.target===this)closeModal('modal-new-token')">
+  <div class="modal" style="width:440px">
+    <div class="modal-hdr">
+      <h2><i class="ti ti-key" style="color:var(--red);margin-right:8px"></i>New API Token</h2>
+      <div class="modal-close" onclick="closeModal('modal-new-token')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <div class="form-label">Token Name <span>*</span></div>
+        <input class="form-input" placeholder="e.g. GitHub Actions Token">
+      </div>
+      <div class="form-group">
+        <div class="form-label">Expiry</div>
+        <select class="form-select">
+          <option>30 days</option>
+          <option>60 days</option>
+          <option selected>90 days</option>
+          <option>1 year</option>
+          <option>No expiry</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Permissions</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--red)"> Read deployments</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--red)"> Create deployments</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer"><input type="checkbox" style="accent-color:var(--red)"> Manage rollouts</label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;cursor:pointer"><input type="checkbox" style="accent-color:var(--red)"> Admin access</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-new-token')">Cancel</button>
+      <button class="btn-primary" onclick="submitNewToken()"><i class="ti ti-check"></i>Generate Token</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: TOKEN GENERATED ══ -->
+<div class="modal-overlay" id="modal-token-result" onclick="if(event.target===this)closeModal('modal-token-result')">
+  <div class="modal" style="width:440px">
+    <div class="modal-hdr">
+      <h2><i class="ti ti-circle-check" style="color:var(--green);margin-right:8px"></i>Token Generated</h2>
+      <div class="modal-close" onclick="closeModal('modal-token-result')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body">
+      <div style="background:var(--gold-10);border:1px solid #FDE68A;border-radius:8px;padding:12px 14px;font-size:12.5px;color:#92640A;display:flex;gap:8px">
+        <i class="ti ti-alert-circle" style="flex-shrink:0;margin-top:1px"></i>
+        <span>Copy this token now — it won't be shown again.</span>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Your API Token</div>
+        <div style="display:flex;gap:8px">
+          <input class="form-input" id="generated-token-val" value="ota_live_sk_2026_xK9mP3nQrT8vWjL5" readonly style="font-family:var(--mono);font-size:12px;flex:1">
+          <button class="btn-ghost" onclick="copyToken()" style="flex-shrink:0"><i class="ti ti-copy"></i>Copy</button>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-primary" onclick="closeModal('modal-token-result')">Done</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const titles={overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
@@ -2095,6 +2264,143 @@ function filterCrashApp(app) {
     row.style.display = (!app || row.textContent.includes(app)) ? '' : 'none';
   });
 }
+
+
+// ── INTEGRATIONS ──
+const INT_DATA = {
+  github: {
+    name:'GitHub', emoji:'🐙', connected:true,
+    fields:[
+      {label:'Repository', val:'ifg-life/mobile-apps', ph:'org/repo'},
+      {label:'Branch trigger', val:'main', ph:'e.g. main'},
+      {label:'Webhook URL', val:'https://ota.ifg.co.id/webhooks/github', ph:''},
+    ],
+    desc:'Push-triggered deployments from main branch. Last sync 4m ago.'
+  },
+  slack: {
+    name:'Slack', emoji:'💬', connected:true,
+    fields:[
+      {label:'Workspace', val:'IFG Life', ph:''},
+      {label:'Deployment channel', val:'#platform-ops', ph:'#channel'},
+      {label:'Incident channel', val:'#incidents-p1', ph:'#channel'},
+    ],
+    desc:'Deployment alerts and incident escalations.'
+  },
+  datadog: {
+    name:'Datadog', emoji:'📊', connected:true,
+    fields:[
+      {label:'API Key', val:'••••••••••••••••dd42', ph:''},
+      {label:'Site', val:'datadoghq.com', ph:''},
+    ],
+    desc:'APM metrics and crash telemetry forwarded to Datadog.'
+  },
+  jira: {
+    name:'Jira', emoji:'🔵', connected:false,
+    fields:[
+      {label:'Jira URL', val:'', ph:'https://yourcompany.atlassian.net'},
+      {label:'Project Key', val:'', ph:'e.g. OTA'},
+      {label:'API Token', val:'', ph:'Jira API token'},
+    ],
+    desc:'Automatically create Jira issues for P1 incidents and failed deployments.'
+  },
+  pagerduty: {
+    name:'PagerDuty', emoji:'🟠', connected:false,
+    fields:[
+      {label:'Integration Key', val:'', ph:'PagerDuty routing key'},
+      {label:'Escalation Policy', val:'', ph:'e.g. Platform On-Call'},
+    ],
+    desc:'Route critical deployment failures to on-call engineers.'
+  },
+};
+
+let _currentIntegration = null;
+function openIntegrationModal(id, isConfigured) {
+  _currentIntegration = id;
+  const d = INT_DATA[id]; if(!d) return;
+  document.getElementById('int-modal-title').innerHTML = `<span style="font-size:18px;margin-right:8px">${d.emoji}</span>${isConfigured ? 'Configure' : 'Connect'} ${d.name}`;
+  document.getElementById('int-modal-body').innerHTML =
+    `<p style="font-size:12.5px;color:var(--text-2);margin-bottom:4px">${d.desc}</p>` +
+    d.fields.map(f =>
+      `<div class="form-group"><div class="form-label">${f.label}</div><input class="form-input" value="${f.val}" placeholder="${f.ph}"></div>`
+    ).join('');
+  const cta = document.getElementById('int-modal-cta');
+  cta.textContent = isConfigured ? 'Save Changes' : 'Connect';
+  openModal('modal-integration');
+}
+
+function submitIntegration() {
+  closeModal('modal-integration');
+  const d = INT_DATA[_currentIntegration];
+  showToast(d ? `${d.name} ${d.connected ? 'settings saved' : 'connected successfully'}` : 'Saved');
+}
+
+// ── TEAM ──
+const MEMBER_DATA = {
+  ra: {abbr:'RA', name:'R. Ananda', email:'r.ananda@ifg.co.id', color:'var(--red)', role:'Platform Admin', access:'All apps'},
+  bw: {abbr:'BW', name:'B. Wicaksono', email:'b.wicaksono@ifg.co.id', color:'var(--blue)', role:'Release Manager', access:'BRImo, IFG Life, PNM'},
+  sh: {abbr:'SH', name:'S. Hartono', email:'s.hartono@ifg.co.id', color:'#16A34A', role:'DevOps Engineer', access:'All apps'},
+  dm: {abbr:'DM', name:'D. Maulana', email:'d.maulana@bri.co.id', color:'var(--gray-30)', role:'Viewer', access:'BRImo only'},
+};
+
+function openEditMember(id) {
+  const m = MEMBER_DATA[id]; if(!m) return;
+  document.getElementById('edit-member-title').innerHTML = `<i class="ti ti-user" style="color:var(--red);margin-right:8px"></i>Edit — ${m.name}`;
+  document.getElementById('edit-member-avatar').textContent = m.abbr;
+  document.getElementById('edit-member-avatar').style.background = m.color;
+  document.getElementById('edit-member-name').textContent = m.name;
+  document.getElementById('edit-member-email').textContent = m.email;
+  const roleSelect = document.getElementById('edit-member-role');
+  [...roleSelect.options].forEach(o => o.selected = o.value === m.role || o.text === m.role);
+  const accessSelect = document.getElementById('edit-member-access');
+  [...accessSelect.options].forEach(o => o.selected = o.text === m.access);
+  openModal('modal-edit-member');
+}
+
+function submitInvite() {
+  closeModal('modal-invite');
+  showToast('Invitation sent successfully');
+}
+
+// ── AUDIT EXPORT ──
+function exportAuditCSV() {
+  const rows = [
+    ['Timestamp','Actor','Action','Target','IP'],
+    ['2026-06-17 16:23:41','AutoDetect','DEPLOYMENT_PAUSED','BRImo v8.4.1 DEP-4821','system'],
+    ['2026-06-17 15:52:10','R. Ananda','DEPLOYMENT_CREATED','PNM Mekaar v4.1.0 DEP-4816','180.241.x.x'],
+    ['2026-06-17 15:44:30','B. Wicaksono','ROLLOUT_APPROVED','IFG Life Portal v3.12.0','36.82.x.x'],
+    ['2026-06-17 14:12:08','R. Ananda','MEMBER_INVITED','d.maulana@bri.co.id','180.241.x.x'],
+    ['2026-06-17 08:30:00','S. Hartono','DEPLOYMENT_COMPLETE','IFG InvestNow v1.8.3 DEP-4812','114.122.x.x'],
+  ];
+  const csv = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'audit-logs-2026-06-17.csv';
+  a.click();
+  showToast('Audit log exported');
+}
+
+// ── API TOKENS ──
+function submitNewToken() {
+  closeModal('modal-new-token');
+  openModal('modal-token-result');
+}
+
+function copyToken() {
+  const val = document.getElementById('generated-token-val').value;
+  navigator.clipboard.writeText(val).then(() => showToast('Token copied to clipboard'));
+}
+
+// Extend confirm for revoke
+const _origSubmitConfirm = window.submitConfirm || function(){};
+window.submitConfirm = function() {
+  if (_confirmAction && _confirmAction.action === 'revoke') {
+    closeModal('modal-confirm');
+    showToast('API token revoked');
+    return;
+  }
+  _origSubmitConfirm();
+};
 
 function filterTab(el){
   el.closest('.dep-filters').querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
