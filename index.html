@@ -569,6 +569,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
       <div class="nav-item" data-screen="team" data-label="Team & Permissions" onclick="nav(this)"><i class="ti ti-users ni-icon"></i><span class="ni-label">Team & Permissions</span></div>
       <div class="nav-item" data-screen="audit" data-label="Audit Logs" onclick="nav(this)"><i class="ti ti-clipboard-list ni-icon"></i><span class="ni-label">Audit Logs</span></div>
       <div class="nav-item" data-screen="api" data-label="API Access" onclick="nav(this)"><i class="ti ti-key ni-icon"></i><span class="ni-label">API Access</span></div>
+      <div class="nav-item" data-screen="billing" data-label="Billing" onclick="nav(this)"><i class="ti ti-credit-card ni-icon"></i><span class="ni-label">Billing</span></div>
       <div class="nav-item" data-screen="settings" data-label="Settings" onclick="nav(this)"><i class="ti ti-settings ni-icon"></i><span class="ni-label">Settings</span></div>
     </div>
   </div>
@@ -587,10 +588,10 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   <div id="navbar">
     <span class="nb-breadcrumb" id="nb-title">Overview</span>
     <div class="nb-search"><i class="ti ti-search"></i><span style="flex:1;color:var(--text-3)">Search apps, deployments…</span><kbd>⌘K</kbd></div>
-    <div class="nb-env"><span class="dot"></span>PRODUCTION</div>
+    <div class="nb-env" id="env-badge" onclick="openModal('modal-env-switch')" style="cursor:pointer"><span class="dot" id="env-dot"></span><span id="env-label">PRODUCTION</span></div>
     <div class="nb-sep"></div>
     <div class="nb-actions">
-      <button class="nb-btn"><i class="ti ti-bell"></i><span class="dot"></span></button>
+      <button class="nb-btn" id="btn-notif" title="Notifications"><i class="ti ti-bell"></i><span class="dot"></span></button>
       <div class="nb-avatar">RA</div>
     </div>
   </div>
@@ -1126,6 +1127,57 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
             <a href="#" style="font-size:12px;color:var(--red);font-weight:600;display:flex;align-items:center;gap:4px"><i class="ti ti-external-link"></i>Full CLI documentation</a>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ══════════ BILLING ══════════ -->
+    <div id="screen-billing" class="screen">
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Billing</h1><p>Plan, usage & invoices</p></div><button class="btn-primary"><i class="ti ti-credit-card"></i>Upgrade Plan</button></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:24px">
+        <div class="card" style="padding:20px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:0;right:0;background:var(--green-10);color:var(--green);font-size:10px;font-weight:700;padding:4px 10px;border-radius:0 0 0 8px;letter-spacing:0.3px">CURRENT PLAN</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Enterprise</div>
+          <div style="font-size:28px;font-weight:800;color:var(--text);font-family:var(--mono);letter-spacing:-1px">Rp 4.500.000<span style="font-size:13px;font-weight:500;color:var(--text-3)">/mo</span></div>
+          <div style="font-size:12px;color:var(--text-3);margin-top:6px">Billed annually · Next renewal 17 Jan 2027</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;align-items:center;gap:8px;font-size:12.5px"><i class="ti ti-circle-check" style="color:var(--green)"></i>Unlimited apps & deployments</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12.5px"><i class="ti ti-circle-check" style="color:var(--green)"></i>Up to 20M active devices</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12.5px"><i class="ti ti-circle-check" style="color:var(--green)"></i>Full audit logs & RBAC</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12.5px"><i class="ti ti-circle-check" style="color:var(--green)"></i>Priority support & SLA</div>
+          </div>
+        </div>
+        <div class="card" style="padding:20px">
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Usage this month</div>
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px">
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:500">Active devices</span><span style="font-size:12px;font-weight:700;font-family:var(--mono)">2.4M / 20M</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill green" style="width:12%"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:500">Deployments</span><span style="font-size:12px;font-weight:700;font-family:var(--mono)">24 / ∞</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill blue" style="width:5%"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:500">API requests</span><span style="font-size:12px;font-weight:700;font-family:var(--mono)">1.2M / 10M</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill red" style="width:12%"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:500">Storage</span><span style="font-size:12px;font-weight:700;font-family:var(--mono)">48GB / 500GB</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill gold" style="width:10%"></div></div></div>
+          </div>
+        </div>
+        <div class="card" style="padding:20px">
+          <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px">Payment method</div>
+          <div style="margin-top:12px;background:var(--gray-10);border-radius:8px;padding:14px;display:flex;align-items:center;gap:12px">
+            <div style="width:40px;height:26px;background:#1A1F71;border-radius:5px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:800">VISA</div>
+            <div><div style="font-size:13px;font-weight:600">•••• •••• •••• 4242</div><div style="font-size:11px;color:var(--text-3);margin-top:1px">Expires 09/28</div></div>
+            <button class="btn-ghost" style="height:28px;font-size:11px;margin-left:auto">Change</button>
+          </div>
+          <div style="margin-top:12px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-3);margin-bottom:8px">Billing contact</div>
+            <div style="font-size:12.5px;color:var(--text)">R. Ananda · r.ananda@ifg.co.id</div>
+            <div style="font-size:12px;color:var(--text-3);margin-top:2px">IFG Life Insurance · Jakarta</div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hdr"><div class="card-hdr-title">Invoice History</div><button class="btn-ghost"><i class="ti ti-download"></i>Export all</button></div>
+        <table class="data-table"><thead><tr><th>Invoice</th><th>Period</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr><td><span class="mono" style="font-size:12px">INV-2026-006</span></td><td><span style="font-size:12px;color:var(--text-2)">Jun 2026</span></td><td><span class="mono" style="font-size:13px;font-weight:600">Rp 4.500.000</span></td><td><span class="badge complete"><span class="dot"></span>Paid</span></td><td><button class="btn-ghost" style="height:28px;font-size:11px"><i class="ti ti-download"></i>PDF</button></td></tr>
+          <tr><td><span class="mono" style="font-size:12px">INV-2026-005</span></td><td><span style="font-size:12px;color:var(--text-2)">May 2026</span></td><td><span class="mono" style="font-size:13px;font-weight:600">Rp 4.500.000</span></td><td><span class="badge complete"><span class="dot"></span>Paid</span></td><td><button class="btn-ghost" style="height:28px;font-size:11px"><i class="ti ti-download"></i>PDF</button></td></tr>
+          <tr><td><span class="mono" style="font-size:12px">INV-2026-004</span></td><td><span style="font-size:12px;color:var(--text-2)">Apr 2026</span></td><td><span class="mono" style="font-size:13px;font-weight:600">Rp 4.500.000</span></td><td><span class="badge complete"><span class="dot"></span>Paid</span></td><td><button class="btn-ghost" style="height:28px;font-size:11px"><i class="ti ti-download"></i>PDF</button></td></tr>
+          <tr><td><span class="mono" style="font-size:12px">INV-2026-003</span></td><td><span style="font-size:12px;color:var(--text-2)">Mar 2026</span></td><td><span class="mono" style="font-size:13px;font-weight:600">Rp 4.500.000</span></td><td><span class="badge complete"><span class="dot"></span>Paid</span></td><td><button class="btn-ghost" style="height:28px;font-size:11px"><i class="ti ti-download"></i>PDF</button></td></tr>
+        </tbody></table>
       </div>
     </div>
 
@@ -2048,8 +2100,107 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
+
+<!-- ══ DRAWER: NOTIFICATIONS ══ -->
+<div class="drawer-overlay" id="drawer-notif" onclick="if(event.target===this)closeDrawer('drawer-notif')">
+  <div class="drawer">
+    <div class="drawer-hdr">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="font-size:15px;font-weight:700;color:var(--text)">Notifications</div>
+        <span style="background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px">3</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="btn-ghost" style="height:28px;font-size:11px" onclick="markAllRead()"><i class="ti ti-checks"></i>Mark all read</button>
+        <div class="modal-close" onclick="closeDrawer('drawer-notif')"><i class="ti ti-x"></i></div>
+      </div>
+    </div>
+    <div style="display:flex;border-bottom:1px solid var(--border);padding:0 16px">
+      <button class="filter-tab active" style="font-size:12px" onclick="filterNotif(this,'all')">All</button>
+      <button class="filter-tab" style="font-size:12px" onclick="filterNotif(this,'unread')">Unread <span class="count">3</span></button>
+      <button class="filter-tab" style="font-size:12px" onclick="filterNotif(this,'incident')">Incidents</button>
+      <button class="filter-tab" style="font-size:12px" onclick="filterNotif(this,'deploy')">Deployments</button>
+    </div>
+    <div class="drawer-body" style="padding:0;gap:0" id="notif-list">
+      <div class="notif-item unread incident" data-type="incident" style="display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid var(--gray-15);background:rgba(237,28,36,0.02);cursor:pointer" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background='rgba(237,28,36,0.02)'">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--red);margin-top:5px;flex-shrink:0"></div>
+        <div style="flex:1">
+          <div style="font-size:12.5px;font-weight:700;color:var(--err)">P1 Incident — BRImo v8.4.1</div>
+          <div style="font-size:12px;color:var(--text-2);margin-top:2px;line-height:1.5">Elevated install failure rate detected. Rollout paused at 24%. 1,847 devices affected.</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:4px;font-family:var(--mono)">23 min ago · AutoDetect</div>
+        </div>
+      </div>
+      <div class="notif-item unread deploy" data-type="deploy" style="display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid var(--gray-15);background:rgba(237,28,36,0.02);cursor:pointer" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background='rgba(237,28,36,0.02)'">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--blue);margin-top:5px;flex-shrink:0"></div>
+        <div style="flex:1">
+          <div style="font-size:12.5px;font-weight:700;color:var(--text)">Rollout approval required</div>
+          <div style="font-size:12px;color:var(--text-2);margin-top:2px;line-height:1.5">PNM Mekaar v4.1.0 canary phase passed. Full rollout requires your approval.</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:4px;font-family:var(--mono)">1h 20m ago · AutoPromote</div>
+        </div>
+      </div>
+      <div class="notif-item unread deploy" data-type="deploy" style="display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid var(--gray-15);background:rgba(237,28,36,0.02);cursor:pointer" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background='rgba(237,28,36,0.02)'">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--green);margin-top:5px;flex-shrink:0"></div>
+        <div style="flex:1">
+          <div style="font-size:12.5px;font-weight:700;color:var(--text)">Deployment complete — IFG InvestNow</div>
+          <div style="font-size:12px;color:var(--text-2);margin-top:2px;line-height:1.5">v1.8.3 successfully deployed to 310K devices. Crash-free rate: 99.9%.</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:4px;font-family:var(--mono)">2h 15m ago · System</div>
+        </div>
+      </div>
+      <div class="notif-item deploy" data-type="deploy" style="display:flex;gap:12px;padding:14px 18px;border-bottom:1px solid var(--gray-15);cursor:pointer" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--gray-20);margin-top:5px;flex-shrink:0"></div>
+        <div style="flex:1">
+          <div style="font-size:12.5px;font-weight:600;color:var(--text-2)">New member joined — D. Maulana</div>
+          <div style="font-size:12px;color:var(--text-3);margin-top:2px;line-height:1.5">d.maulana@bri.co.id accepted invitation with Viewer role.</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:4px;font-family:var(--mono)">1d ago · R. Ananda</div>
+        </div>
+      </div>
+      <div class="notif-item deploy" data-type="deploy" style="display:flex;gap:12px;padding:14px 18px;cursor:pointer" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--gray-20);margin-top:5px;flex-shrink:0"></div>
+        <div style="flex:1">
+          <div style="font-size:12.5px;font-weight:600;color:var(--text-2)">Weekly digest — 17 Jun 2026</div>
+          <div style="font-size:12px;color:var(--text-3);margin-top:2px;line-height:1.5">7 deployments, 98.3% success rate, 2 rollbacks this week.</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:4px;font-family:var(--mono)">2d ago · System</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MODAL: ENVIRONMENT SWITCHER ══ -->
+<div class="modal-overlay" id="modal-env-switch" onclick="if(event.target===this)closeModal('modal-env-switch')">
+  <div class="modal" style="width:400px">
+    <div class="modal-hdr">
+      <h2><i class="ti ti-server" style="color:var(--red);margin-right:8px"></i>Switch Environment</h2>
+      <div class="modal-close" onclick="closeModal('modal-env-switch')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body" style="gap:10px">
+      <div onclick="switchEnv('production')" id="env-prod" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;border:2px solid var(--red);background:var(--red-10);cursor:pointer">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--green)"></div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:var(--text)">Production</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:2px">Live environment · 13.5M devices · ardabili22.github.io/ota-dashboard</div>
+        </div>
+        <i class="ti ti-circle-check" style="color:var(--red);font-size:18px"></i>
+      </div>
+      <div onclick="switchEnv('staging')" id="env-staging" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;border:2px solid var(--border);cursor:pointer" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--gold)"></div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:var(--text)">Staging</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:2px">Pre-release testing · 50K devices · staging.ota.ifg.co.id</div>
+        </div>
+      </div>
+      <div onclick="switchEnv('development')" id="env-dev" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;border:2px solid var(--border);cursor:pointer" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--blue)"></div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:var(--text)">Development</div>
+          <div style="font-size:11px;color:var(--text-3);margin-top:2px">Internal testing · dev.ota.ifg.co.id</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-const titles={overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
+const titles={billing:'Billing',overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   el.classList.add('active');
@@ -2724,6 +2875,65 @@ document.addEventListener('DOMContentLoaded', function() {
   var sbUserInfo = document.querySelector('.sb-user-info');
   if (sbUserInfo) sbUserInfo.addEventListener('click', function() { openDrawer('drawer-profile'); });
 });
+
+
+// Notifications
+document.addEventListener('DOMContentLoaded', function() {
+  var btnNotif = document.getElementById('btn-notif');
+  if (btnNotif) btnNotif.addEventListener('click', function() { openDrawer('drawer-notif'); });
+});
+
+function markAllRead() {
+  document.querySelectorAll('.notif-item.unread').forEach(function(el) {
+    el.classList.remove('unread');
+    el.style.background = '';
+    el.querySelector('div[style*="border-radius:50%"]').style.background = 'var(--gray-20)';
+  });
+  document.querySelector('#btn-notif .dot') && (document.querySelector('#btn-notif .dot').style.display = 'none');
+  showToast('All notifications marked as read');
+}
+
+function filterNotif(el, type) {
+  el.closest('div').querySelectorAll('.filter-tab').forEach(function(t) { t.classList.remove('active'); });
+  el.classList.add('active');
+  document.querySelectorAll('.notif-item').forEach(function(item) {
+    if (type === 'all') item.style.display = '';
+    else if (type === 'unread') item.style.display = item.classList.contains('unread') ? '' : 'none';
+    else item.style.display = item.dataset.type === type ? '' : 'none';
+  });
+}
+
+// Environment switcher
+var currentEnv = 'production';
+var envConfig = {
+  production: {label:'PRODUCTION', dotColor:'var(--green)', badgeBg:'var(--green-10)', badgeColor:'var(--green)'},
+  staging:    {label:'STAGING',    dotColor:'var(--gold)',  badgeBg:'var(--gold-10)',  badgeColor:'#92640A'},
+  development:{label:'DEV',        dotColor:'var(--blue)',  badgeBg:'var(--blue-10)',  badgeColor:'var(--blue)'},
+};
+
+function switchEnv(env) {
+  currentEnv = env;
+  var cfg = envConfig[env];
+  var badge = document.getElementById('env-badge');
+  var dot = document.getElementById('env-dot');
+  var label = document.getElementById('env-label');
+  if (badge) { badge.style.background = cfg.badgeBg; badge.style.color = cfg.badgeColor; }
+  if (dot) dot.style.background = cfg.dotColor;
+  if (label) label.textContent = cfg.label;
+  // Update selected state in modal
+  ['production','staging','development'].forEach(function(e) {
+    var el = document.getElementById('env-' + e.replace('development','dev').replace('production','prod').replace('staging','staging'));
+    // reset all
+  });
+  document.getElementById('env-prod').style.border = env==='production' ? '2px solid var(--red)' : '2px solid var(--border)';
+  document.getElementById('env-prod').style.background = env==='production' ? 'var(--red-10)' : '';
+  document.getElementById('env-staging').style.border = env==='staging' ? '2px solid var(--gold)' : '2px solid var(--border)';
+  document.getElementById('env-staging').style.background = env==='staging' ? 'var(--gold-10)' : '';
+  document.getElementById('env-dev').style.border = env==='development' ? '2px solid var(--blue)' : '2px solid var(--border)';
+  document.getElementById('env-dev').style.background = env==='development' ? 'var(--blue-10)' : '';
+  closeModal('modal-env-switch');
+  showToast('Switched to ' + cfg.label + ' environment');
+}
 
 function filterTab(el){
   el.closest('.dep-filters').querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
