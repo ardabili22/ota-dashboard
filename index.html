@@ -2712,6 +2712,19 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.style.overflow = 'hidden';
 });
 
+
+// Fix avatar click — resolution independent
+document.addEventListener('DOMContentLoaded', function() {
+  // Navbar avatar
+  var nbAvatar = document.querySelector('.nb-avatar');
+  if (nbAvatar) nbAvatar.addEventListener('click', function() { openDrawer('drawer-profile'); });
+  // Sidebar user area  
+  var sbAvatar = document.querySelector('.sb-user-avatar');
+  if (sbAvatar) sbAvatar.addEventListener('click', function() { openDrawer('drawer-profile'); });
+  var sbUserInfo = document.querySelector('.sb-user-info');
+  if (sbUserInfo) sbUserInfo.addEventListener('click', function() { openDrawer('drawer-profile'); });
+});
+
 function filterTab(el){
   el.closest('.dep-filters').querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
   el.classList.add('active');
