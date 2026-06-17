@@ -724,10 +724,10 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
       <div class="card">
         <table class="data-table"><thead><tr><th>Error</th><th>App / Version</th><th>Severity</th><th>Occurrences</th><th>Users Affected</th><th>Regression</th><th>First seen</th></tr></thead>
         <tbody>
-          <tr style="background:rgba(255,241,240,0.4)"><td><div style="font-weight:600;font-size:12.5px">InstallPackageException: APK verification failed</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">PackageInstaller.java:284</div></td><td><div style="font-weight:500">BRImo SuperApp</div><div class="mono" style="color:var(--text-3)">v8.4.1</div></td><td><span class="sev-pill critical">Critical</span></td><td><span class="mono" style="color:var(--err);font-weight:700">4,821</span></td><td><span class="mono">1,847</span></td><td><span style="background:var(--err-10);color:var(--err);font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:4px">NEW</span></td><td><span style="font-size:12px;color:var(--text-3)">23m ago</span></td></tr>
-          <tr><td><div style="font-weight:600;font-size:12.5px">NetworkTimeoutException: Connection reset</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">OkHttpClient.kt:142</div></td><td><div style="font-weight:500">IFG Life Portal</div><div class="mono" style="color:var(--text-3)">v3.11.2</div></td><td><span class="sev-pill high">High</span></td><td><span class="mono">892</span></td><td><span class="mono">341</span></td><td><span style="font-size:11px;color:var(--text-3)">—</span></td><td><span style="font-size:12px;color:var(--text-3)">2d ago</span></td></tr>
-          <tr><td><div style="font-weight:600;font-size:12.5px">NullPointerException: User session nil</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">AuthManager.swift:67</div></td><td><div style="font-weight:500">IFG InvestNow</div><div class="mono" style="color:var(--text-3)">v1.8.2</div></td><td><span class="sev-pill medium">Medium</span></td><td><span class="mono">234</span></td><td><span class="mono">89</span></td><td><span style="background:var(--gold-10);color:#92640A;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:4px">↑ REG</span></td><td><span style="font-size:12px;color:var(--text-3)">5d ago</span></td></tr>
-          <tr><td><div style="font-weight:600;font-size:12.5px">RenderException: Widget overflow 12px</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">HomePage.dart:203</div></td><td><div style="font-weight:500">PNM Mekaar</div><div class="mono" style="color:var(--text-3)">v4.0.9</div></td><td><span class="sev-pill low">Low</span></td><td><span class="mono">67</span></td><td><span class="mono">21</span></td><td><span style="font-size:11px;color:var(--text-3)">—</span></td><td><span style="font-size:12px;color:var(--text-3)">1w ago</span></td></tr>
+          <tr style="background:rgba(255,241,240,0.4);cursor:pointer" data-sev="critical" onclick="openCrashDrawer('crash-001')"><td><div style="font-weight:600;font-size:12.5px">InstallPackageException: APK verification failed</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">PackageInstaller.java:284</div></td><td><div style="font-weight:500">BRImo SuperApp</div><div class="mono" style="color:var(--text-3)">v8.4.1</div></td><td><span class="sev-pill critical">Critical</span></td><td><span class="mono" style="color:var(--err);font-weight:700">4,821</span></td><td><span class="mono">1,847</span></td><td><span style="background:var(--err-10);color:var(--err);font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:4px">NEW</span></td><td><span style="font-size:12px;color:var(--text-3)">23m ago</span></td></tr>
+          <tr style="cursor:pointer" data-sev="high" onclick="openCrashDrawer('crash-002')"><td><div style="font-weight:600;font-size:12.5px">NetworkTimeoutException: Connection reset</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">OkHttpClient.kt:142</div></td><td><div style="font-weight:500">IFG Life Portal</div><div class="mono" style="color:var(--text-3)">v3.11.2</div></td><td><span class="sev-pill high">High</span></td><td><span class="mono">892</span></td><td><span class="mono">341</span></td><td><span style="font-size:11px;color:var(--text-3)">—</span></td><td><span style="font-size:12px;color:var(--text-3)">2d ago</span></td></tr>
+          <tr style="cursor:pointer" data-sev="medium" onclick="openCrashDrawer('crash-003')"><td><div style="font-weight:600;font-size:12.5px">NullPointerException: User session nil</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">AuthManager.swift:67</div></td><td><div style="font-weight:500">IFG InvestNow</div><div class="mono" style="color:var(--text-3)">v1.8.2</div></td><td><span class="sev-pill medium">Medium</span></td><td><span class="mono">234</span></td><td><span class="mono">89</span></td><td><span style="background:var(--gold-10);color:#92640A;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:4px">↑ REG</span></td><td><span style="font-size:12px;color:var(--text-3)">5d ago</span></td></tr>
+          <tr style="cursor:pointer" data-sev="low" onclick="openCrashDrawer('crash-004')"><td><div style="font-weight:600;font-size:12.5px">RenderException: Widget overflow 12px</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">HomePage.dart:203</div></td><td><div style="font-weight:500">PNM Mekaar</div><div class="mono" style="color:var(--text-3)">v4.0.9</div></td><td><span class="sev-pill low">Low</span></td><td><span class="mono">67</span></td><td><span class="mono">21</span></td><td><span style="font-size:11px;color:var(--text-3)">—</span></td><td><span style="font-size:12px;color:var(--text-3)">1w ago</span></td></tr>
         </tbody></table>
       </div>
     </div>
@@ -1534,6 +1534,48 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
+
+<!-- ══ DRAWER: CRASH DETAIL ══ -->
+<div class="drawer-overlay" id="drawer-crash" onclick="if(event.target===this)closeDrawer('drawer-crash')">
+  <div class="drawer">
+    <div class="drawer-hdr">
+      <div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+          <span id="crash-drawer-sev"></span>
+          <span id="crash-drawer-regression"></span>
+        </div>
+        <div id="crash-drawer-title" style="font-size:14px;font-weight:700;color:var(--text)"></div>
+        <div id="crash-drawer-location" style="font-size:11px;color:var(--text-3);font-family:var(--mono);margin-top:3px"></div>
+      </div>
+      <div class="modal-close" onclick="closeDrawer('drawer-crash')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="drawer-body">
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-box-val" id="crash-drawer-occ"></div><div class="stat-box-label">Occurrences</div></div>
+        <div class="stat-box"><div class="stat-box-val" id="crash-drawer-users"></div><div class="stat-box-label">Users Affected</div></div>
+        <div class="stat-box"><div class="stat-box-val" id="crash-drawer-app"></div><div class="stat-box-label">App</div></div>
+        <div class="stat-box"><div class="stat-box-val" id="crash-drawer-first"></div><div class="stat-box-label">First Seen</div></div>
+      </div>
+      <div class="drawer-section">
+        <div class="drawer-section-title">Stack Trace</div>
+        <div id="crash-drawer-stack" style="background:var(--gray-80);color:#E5E5E5;border-radius:8px;padding:14px;font-family:var(--mono);font-size:11.5px;line-height:1.7;overflow-x:auto;white-space:pre"></div>
+      </div>
+      <div class="drawer-section">
+        <div class="drawer-section-title">Affected Versions</div>
+        <div id="crash-drawer-versions" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+      </div>
+      <div class="drawer-section">
+        <div class="drawer-section-title">Device Breakdown</div>
+        <div id="crash-drawer-devices" style="display:flex;flex-direction:column;gap:6px"></div>
+      </div>
+    </div>
+    <div class="drawer-footer">
+      <button class="btn-ghost" style="color:var(--err);border-color:var(--red-10)" onclick="openConfirm('rollback','DEP-4821','BRImo v8.4.1');closeDrawer('drawer-crash')"><i class="ti ti-rotate-clockwise-2"></i>Rollback</button>
+      <button class="btn-ghost" onclick="closeDrawer('drawer-crash')"><i class="ti ti-external-link"></i>Open in Jira</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const titles={overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
@@ -1935,6 +1977,123 @@ function setPeriod(el, days) {
     const fillD = d.chartPath + ' L600,160 L0,160Z';
     paths[2] && paths[2].setAttribute('d', fillD);
   }
+}
+
+
+const CRASH_DATA = {
+  'crash-001': {
+    title:'InstallPackageException: APK verification failed',
+    location:'PackageInstaller.java:284',
+    sev:'critical', regression:true,
+    occ:'4,821', users:'1,847', app:'BRImo v8.4.1', first:'23m ago',
+    stack:'java.lang.RuntimeException: InstallPackageException
+  at android.content.pm.PackageInstaller.commitSession(PackageInstaller.java:284)
+  at com.bri.brimo.update.OTAInstaller.commit(OTAInstaller.kt:142)
+  at com.bri.brimo.update.UpdateManager.apply(UpdateManager.kt:89)
+Caused by: SecurityException: APK signature mismatch
+  at android.content.pm.PackageParser.parseSignatures(PackageParser.java:4021)',
+    versions:['v8.4.1'],
+    devices:[
+      {name:'Android 12', pct:68, color:'var(--err)'},
+      {name:'Android 13', pct:24, color:'var(--gold)'},
+      {name:'Android 11', pct:8, color:'var(--green)'},
+    ]
+  },
+  'crash-002': {
+    title:'NetworkTimeoutException: Connection reset by peer',
+    location:'OkHttpClient.kt:142',
+    sev:'high', regression:false,
+    occ:'892', users:'341', app:'IFG Life v3.11.2', first:'2d ago',
+    stack:'java.net.SocketException: Connection reset
+  at java.net.SocketInputStream.read(SocketInputStream.java:210)
+  at okhttp3.internal.http1.Http1ExchangeCodec.readResponseHeaders(Http1ExchangeCodec.kt:142)
+  at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain(RealCall.kt:219)',
+    versions:['v3.11.2','v3.11.1'],
+    devices:[
+      {name:'Android', pct:71, color:'var(--red)'},
+      {name:'iOS', pct:29, color:'var(--blue)'},
+    ]
+  },
+  'crash-003': {
+    title:'NullPointerException: User session is nil',
+    location:'AuthManager.swift:67',
+    sev:'medium', regression:true,
+    occ:'234', users:'89', app:'IFG InvestNow v1.8.2', first:'5d ago',
+    stack:'Fatal error: Unexpectedly found nil while unwrapping an Optional value
+  AuthManager.swift:67 in AuthManager.validateSession()
+  SessionCoordinator.swift:34 in SessionCoordinator.refresh()
+  AppDelegate.swift:112 in AppDelegate.applicationDidBecomeActive(_:)',
+    versions:['v1.8.2','v1.8.1'],
+    devices:[
+      {name:'iOS 17', pct:54, color:'var(--gold)'},
+      {name:'iOS 16', pct:31, color:'var(--blue)'},
+      {name:'iOS 15', pct:15, color:'var(--green)'},
+    ]
+  },
+  'crash-004': {
+    title:'RenderException: Widget overflow by 12px',
+    location:'HomePage.dart:203',
+    sev:'low', regression:false,
+    occ:'67', users:'21', app:'PNM Mekaar v4.0.9', first:'1w ago',
+    stack:'FlutterError: A RenderFlex overflowed by 12 pixels on the right.
+  The relevant error-causing widget was:
+    Row widgets/home_page.dart:203:16
+  The overflowing RenderFlex has an orientation of Axis.horizontal.
+  Consider applying a flex factor (e.g. using an Expanded widget)',
+    versions:['v4.0.9'],
+    devices:[
+      {name:'Small screens <360dp', pct:82, color:'var(--gold)'},
+      {name:'Normal screens', pct:18, color:'var(--green)'},
+    ]
+  }
+};
+
+const SEV_PILL = {
+  critical:'<span class="sev-pill critical">Critical</span>',
+  high:'<span class="sev-pill high">High</span>',
+  medium:'<span class="sev-pill medium">Medium</span>',
+  low:'<span class="sev-pill low">Low</span>',
+};
+
+function openCrashDrawer(id) {
+  const c = CRASH_DATA[id]; if(!c) return;
+  document.getElementById('crash-drawer-title').textContent = c.title;
+  document.getElementById('crash-drawer-location').textContent = c.location;
+  document.getElementById('crash-drawer-sev').innerHTML = SEV_PILL[c.sev];
+  document.getElementById('crash-drawer-regression').innerHTML = c.regression
+    ? '<span style="background:var(--gold-10);color:#92640A;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:4px">↑ REGRESSION</span>' : '';
+  document.getElementById('crash-drawer-occ').textContent = c.occ;
+  document.getElementById('crash-drawer-users').textContent = c.users;
+  document.getElementById('crash-drawer-app').textContent = c.app;
+  document.getElementById('crash-drawer-first').textContent = c.first;
+  document.getElementById('crash-drawer-stack').textContent = c.stack;
+  document.getElementById('crash-drawer-versions').innerHTML = c.versions.map(v =>
+    `<span class="chip" style="font-family:var(--mono)">${v}</span>`).join('');
+  document.getElementById('crash-drawer-devices').innerHTML = c.devices.map(d =>
+    `<div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:12px;font-weight:500">${d.name}</span><span style="font-size:12px;font-weight:700;font-family:var(--mono);color:${d.color}">${d.pct}%</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill" style="width:${d.pct}%;background:${d.color}"></div></div></div>`
+  ).join('');
+  openDrawer('drawer-crash');
+}
+
+function toggleCrashFilter(btn) {
+  const bar = document.getElementById('crash-filter-bar');
+  const isOpen = bar.style.display === 'flex';
+  bar.style.display = isOpen ? 'none' : 'flex';
+  btn.style.background = isOpen ? '' : 'var(--gray-10)';
+}
+
+function filterCrash(el, sev) {
+  el.closest('#crash-filter-bar').querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('#screen-crash .data-table tbody tr').forEach(row => {
+    row.style.display = (sev === 'all' || row.dataset.sev === sev) ? '' : 'none';
+  });
+}
+
+function filterCrashApp(app) {
+  document.querySelectorAll('#screen-crash .data-table tbody tr').forEach(row => {
+    row.style.display = (!app || row.textContent.includes(app)) ? '' : 'none';
+  });
 }
 
 function filterTab(el){
