@@ -636,12 +636,12 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 
     <!-- ══════════ ROLLOUTS ══════════ -->
     <div id="screen-rollouts" class="screen">
-      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Rollouts</h1><p>Staged rollout controls & automation rules</p></div><button class="btn-primary"><i class="ti ti-plus"></i>New Rollout</button></div></div>
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Rollouts</h1><p>Staged rollout controls & automation rules</p></div><button class="btn-primary" onclick="openModal('modal-new-rollout')"><i class="ti ti-plus"></i>New Rollout</button></div></div>
 
       <div class="rollout-card">
         <div class="rollout-header">
           <div style="display:flex;align-items:center;gap:10px"><div class="app-icon" style="background:#005BAC;width:34px;height:34px;border-radius:8px;font-size:10px">BR</div><div><div style="font-size:14px;font-weight:700">BRImo SuperApp · v8.4.1</div><div style="font-size:12px;color:var(--text-3);margin-top:1px">DEP-4821 · Started 2h 31m ago</div></div></div>
-          <div style="display:flex;gap:8px;align-items:center"><span class="badge paused"><span class="dot"></span>Paused at 24%</span><button class="btn-primary" style="background:var(--err)"><i class="ti ti-rotate-clockwise-2"></i>Rollback</button><button class="btn-ghost" style="color:var(--red);border-color:var(--red-10)"><i class="ti ti-player-play"></i>Resume</button></div>
+          <div style="display:flex;gap:8px;align-items:center"><span class="badge paused"><span class="dot"></span>Paused at 24%</span><button class="btn-primary" style="background:var(--err)" onclick="openConfirm('rollback','DEP-4821','BRImo v8.4.1')"><i class="ti ti-rotate-clockwise-2"></i>Rollback</button><button class="btn-ghost" style="color:var(--red);border-color:var(--red-10)" onclick="openConfirm('resume','DEP-4821','BRImo v8.4.1')"><i class="ti ti-player-play"></i>Resume</button></div>
         </div>
         <div class="rollout-stages">
           <div class="stage"><div class="stage-bar"><div class="stage-fill" style="width:100%;background:var(--green)"></div></div><div class="stage-label">Canary</div><div class="stage-pct">5%</div></div>
@@ -1455,6 +1455,85 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
+
+<!-- ══ MODAL: NEW ROLLOUT ══ -->
+<div class="modal-overlay" id="modal-new-rollout" onclick="if(event.target===this)closeModal('modal-new-rollout')">
+  <div class="modal">
+    <div class="modal-hdr">
+      <h2><i class="ti ti-git-branch" style="color:var(--red);margin-right:8px"></i>New Rollout</h2>
+      <div class="modal-close" onclick="closeModal('modal-new-rollout')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group">
+          <div class="form-label">App <span>*</span></div>
+          <select class="form-select">
+            <option value="">Select app…</option>
+            <option>BRImo SuperApp</option>
+            <option>IFG Life Portal</option>
+            <option>Askrindo Mobile</option>
+            <option>Jiwasraya Connect</option>
+            <option>PNM Mekaar</option>
+            <option>IFG InvestNow</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <div class="form-label">Release <span>*</span></div>
+          <select class="form-select">
+            <option value="">Select release…</option>
+            <option>v8.4.2 (BRImo)</option>
+            <option>v3.12.0 (IFG Life)</option>
+            <option>v4.1.0 (PNM Mekaar)</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Rollout Strategy <span>*</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div class="strategy-opt active" onclick="selectStrategy(this,'staged')" style="border:2px solid var(--red);border-radius:8px;padding:12px;cursor:pointer;background:var(--red-10)">
+            <div style="font-size:12.5px;font-weight:700;color:var(--red)"><i class="ti ti-stairs"></i> Staged Rollout</div>
+            <div style="font-size:11px;color:var(--text-3);margin-top:3px">Canary → Stage 1 → Stage 2 → Full</div>
+          </div>
+          <div class="strategy-opt" onclick="selectStrategy(this,'instant')" style="border:2px solid var(--border);border-radius:8px;padding:12px;cursor:pointer">
+            <div style="font-size:12.5px;font-weight:700;color:var(--text)"><i class="ti ti-bolt"></i> Instant Rollout</div>
+            <div style="font-size:11px;color:var(--text-3);margin-top:3px">Deploy to 100% immediately</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Stage Configuration</div>
+        <div class="stage-config">
+          <div class="stage-item"><label>Canary</label><input type="range" min="1" max="10" value="5" oninput="this.nextElementSibling.textContent=this.value+'%'"><span>5%</span></div>
+          <div class="stage-item"><label>Stage 1</label><input type="range" min="5" max="30" value="10" oninput="this.nextElementSibling.textContent=this.value+'%'"><span>10%</span></div>
+          <div class="stage-item"><label>Stage 2</label><input type="range" min="20" max="60" value="25" oninput="this.nextElementSibling.textContent=this.value+'%'"><span>25%</span></div>
+          <div class="stage-item"><label>Stage 3</label><input type="range" min="40" max="80" value="50" oninput="this.nextElementSibling.textContent=this.value+'%'"><span>50%</span></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Automation Rules</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--gray-10);border-radius:7px">
+            <div><div style="font-size:12.5px;font-weight:600">Auto-promote on healthy canary</div><div style="font-size:11px;color:var(--text-3)">Promote if crash-free ≥ 99% after 30 min</div></div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--gray-10);border-radius:7px">
+            <div><div style="font-size:12.5px;font-weight:600">Auto-pause on failure</div><div style="font-size:11px;color:var(--text-3)">Pause if failure rate exceeds 2%</div></div>
+            <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--gray-10);border-radius:7px">
+            <div><div style="font-size:12.5px;font-weight:600">Require approval for full rollout</div><div style="font-size:11px;color:var(--text-3)">Stage 3 → Full needs Release Manager sign-off</div></div>
+            <div class="toggle" onclick="this.classList.toggle('on')"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-new-rollout')">Cancel</button>
+      <button class="btn-primary" onclick="submitNewRollout()"><i class="ti ti-rocket"></i>Start Rollout</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const titles={overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
@@ -1808,6 +1887,23 @@ function openReleaseDrawer(id) {
 function submitNewRelease() {
   closeModal('modal-new-release');
   showToast('Release created — ready for deployment');
+}
+
+
+function selectStrategy(el, val) {
+  document.querySelectorAll('.strategy-opt').forEach(o => {
+    o.style.border = '2px solid var(--border)';
+    o.style.background = '';
+    o.querySelector('div').style.color = 'var(--text)';
+  });
+  el.style.border = '2px solid var(--red)';
+  el.style.background = 'var(--red-10)';
+  el.querySelector('div').style.color = 'var(--red)';
+}
+
+function submitNewRollout() {
+  closeModal('modal-new-rollout');
+  showToast('Rollout started — canary phase in progress');
 }
 
 function filterTab(el){
