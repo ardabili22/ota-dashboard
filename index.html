@@ -691,7 +691,212 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
     </div>
 
     <!-- ══════════ DEVICES ══════════ -->
-    <div id="screen-devices" class="screen"><div class="coming-soon"><i class="ti ti-devices"></i><h3>Devices</h3><p>Device fleet management — coming soon</p></div></div>
+    <!-- ══════════ DEVICES ══════════ -->
+    <div id="screen-devices" class="screen">
+      <div class="page-hdr">
+        <div class="page-hdr-row">
+          <div><h1>Devices</h1><p>2.4M active devices across 6 apps</p></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="search-wrap"><i class="ti ti-search"></i><input class="search-input" placeholder="Search device ID, model…"></div>
+            <button class="btn-ghost"><i class="ti ti-filter"></i>Filter</button>
+            <button class="btn-ghost"><i class="ti ti-download"></i>Export</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI row -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px">
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:var(--blue-10)"><i class="ti ti-device-mobile" style="color:var(--blue)"></i></div>
+          <div class="kpi-delta-badge up"><i class="ti ti-trending-up" style="font-size:11px"></i>+12K</div>
+          <div class="kpi-value">2.41M</div>
+          <div class="kpi-label">Total Active</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:var(--green-10)"><i class="ti ti-refresh" style="color:var(--green)"></i></div>
+          <div class="kpi-delta-badge up"><i class="ti ti-trending-up" style="font-size:11px"></i>+4.2%</div>
+          <div class="kpi-value">78.4%</div>
+          <div class="kpi-label">On Latest Version</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:var(--gold-10)"><i class="ti ti-clock-exclamation" style="color:var(--gold)"></i></div>
+          <div class="kpi-delta-badge warn"><i class="ti ti-trending-up" style="font-size:11px"></i>+1,847</div>
+          <div class="kpi-value">3.2K</div>
+          <div class="kpi-label">Pending Update</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:var(--err-10)"><i class="ti ti-wifi-off" style="color:var(--err)"></i></div>
+          <div class="kpi-delta-badge neutral">Stable</div>
+          <div class="kpi-value">1,847</div>
+          <div class="kpi-label">Install Failed</div>
+        </div>
+      </div>
+
+      <!-- Two col: breakdown + table -->
+      <div style="display:grid;grid-template-columns:280px 1fr;gap:16px;align-items:start">
+
+        <!-- Left: breakdowns -->
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <!-- OS split -->
+          <div class="card" style="padding:18px">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:14px;text-transform:uppercase;letter-spacing:0.5px">OS Distribution</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+                  <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600"><i class="ti ti-brand-android" style="color:#3DDC84;font-size:14px"></i>Android</div>
+                  <span class="mono" style="font-size:12px">68%</span>
+                </div>
+                <div class="prog-bar" style="min-width:unset"><div class="prog-fill" style="width:68%;background:#3DDC84"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+                  <div style="display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600"><i class="ti ti-brand-apple" style="color:#555;font-size:14px"></i>iOS</div>
+                  <span class="mono" style="font-size:12px">32%</span>
+                </div>
+                <div class="prog-bar" style="min-width:unset"><div class="prog-fill" style="width:32%;background:#555"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top devices -->
+          <div class="card" style="padding:18px">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:14px;text-transform:uppercase;letter-spacing:0.5px">Top Device Models</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div><div style="font-size:12.5px;font-weight:600">Samsung Galaxy A54</div><div style="font-size:11px;color:var(--text-3)">Android 14</div></div>
+                <span class="mono" style="font-size:12px;color:var(--text-2)">18.4%</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div><div style="font-size:12.5px;font-weight:600">Xiaomi Redmi Note 12</div><div style="font-size:11px;color:var(--text-3)">Android 13</div></div>
+                <span class="mono" style="font-size:12px;color:var(--text-2)">14.1%</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div><div style="font-size:12.5px;font-weight:600">iPhone 14</div><div style="font-size:11px;color:var(--text-3)">iOS 17.4</div></div>
+                <span class="mono" style="font-size:12px;color:var(--text-2)">11.2%</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div><div style="font-size:12.5px;font-weight:600">OPPO A78</div><div style="font-size:11px;color:var(--text-3)">Android 13</div></div>
+                <span class="mono" style="font-size:12px;color:var(--text-2)">9.8%</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <div><div style="font-size:12.5px;font-weight:600">Vivo Y36</div><div style="font-size:11px;color:var(--text-3)">Android 13</div></div>
+                <span class="mono" style="font-size:12px;color:var(--text-2)">7.3%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- App version spread -->
+          <div class="card" style="padding:18px">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:14px;text-transform:uppercase;letter-spacing:0.5px">BRImo Version Spread</div>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:12px;font-weight:600">v8.4.0 <span style="font-weight:400;color:var(--text-3)">(latest stable)</span></span><span class="mono" style="font-size:12px;color:var(--green)">76%</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill green" style="width:76%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:12px;font-weight:600">v8.3.x</span><span class="mono" style="font-size:12px;color:var(--text-2)">18%</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill blue" style="width:18%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:12px;font-weight:600">v8.2.x</span><span class="mono" style="font-size:12px;color:var(--text-2)">5%</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill" style="width:5%;background:var(--gold)"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span style="font-size:12px;font-weight:600">v8.1.x &amp; older</span><span class="mono" style="font-size:12px;color:var(--err)">1%</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill red" style="width:1%"></div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: device table -->
+        <div class="card">
+          <div class="card-hdr">
+            <div><div class="card-hdr-title">Device Registry</div><div class="card-hdr-sub">Showing 8 of 2,413,204</div></div>
+            <div style="display:flex;gap:6px">
+              <button class="filter-tab active" onclick="filterTab(this)" style="font-size:11px;height:28px;padding:0 10px">All</button>
+              <button class="filter-tab" onclick="filterTab(this)" style="font-size:11px;height:28px;padding:0 10px">Failed</button>
+              <button class="filter-tab" onclick="filterTab(this)" style="font-size:11px;height:28px;padding:0 10px">Outdated</button>
+            </div>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Device ID</th>
+                <th>Model</th>
+                <th>OS</th>
+                <th>App</th>
+                <th>Version</th>
+                <th>Last Seen</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:rgba(255,241,240,0.4)">
+                <td><span class="mono" style="font-size:11px;color:var(--text-3)">DEV-8821-ABJK</span></td>
+                <td><div style="font-size:13px;font-weight:600">Samsung Galaxy A54</div><div style="font-size:11px;color:var(--text-3)">Android 14</div></td>
+                <td><span class="chip"><i class="ti ti-brand-android" style="font-size:11px;color:#3DDC84"></i>Android</span></td>
+                <td><span style="font-size:13px;font-weight:500">BRImo</span></td>
+                <td><span class="mono">v8.4.1</span></td>
+                <td><span style="font-size:12px;color:var(--text-3)">2m ago</span></td>
+                <td><span class="badge failed"><span class="dot"></span>Install failed</span></td>
+              </tr>
+              <tr style="background:rgba(255,241,240,0.4)">
+                <td><span class="mono" style="font-size:11px;color:var(--text-3)">DEV-4421-CXMN</span></td>
+                <td><div style="font-size:13px;font-weight:600">Xiaomi Redmi Note 12</div><div style="font-size:11px;color:var(--text-3)">Android 13</div></td>
+                <td><span class="chip"><i class="ti ti-brand-android" style="font-size:11px;color:#3DDC84"></i>Android</span></td>
+                <td><span style="font-size:13px;font-weight:500">BRImo</span></td>
+                <td><span class="mono">v8.4.1</span></td>
+                <td><span style="font-size:12px;color:var(--text-3)">5m ago</span></td>
+                <td><span class="badge failed"><span class="dot"></span>Install failed</span></td>
+              </tr>
+              <tr>
+                <td><span class="mono" style="font-size:11px;color:var(--text-3)">DEV-1190-PLWQ</span></td>
+                <td><div style="font-size:13px;font-weight:600">iPhone 14</div><div style="font-size:11px;color:var(--text-3)">iOS 17.4</div></td>
+                <td><span class="chip"><i class="ti ti-brand-apple" style="font-size:11px"></i>iOS</span></td>
+                <td><span style="font-size:13px;font-weight:500">IFG Life Portal</span></td>
+                <td><span class="mono">v3.12.0</span></td>
+                <td><span style="font-size:12px;color:var(--text-3)">8m ago</span></td>
+                <td><span class="badge rolling"><span class="dot"></span>Updating</span></td>
+              </tr>
+              <tr>
+                <td><span class="mono" style="font-size:11px;color:var(--text-3)">DEV-7742-MNSQ</span></td>
+                <td><div style="font-size:13px;font-weight:600">OPPO A78</div><div style="font-size:11px;color:var(--text-3)">Android 13</div></td>
+                <td><span class="chip"><i class="ti ti-brand-android" style="font-size:11px;color:#3DDC84"></i>Android</span></td>
+                <td><span style="font-size:13px;font-weight:500">PNM Mekaar</span></td>
+                <td><span class="mono">v4.1.0</span></td>
+                <td><span style="font-size:12px;color:var(--text-3)">12m ago</span></td>
+                <td><span class="badge canary"><span class="dot"></span>Canary</span></td>
+              </tr>
+              <tr>
+                <td><span class="mono" style="font-size:11px;color:var(--text-3)">DEV-3301-HBTK</span></td>
+                <td><div style="font-size:13px;font-weight:600">Samsung Galaxy S23</div><div style="font-size:11px;color:var(--text-3)">Android 14</div></td>
+                <td><span class="chip"><i class="ti ti-brand-android" style="font-size:11px;color:#3DDC84"></i>Android</span></td>
+                <td><span style="font-size:13px;font-weight:500">IFG InvestNow</span></td>
+                <td><span class="mono">v1.8.3</span></td>
+                <td><span style="font-size:12px;color:var(--text-3)">1h ago</span></td>
+                <td><span class="badge complete"><span class="dot"></span>Up to date</span></td>
+              </tr>
+              <tr>
+                <td><span class="mono" style="font-size:11px;color:var(--text-3)">DEV-9912-RLVP</span></td>
+                <td><div style="font-size:13px;font-weight:600">Vivo Y36</div><div style="font-size:11px;color:var(--text-3)">Android 13</div></td>
+                <td><span class="chip"><i class="ti ti-brand-android" style="font-size:11px;color:#3DDC84"></i>Android</span></td>
+                <td><span style="font-size:13px;font-weight:500">Askrindo Mobile</span></td>
+                <td><span class="mono">v2.4.5</span></td>
+                <td><span style="font-size:12px;color:var(--text-3)">2h ago</span></td>
+                <td><span class="badge rolling"><span class="dot"></span>Updating</span></td>
+              </tr>
+              <tr>
+                <td><span class="mono" style="font-size:11px;color:var(--text-3)">DEV-5540-WXKL</span></td>
+                <td><div style="font-size:13px;font-weight:600">iPhone 13</div><div style="font-size:11px;color:var(--text-3)">iOS 16.7</div></td>
+                <td><span class="chip"><i class="ti ti-brand-apple" style="font-size:11px"></i>iOS</span></td>
+                <td><span style="font-size:13px;font-weight:500">Jiwasraya Connect</span></td>
+                <td><span class="mono">v5.2.1</span></td>
+                <td><span style="font-size:12px;color:var(--text-3)">3h ago</span></td>
+                <td><span class="badge live"><span class="dot"></span>Up to date</span></td>
+              </tr>
+              <tr>
+                <td><span class="mono" style="font-size:11px;color:var(--text-3)">DEV-2280-QRTJ</span></td>
+                <td><div style="font-size:13px;font-weight:600">Realme C55</div><div style="font-size:11px;color:var(--text-3)">Android 13</div></td>
+                <td><span class="chip"><i class="ti ti-brand-android" style="font-size:11px;color:#3DDC84"></i>Android</span></td>
+                <td><span style="font-size:13px;font-weight:500">BRImo</span></td>
+                <td><span class="mono" style="color:var(--gold)">v8.3.2</span></td>
+                <td><span style="font-size:12px;color:var(--text-3)">5h ago</span></td>
+                <td><span class="badge pending"><span class="dot"></span>Outdated</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
 
     <!-- ══════════ INTEGRATIONS ══════════ -->
     <div id="screen-integrations" class="screen">
