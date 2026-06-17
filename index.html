@@ -678,7 +678,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 
     <!-- ══════════ ANALYTICS ══════════ -->
     <div id="screen-analytics" class="screen">
-      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Analytics</h1><p>Install adoption & platform health</p></div><div style="display:flex;gap:8px"><button class="btn-ghost">7 Days</button><button class="btn-ghost">30 Days</button><button class="btn-primary">90 Days</button></div></div></div>
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Analytics</h1><p>Install adoption & platform health</p></div><div style="display:flex;gap:8px"><button class="btn-ghost period-btn" onclick="setPeriod(this,7)">7 Days</button><button class="btn-ghost period-btn" onclick="setPeriod(this,30)">30 Days</button><button class="btn-primary period-btn active-period" onclick="setPeriod(this,90)">90 Days</button></div></div></div>
       <div class="metric-row">
         <div class="kpi-card"><div class="kpi-icon" style="background:var(--blue-10)"><i class="ti ti-download" style="color:var(--blue)"></i></div><div class="kpi-delta-badge up"><i class="ti ti-trending-up" style="font-size:11px"></i>+12%</div><div class="kpi-value">4.2M</div><div class="kpi-label">Total Installs (90d)</div></div>
         <div class="kpi-card"><div class="kpi-icon" style="background:var(--green-10)"><i class="ti ti-users" style="color:var(--green)"></i></div><div class="kpi-delta-badge up"><i class="ti ti-trending-up" style="font-size:11px"></i>+8.3%</div><div class="kpi-value">78.4%</div><div class="kpi-label">Adoption Rate</div></div>
@@ -1904,6 +1904,37 @@ function selectStrategy(el, val) {
 function submitNewRollout() {
   closeModal('modal-new-rollout');
   showToast('Rollout started — canary phase in progress');
+}
+
+
+const PERIOD_DATA = {
+  7:  {installs:'320K', adoption:'74.2%', cfr:'99.5%', chartPath:'M0,130 C50,120 100,110 150,105 C200,100 250,115 300,95 C350,75 400,85 450,68 C500,50 550,58 600,42', prevPath:'M0,145 C50,140 100,138 150,135 C200,132 250,138 300,128 C350,118 400,122 450,110 C500,98 550,104 600,92'},
+  30: {installs:'1.4M', adoption:'76.8%', cfr:'99.6%', chartPath:'M0,125 C50,115 100,100 150,95 C200,88 250,105 300,82 C350,58 400,72 450,52 C500,32 550,44 600,28', prevPath:'M0,140 C50,134 100,128 150,124 C200,118 250,126 300,114 C350,102 400,108 450,94 C500,80 550,88 600,72'},
+  90: {installs:'4.2M', adoption:'78.4%', cfr:'99.7%', chartPath:'M0,120 C50,110 100,90 150,85 C200,80 250,95 300,70 C350,45 400,60 450,40 C500,20 550,30 600,15', prevPath:'M0,140 C50,135 100,130 150,125 C200,120 250,128 300,115 C350,102 400,110 450,95 C500,80 550,88 600,75'},
+};
+
+function setPeriod(el, days) {
+  document.querySelectorAll('.period-btn').forEach(b => {
+    b.className = 'btn-ghost period-btn';
+    b.onclick = function(){ setPeriod(this, parseInt(this.textContent)); };
+  });
+  el.className = 'btn-primary period-btn active-period';
+  const d = PERIOD_DATA[days];
+  if (!d) return;
+  // Update KPI values
+  const kpis = document.querySelectorAll('#screen-analytics .kpi-value');
+  if (kpis[0]) kpis[0].textContent = d.installs;
+  if (kpis[1]) kpis[1].textContent = d.adoption;
+  if (kpis[2]) kpis[2].textContent = d.cfr;
+  // Update chart path
+  const paths = document.querySelectorAll('#screen-analytics svg path');
+  if (paths[0]) paths[0].setAttribute('d', d.chartPath);
+  if (paths[1]) {
+    paths[1].setAttribute('d', d.prevPath);
+    // update fill path too
+    const fillD = d.chartPath + ' L600,160 L0,160Z';
+    paths[2] && paths[2].setAttribute('d', fillD);
+  }
 }
 
 function filterTab(el){
