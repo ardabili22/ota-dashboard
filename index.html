@@ -591,6 +591,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
     </div>
     <div class="sb-section">
       <div class="sb-section-label">Configure</div>
+      <div class="nav-item" data-screen="masterdata" data-label="Master Data" onclick="nav(this)"><i class="ti ti-database ni-icon"></i><span class="ni-label">Master Data</span></div>
       <div class="nav-item" data-screen="integrations" data-label="Integrations" onclick="nav(this)"><i class="ti ti-plug ni-icon"></i><span class="ni-label">Integrations</span></div>
       <div class="nav-item" data-screen="team" data-label="Team & Permissions" onclick="nav(this)"><i class="ti ti-users ni-icon"></i><span class="ni-label">Team & Permissions</span></div>
       <div class="nav-item" data-screen="audit" data-label="Audit Logs" onclick="nav(this)"><i class="ti ti-clipboard-list ni-icon"></i><span class="ni-label">Audit Logs</span></div>
@@ -1152,6 +1153,106 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
             <div class="code-block">$ ota deploy --app brimo --version 8.4.2<br>$ ota rollout pause DEP-4821<br>$ ota rollback --app brimo --to 8.4.0<br>$ ota logs --app ifglife --tail 100</div>
             <a href="#" style="font-size:12px;color:var(--red);font-weight:600;display:flex;align-items:center;gap:4px"><i class="ti ti-external-link"></i>Full CLI documentation</a>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ MASTER DATA ══════════ -->
+    <div id="screen-masterdata" class="screen">
+      <div class="page-hdr"><h1>Master Data</h1><p>Manage core platform data — apps, members, integrations, workspaces</p></div>
+
+      <!-- Tabs -->
+      <div style="display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px">
+        <button class="md-tab active" onclick="mdTab(this,'md-apps')" style="padding:10px 20px;border:none;background:none;font-family:var(--font);font-size:13px;font-weight:600;color:var(--red);border-bottom:2px solid var(--red);cursor:pointer">Apps</button>
+        <button class="md-tab" onclick="mdTab(this,'md-members')" style="padding:10px 20px;border:none;background:none;font-family:var(--font);font-size:13px;font-weight:500;color:var(--text-2);border-bottom:2px solid transparent;cursor:pointer">Members</button>
+        <button class="md-tab" onclick="mdTab(this,'md-integrations')" style="padding:10px 20px;border:none;background:none;font-family:var(--font);font-size:13px;font-weight:500;color:var(--text-2);border-bottom:2px solid transparent;cursor:pointer">Integrations</button>
+        <button class="md-tab" onclick="mdTab(this,'md-workspaces')" style="padding:10px 20px;border:none;background:none;font-family:var(--font);font-size:13px;font-weight:500;color:var(--text-2);border-bottom:2px solid transparent;cursor:pointer">Workspaces</button>
+      </div>
+
+      <!-- APPS TAB -->
+      <div id="md-apps">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div style="font-size:13px;color:var(--text-2)" id="md-apps-count">6 apps registered</div>
+          <button class="btn-primary" onclick="openModal('modal-md-add-app')"><i class="ti ti-plus"></i>Add App</button>
+        </div>
+        <div class="card">
+          <table class="data-table" id="md-apps-table">
+            <thead><tr><th>App</th><th>Organization</th><th>Platform</th><th>Framework</th><th>Bundle ID</th><th>Status</th><th></th></tr></thead>
+            <tbody id="md-apps-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MEMBERS TAB -->
+      <div id="md-members" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div style="font-size:13px;color:var(--text-2)" id="md-members-count">4 members</div>
+          <button class="btn-primary" onclick="openModal('modal-invite')"><i class="ti ti-plus"></i>Add Member</button>
+        </div>
+        <div class="card">
+          <table class="data-table">
+            <thead><tr><th>Member</th><th>Role</th><th>App Access</th><th>Email</th><th>Status</th><th></th></tr></thead>
+            <tbody id="md-members-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- INTEGRATIONS TAB -->
+      <div id="md-integrations" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div style="font-size:13px;color:var(--text-2)" id="md-int-count">5 integrations · 3 connected</div>
+          <button class="btn-primary" onclick="showToast('Integration marketplace coming soon')"><i class="ti ti-plus"></i>Browse integrations</button>
+        </div>
+        <div class="card">
+          <table class="data-table">
+            <thead><tr><th>Integration</th><th>Category</th><th>Status</th><th>Config</th><th></th></tr></thead>
+            <tbody id="md-int-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- WORKSPACES TAB -->
+      <div id="md-workspaces" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+          <div style="font-size:13px;color:var(--text-2)" id="md-ws-count">4 workspaces</div>
+          <button class="btn-primary" onclick="showToast('New workspace creation coming soon')"><i class="ti ti-plus"></i>New Workspace</button>
+        </div>
+        <div class="card">
+          <table class="data-table">
+            <thead><tr><th>Workspace</th><th>Plan</th><th>Apps</th><th>Devices</th><th>Status</th><th></th></tr></thead>
+            <tbody id="md-ws-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ MODAL: ADD APP ══ -->
+    <div class="modal-overlay" id="modal-md-add-app" onclick="if(event.target===this)closeModal('modal-md-add-app')">
+      <div class="modal">
+        <div class="modal-hdr"><h2><i class="ti ti-apps" style="color:var(--red);margin-right:8px"></i>Add New App</h2><div class="modal-close" onclick="closeModal('modal-md-add-app')"><i class="ti ti-x"></i></div></div>
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group"><div class="form-label">App Name <span>*</span></div><input class="form-input" id="md-app-name" placeholder="e.g. MyApp Mobile"></div>
+            <div class="form-group"><div class="form-label">Organization <span>*</span></div><input class="form-input" id="md-app-org" placeholder="e.g. PT Example Corp"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><div class="form-label">Framework <span>*</span></div>
+              <select class="form-select" id="md-app-fw"><option value="">Select…</option><option>React Native</option><option>Flutter</option><option>Cordova</option></select>
+            </div>
+            <div class="form-group"><div class="form-label">Platform <span>*</span></div>
+              <select class="form-select" id="md-app-platform"><option>iOS + Android</option><option>Android only</option><option>iOS only</option></select>
+            </div>
+          </div>
+          <div class="form-group"><div class="form-label">Bundle ID</div><input class="form-input" id="md-app-bundle" placeholder="com.example.myapp" style="font-family:var(--mono)"></div>
+          <div class="form-group"><div class="form-label">Brand Color</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              ${['#ED1C24','#005BAC','#E67E22','#1E6FA8','#16A34A','#7C3AED','#0284C7','#DB2777'].map(c=>`<div onclick="selectAppColor(this,'${c}')" style="width:28px;height:28px;border-radius:6px;background:${c};cursor:pointer;border:2px solid transparent" data-color="${c}"></div>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-ghost" onclick="closeModal('modal-md-add-app')">Cancel</button>
+          <button class="btn-primary" onclick="submitAddApp()"><i class="ti ti-check"></i>Add App</button>
         </div>
       </div>
     </div>
@@ -2296,7 +2397,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 </div>
 
 <script>
-const titles={billing:'Billing',overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
+const titles={masterdata:'Master Data',billing:'Billing',overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   el.classList.add('active');
@@ -2305,6 +2406,7 @@ function nav(el){
   document.getElementById('screen-'+sc).classList.add('active');
   document.getElementById('nb-title').textContent=titles[sc]||sc;
   document.getElementById('content').scrollTop=0;
+  if(sc==='masterdata'){renderMDApps();}
 }
 let collapsed=false;
 function toggleSidebar(){
@@ -3209,6 +3311,341 @@ function filterWorkspaces(q) {
     el.style.display = el.dataset.name.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
   });
 }
+
+
+// ═══════════════════════════════════════════
+// MASTER DATA — Single source of truth
+// ═══════════════════════════════════════════
+const MASTER_DATA = {
+  apps: [
+    {id:'brimo',    name:'BRImo SuperApp',     org:'PT Bank Rakyat Indonesia', color:'#005BAC', abbr:'BR',  platform:'Android',        fw:'React Native', users:'8.2M',  ver:'v8.4.1', status:'paused',   cfr:'99.1%', date:'Today',  bundleId:'com.bri.brimo'},
+    {id:'ifglife',  name:'IFG Life Portal',    org:'IFG Life Insurance',       color:'#ED1C24', abbr:'IFG', platform:'iOS + Android',   fw:'Flutter',      users:'1.1M',  ver:'v3.12.0',status:'rolling',  cfr:'99.6%', date:'Today',  bundleId:'id.co.ifglife.portal'},
+    {id:'askrindo', name:'Askrindo Mobile',    org:'PT Askrindo',              color:'#E67E22', abbr:'AS',  platform:'iOS + Android',   fw:'Flutter',      users:'420K',  ver:'v2.4.5', status:'rolling',  cfr:'99.9%', date:'16 Jun', bundleId:'id.co.askrindo.mobile'},
+    {id:'jiwasraya',name:'Jiwasraya Connect',  org:'PT Asuransi Jiwasraya',   color:'#1E6FA8', abbr:'JW',  platform:'iOS + Android',   fw:'React Native', users:'680K',  ver:'v5.2.1', status:'live',     cfr:'99.7%', date:'10 Jun', bundleId:'id.co.jiwasraya.connect'},
+    {id:'pnm',      name:'PNM Mekaar',         org:'PT Permodalan Nasional',   color:'#16A34A', abbr:'PM',  platform:'iOS + Android',   fw:'Flutter',      users:'2.8M',  ver:'v4.1.0', status:'canary',   cfr:'100%',  date:'Today',  bundleId:'id.co.pnm.mekaar'},
+    {id:'investnow',name:'IFG InvestNow',      org:'IFG Securities',           color:'#7C3AED', abbr:'IN',  platform:'iOS + Android',   fw:'React Native', users:'310K',  ver:'v1.8.3', status:'complete', cfr:'99.9%', date:'15 Jun', bundleId:'id.co.ifg.investnow'},
+  ],
+  members: [
+    {id:'ra', abbr:'RA', name:'R. Ananda',     email:'r.ananda@ifg.co.id',     color:'#ED1C24', role:'Platform Admin',   roleClass:'admin',   access:'All apps',              lastActive:'Now',    status:'active'},
+    {id:'bw', abbr:'BW', name:'B. Wicaksono',  email:'b.wicaksono@ifg.co.id',  color:'#3299C5', role:'Release Manager',  roleClass:'release', access:'BRImo, IFG Life, PNM',  lastActive:'12m ago',status:'active'},
+    {id:'sh', abbr:'SH', name:'S. Hartono',    email:'s.hartono@ifg.co.id',    color:'#16A34A', role:'DevOps Engineer',  roleClass:'devops',  access:'All apps',              lastActive:'2h ago', status:'active'},
+    {id:'dm', abbr:'DM', name:'D. Maulana',    email:'d.maulana@bri.co.id',    color:'#B1B1B1', role:'Viewer',           roleClass:'viewer',  access:'BRImo only',            lastActive:'1d ago', status:'active'},
+  ],
+  integrations: [
+    {id:'github',    name:'GitHub',    emoji:'🐙', category:'Source control',  connected:true,  desc:'Push-triggered deployments from main branch. Last sync 4m ago.',    fields:[{label:'Repository',val:'ifg-life/mobile-apps'},{label:'Branch trigger',val:'main'},{label:'Webhook URL',val:'https://ota.ifg.co.id/webhooks/github'}]},
+    {id:'slack',     name:'Slack',     emoji:'💬', category:'Notifications',   connected:true,  desc:'Deployment alerts to #platform-ops. Incident escalations to #incidents-p1.',fields:[{label:'Workspace',val:'IFG Life'},{label:'Deploy channel',val:'#platform-ops'},{label:'Incident channel',val:'#incidents-p1'}]},
+    {id:'datadog',   name:'Datadog',   emoji:'📊', category:'Observability',   connected:true,  desc:'APM metrics and crash telemetry forwarded to Datadog dashboards.',   fields:[{label:'API Key',val:'••••••••••••••••dd42'},{label:'Site',val:'datadoghq.com'}]},
+    {id:'jira',      name:'Jira',      emoji:'🔵', category:'Issue tracking',  connected:false, desc:'Automatically create Jira issues for P1 incidents and failed deployments.',fields:[{label:'Jira URL',val:''},{label:'Project Key',val:''},{label:'API Token',val:''}]},
+    {id:'pagerduty', name:'PagerDuty', emoji:'🟠', category:'On-call alerts',  connected:false, desc:'Route critical deployment failures to on-call engineers.',           fields:[{label:'Integration Key',val:''},{label:'Escalation Policy',val:''}]},
+  ],
+  workspaces: [
+    {id:'ifglife',  name:'IFG Life Insurance',            abbr:'IFG', color:'#ED1C24', apps:6, devices:'13.5M', plan:'Enterprise', current:true},
+    {id:'bri',      name:'PT Bank Rakyat Indonesia',      abbr:'BRI', color:'#005BAC', apps:1, devices:'8.2M',  plan:'Enterprise', current:false},
+    {id:'askrindo', name:'PT Askrindo',                   abbr:'AS',  color:'#E67E22', apps:1, devices:'420K',  plan:'Business',   current:false},
+    {id:'pnm',      name:'PT Permodalan Nasional Madani', abbr:'PNM', color:'#16A34A', apps:1, devices:'2.8M',  plan:'Enterprise', current:false},
+  ],
+};
+
+// ── STATUS helpers ──
+const STATUS_BADGE_MD = {
+  live:     '<span class="badge live"><span class="dot"></span>Live</span>',
+  rolling:  '<span class="badge rolling"><span class="dot"></span>Rolling</span>',
+  canary:   '<span class="badge canary"><span class="dot"></span>Canary</span>',
+  paused:   '<span class="badge paused"><span class="dot"></span>Paused</span>',
+  complete: '<span class="badge complete"><span class="dot"></span>Complete</span>',
+  failed:   '<span class="badge failed"><span class="dot"></span>Failed</span>',
+};
+const FW_BADGE = {
+  'React Native': '<span class="fw rn">React Native</span>',
+  'Flutter':      '<span class="fw flutter">Flutter</span>',
+  'Cordova':      '<span class="fw cordova">Cordova</span>',
+};
+const ROLE_BADGE_MD = {
+  admin:   '<span class="role-badge admin">Platform Admin</span>',
+  release: '<span class="role-badge release">Release Manager</span>',
+  devops:  '<span class="role-badge devops">DevOps Engineer</span>',
+  viewer:  '<span class="role-badge viewer">Viewer</span>',
+};
+
+// ── RENDER: Apps screen ──
+function renderAppsScreen() {
+  const grid = document.querySelector('#screen-apps .apps-grid');
+  if (!grid) return;
+  grid.innerHTML = MASTER_DATA.apps.map(app => `
+    <div class="app-card" onclick="openAppDrawer('${app.id}')" style="cursor:pointer">
+      <div class="app-card-top">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="app-icon" style="background:${app.color}">${app.abbr}</div>
+          <div><div class="app-name">${app.name}</div><div class="app-meta">${app.org}</div></div>
+        </div>
+        ${STATUS_BADGE_MD[app.status]||''}
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>${app.platform}</span>
+        ${FW_BADGE[app.fw]||''}
+      </div>
+      <div class="app-stats">
+        <div class="app-stat"><div class="app-stat-val">${app.users}</div><div class="app-stat-label">Active users</div></div>
+        <div class="app-stat"><div class="app-stat-val" style="font-family:var(--mono)">${app.ver}</div><div class="app-stat-label">Live version</div></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── RENDER: Team screen ──
+function renderTeamScreen() {
+  const tbody = document.querySelector('#screen-team .data-table tbody');
+  if (!tbody) return;
+  tbody.innerHTML = MASTER_DATA.members.map(m => `
+    <tr>
+      <td><div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:50%;background:${m.color};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">${m.abbr}</div>
+        <div><div style="font-weight:600">${m.name}</div><div style="font-size:11px;color:var(--text-3)">${m.email}</div></div>
+      </div></td>
+      <td>${ROLE_BADGE_MD[m.roleClass]||m.role}</td>
+      <td><span style="font-size:12px;color:var(--text-2)">${m.access}</span></td>
+      <td><span style="font-size:12px;color:var(--text-3)">${m.lastActive}</span></td>
+      <td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td>
+      <td><button class="btn-ghost" onclick="openEditMember('${m.id}')">Edit</button></td>
+    </tr>
+  `).join('');
+}
+
+// ── RENDER: Integrations screen ──
+function renderIntegrationsScreen() {
+  const grid = document.querySelector('#screen-integrations > div:last-child');
+  if (!grid) return;
+  grid.innerHTML = MASTER_DATA.integrations.map(int => `
+    <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:14px${int.connected?'':';opacity:0.65'}">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:36px;height:36px;border-radius:8px;background:var(--gray-10);display:flex;align-items:center;justify-content:center;font-size:18px">${int.emoji}</div>
+          <div><div style="font-size:13px;font-weight:700">${int.name}</div><div style="font-size:11px;color:var(--text-3)">${int.category}</div></div>
+        </div>
+        ${int.connected
+          ? '<span class="badge live"><span class="dot"></span>Connected</span>'
+          : '<span style="font-size:11px;color:var(--text-3);background:var(--gray-10);padding:3px 9px;border-radius:20px;font-weight:600">Not connected</span>'}
+      </div>
+      <div style="font-size:12px;color:var(--text-2)">${int.desc}</div>
+      <button class="${int.connected?'btn-ghost':'btn-primary'}" style="width:fit-content" onclick="openIntegrationModal('${int.id}',${int.connected})">
+        ${int.connected ? 'Configure' : 'Connect'}
+      </button>
+    </div>
+  `).join('');
+}
+
+// ── RENDER: Workspace modal ──
+function renderWorkspaceModal() {
+  const list = document.querySelector('#modal-workspace .modal-body');
+  if (!list) return;
+  const current = MASTER_DATA.workspaces.find(w => w.current);
+  const others  = MASTER_DATA.workspaces.filter(w => !w.current);
+  list.innerHTML = `
+    <div style="position:relative;margin-bottom:4px">
+      <i class="ti ti-search" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-3);font-size:14px"></i>
+      <input class="form-input" placeholder="Search workspaces…" style="padding-left:32px" oninput="filterWorkspaces(this.value)">
+    </div>
+    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-3);padding:4px 2px">Current</div>
+    ${current ? `
+    <div onclick="switchWorkspace('${current.id}')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;border:2px solid var(--red);background:var(--red-10);cursor:pointer" class="workspace-item" data-name="${current.name}">
+      <div style="width:36px;height:36px;border-radius:9px;background:${current.color};display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;flex-shrink:0">${current.abbr}</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">${current.name}</div><div style="font-size:11px;color:var(--text-3)">${current.apps} apps · ${current.devices} devices · ${current.plan}</div></div>
+      <i class="ti ti-circle-check" style="color:var(--red);font-size:18px"></i>
+    </div>` : ''}
+    <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-3);padding:8px 2px 4px">Other workspaces</div>
+    ${others.map(w => `
+    <div onclick="switchWorkspace('${w.id}')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;border:2px solid var(--border);cursor:pointer" class="workspace-item" data-name="${w.name}" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
+      <div style="width:36px;height:36px;border-radius:9px;background:${w.color};display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;flex-shrink:0">${w.abbr}</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">${w.name}</div><div style="font-size:11px;color:var(--text-3)">${w.apps} apps · ${w.devices} devices · ${w.plan}</div></div>
+      <i class="ti ti-arrow-right" style="color:var(--text-3);font-size:15px"></i>
+    </div>`).join('')}
+    <div style="border-top:1px solid var(--border);margin-top:8px;padding-top:8px">
+      <div onclick="closeModal('modal-workspace')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;cursor:pointer;color:var(--red);font-size:13px;font-weight:600" onmouseover="this.style.background='var(--red-10)'" onmouseout="this.style.background=''">
+        <i class="ti ti-plus"></i>Create new workspace
+      </div>
+    </div>
+  `;
+}
+
+// Override switchWorkspace to use MASTER_DATA
+function switchWorkspace(id) {
+  MASTER_DATA.workspaces.forEach(w => w.current = w.id === id);
+  const w = MASTER_DATA.workspaces.find(w => w.id === id);
+  if (!w) return;
+  const logoText = document.querySelector('.sb-logo-text');
+  if (logoText) logoText.innerHTML = w.name + ' <i class="ti ti-selector" style="font-size:11px;color:var(--text-3)"></i>';
+  const logoMark = document.querySelector('.sb-logo-mark');
+  if (logoMark) { logoMark.textContent = w.abbr; logoMark.style.background = w.color; }
+  const logoSub = document.querySelector('.sb-logo-sub');
+  if (logoSub) logoSub.textContent = w.apps + ' apps · ' + w.devices + ' devices';
+  renderWorkspaceModal();
+  closeModal('modal-workspace');
+  showToast('Switched to ' + w.name);
+}
+
+// Init all renders on load
+document.addEventListener('DOMContentLoaded', function() {
+  renderAppsScreen();
+  renderTeamScreen();
+  renderIntegrationsScreen();
+  renderWorkspaceModal();
+});
+
+
+// ── MASTER DATA SCREEN LOGIC ──
+let mdSelectedColor = '#ED1C24';
+
+function mdTab(el, tabId) {
+  document.querySelectorAll('.md-tab').forEach(t => {
+    t.style.color = 'var(--text-2)';
+    t.style.borderBottom = '2px solid transparent';
+    t.style.fontWeight = '500';
+  });
+  el.style.color = 'var(--red)';
+  el.style.borderBottom = '2px solid var(--red)';
+  el.style.fontWeight = '600';
+  ['md-apps','md-members','md-integrations','md-workspaces'].forEach(id => {
+    document.getElementById(id).style.display = id === tabId ? '' : 'none';
+  });
+  if (tabId === 'md-apps') renderMDApps();
+  if (tabId === 'md-members') renderMDMembers();
+  if (tabId === 'md-integrations') renderMDIntegrations();
+  if (tabId === 'md-workspaces') renderMDWorkspaces();
+}
+
+function renderMDApps() {
+  const tbody = document.getElementById('md-apps-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = MASTER_DATA.apps.map(app => `
+    <tr>
+      <td><div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:8px;background:${app.color};color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">${app.abbr}</div>
+        <div style="font-weight:600">${app.name}</div>
+      </div></td>
+      <td><span style="font-size:12px;color:var(--text-2)">${app.org}</span></td>
+      <td><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>${app.platform}</span></td>
+      <td>${FW_BADGE[app.fw]||app.fw}</td>
+      <td><span class="mono" style="font-size:11px;color:var(--text-3)">${app.bundleId}</span></td>
+      <td>${STATUS_BADGE_MD[app.status]||''}</td>
+      <td><div style="display:flex;gap:6px">
+        <button class="btn-ghost" style="height:28px;font-size:11px" onclick="editMDApp('${app.id}')"><i class="ti ti-edit"></i>Edit</button>
+        <button class="btn-ghost" style="height:28px;font-size:11px;color:var(--err);border-color:var(--err-10)" onclick="deleteMDApp('${app.id}')"><i class="ti ti-trash"></i></button>
+      </div></td>
+    </tr>
+  `).join('');
+  document.getElementById('md-apps-count').textContent = MASTER_DATA.apps.length + ' apps registered';
+}
+
+function renderMDMembers() {
+  const tbody = document.getElementById('md-members-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = MASTER_DATA.members.map(m => `
+    <tr>
+      <td><div style="display:flex;align-items:center;gap:10px">
+        <div style="width:30px;height:30px;border-radius:50%;background:${m.color};color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">${m.abbr}</div>
+        <div style="font-weight:600">${m.name}</div>
+      </div></td>
+      <td>${ROLE_BADGE_MD[m.roleClass]||m.role}</td>
+      <td><span style="font-size:12px;color:var(--text-2)">${m.access}</span></td>
+      <td><span style="font-size:12px;color:var(--text-3)">${m.email}</span></td>
+      <td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td>
+      <td><div style="display:flex;gap:6px">
+        <button class="btn-ghost" style="height:28px;font-size:11px" onclick="openEditMember('${m.id}')"><i class="ti ti-edit"></i>Edit</button>
+        <button class="btn-ghost" style="height:28px;font-size:11px;color:var(--err);border-color:var(--err-10)" onclick="deleteMDMember('${m.id}','${m.name}')"><i class="ti ti-trash"></i></button>
+      </div></td>
+    </tr>
+  `).join('');
+  document.getElementById('md-members-count').textContent = MASTER_DATA.members.length + ' members';
+}
+
+function renderMDIntegrations() {
+  const tbody = document.getElementById('md-int-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = MASTER_DATA.integrations.map(int => `
+    <tr>
+      <td><div style="display:flex;align-items:center;gap:10px">
+        <span style="font-size:18px">${int.emoji}</span>
+        <div style="font-weight:600">${int.name}</div>
+      </div></td>
+      <td><span style="font-size:12px;color:var(--text-2)">${int.category}</span></td>
+      <td>${int.connected ? '<span class="badge live"><span class="dot"></span>Connected</span>' : '<span style="font-size:11px;color:var(--text-3);background:var(--gray-10);padding:3px 9px;border-radius:20px;font-weight:600">Not connected</span>'}</td>
+      <td><span style="font-size:12px;color:var(--text-3)">${int.fields.filter(f=>f.val).length} / ${int.fields.length} fields set</span></td>
+      <td><button class="btn-ghost" style="height:28px;font-size:11px" onclick="openIntegrationModal('${int.id}',${int.connected})">${int.connected?'Configure':'Connect'}</button></td>
+    </tr>
+  `).join('');
+  const connected = MASTER_DATA.integrations.filter(i=>i.connected).length;
+  document.getElementById('md-int-count').textContent = MASTER_DATA.integrations.length + ' integrations · ' + connected + ' connected';
+}
+
+function renderMDWorkspaces() {
+  const tbody = document.getElementById('md-ws-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = MASTER_DATA.workspaces.map(w => `
+    <tr>
+      <td><div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:8px;background:${w.color};color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">${w.abbr}</div>
+        <div style="font-weight:600">${w.name}</div>
+      </div></td>
+      <td><span style="font-size:12px;color:var(--text-2)">${w.plan}</span></td>
+      <td><span class="mono" style="font-size:12px">${w.apps}</span></td>
+      <td><span class="mono" style="font-size:12px">${w.devices}</span></td>
+      <td>${w.current ? '<span class="badge live"><span class="dot"></span>Current</span>' : '<span style="font-size:11px;color:var(--text-3);background:var(--gray-10);padding:3px 9px;border-radius:20px;font-weight:600">Inactive</span>'}</td>
+      <td><button class="btn-ghost" style="height:28px;font-size:11px" onclick="switchWorkspace('${w.id}')">Switch</button></td>
+    </tr>
+  `).join('');
+  document.getElementById('md-ws-count').textContent = MASTER_DATA.workspaces.length + ' workspaces';
+}
+
+function selectAppColor(el, color) {
+  mdSelectedColor = color;
+  document.querySelectorAll('[data-color]').forEach(e => e.style.border = '2px solid transparent');
+  el.style.border = '2px solid var(--text)';
+}
+
+function submitAddApp() {
+  const name = document.getElementById('md-app-name').value.trim();
+  const org  = document.getElementById('md-app-org').value.trim();
+  const fw   = document.getElementById('md-app-fw').value;
+  const platform = document.getElementById('md-app-platform').value;
+  const bundle   = document.getElementById('md-app-bundle').value.trim();
+  if (!name || !org || !fw) { showToast('Please fill required fields'); return; }
+  const abbr = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,3);
+  const id = name.toLowerCase().replace(/[^a-z0-9]/g,'');
+  MASTER_DATA.apps.push({id, name, org, color:mdSelectedColor, abbr, platform, fw, users:'0', ver:'v1.0.0', status:'live', cfr:'100%', date:'Today', bundleId:bundle||id+'.app'});
+  closeModal('modal-md-add-app');
+  renderAppsScreen();
+  renderMDApps();
+  showToast(name + ' added successfully');
+}
+
+function editMDApp(id) {
+  const app = MASTER_DATA.apps.find(a=>a.id===id);
+  if (!app) return;
+  showToast('Edit ' + app.name + ' — form coming soon');
+}
+
+function deleteMDApp(id) {
+  const app = MASTER_DATA.apps.find(a=>a.id===id);
+  if (!app) return;
+  if (confirm('Remove ' + app.name + ' from platform?')) {
+    MASTER_DATA.apps = MASTER_DATA.apps.filter(a=>a.id!==id);
+    renderAppsScreen();
+    renderMDApps();
+    showToast(app.name + ' removed');
+  }
+}
+
+function deleteMDMember(id, name) {
+  if (confirm('Remove ' + name + ' from platform?')) {
+    MASTER_DATA.members = MASTER_DATA.members.filter(m=>m.id!==id);
+    renderTeamScreen();
+    renderMDMembers();
+    showToast(name + ' removed');
+  }
+}
+
+// Trigger MD render when navigating to masterdata screen
+const _origNav = window.nav;
 
 function filterTab(el){
   el.closest('.dep-filters').querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
