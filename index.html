@@ -9,165 +9,396 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css">
 <style>
 :root {
-  --red:#ED1C24; --red-10:#FDE8EB; --red-80:#F04248;
+  --red:#ED1C24; --red-10:#FDE8EB; --red-20:#F9B4B6; --red-80:#F04248;
   --gold:#F99D27; --gold-10:#FEF6EB;
-  --green:#009262; --green-10:#F1FBF8; --green-40:#32C997;
+  --green:#009262; --green-10:#F1FBF8;
   --blue:#3299C5; --blue-10:#CEE7F1;
   --err:#E02B1D; --err-10:#FFF1F0;
-  --gray-10:#EBEBEB; --gray-20:#D5D5D5; --gray-30:#B1B1B1;
-  --gray-40:#505254; --gray-80:#232425; --gray-90:#202021;
-  --surface:#F5F5F5; --card:#FCFDFF; --border:#D5D5D5;
-  --text:#232425; --text-2:#505254;
+  --purple:#5B4FCF; --purple-10:#F3F0FF;
+  --gray-10:#F5F5F5; --gray-15:#EFEFEF; --gray-20:#E5E5E5; --gray-30:#B1B1B1;
+  --gray-40:#6B6B6B; --gray-60:#404040; --gray-80:#1A1A1A;
+  --surface:#F4F5F7; --card:#FFFFFF; --border:#E8E8E8;
+  --text:#1A1A1A; --text-2:#6B6B6B; --text-3:#9B9B9B;
   --font:'Montserrat',system-ui,sans-serif;
   --mono:'JetBrains Mono',monospace;
-  --sidebar-w:240px; --sidebar-collapsed:56px;
+  --sidebar-w:220px; --sidebar-collapsed:60px;
   --navbar-h:56px;
-  --transition:0.2s cubic-bezier(0.4,0,0.2,1);
+  --shadow-card:0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-card-hover:0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --transition:0.18s cubic-bezier(0.4,0,0.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:var(--gray-90);font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiased}
-a{text-decoration:none;color:inherit}
+html,body{height:100%;background:var(--surface);font-family:var(--font);color:var(--text);-webkit-font-smoothing:antialiased}
 button{cursor:pointer;border:none;background:none;font-family:var(--font)}
+
+/* ── LAYOUT ── */
 #app{display:flex;height:100vh;overflow:hidden}
-#sidebar{width:var(--sidebar-w);min-width:var(--sidebar-w);background:var(--gray-90);display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,0.06);transition:width var(--transition),min-width var(--transition);overflow:hidden;position:relative;z-index:10}
+
+/* ── SIDEBAR ── */
+#sidebar{
+  width:var(--sidebar-w);min-width:var(--sidebar-w);
+  background:#fff;
+  display:flex;flex-direction:column;
+  border-right:1px solid var(--border);
+  transition:width var(--transition),min-width var(--transition);
+  overflow:hidden;position:relative;z-index:10;
+}
 #sidebar.collapsed{width:var(--sidebar-collapsed);min-width:var(--sidebar-collapsed)}
-.sb-logo{height:var(--navbar-h);display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.06)}
-.sb-logo-mark{width:28px;height:28px;min-width:28px;border-radius:6px;background:var(--red);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;letter-spacing:-0.5px}
-.sb-logo-text{font-size:13px;font-weight:700;color:#fff;white-space:nowrap;letter-spacing:-0.3px;opacity:1;transition:opacity var(--transition)}
-#sidebar.collapsed .sb-logo-text{opacity:0;pointer-events:none}
-.sb-nav{flex:1;overflow-y:auto;padding:12px 0;overflow-x:hidden}
+
+.sb-logo{
+  height:var(--navbar-h);display:flex;align-items:center;
+  padding:0 14px 0 18px;gap:10px;flex-shrink:0;
+  border-bottom:1px solid var(--border);
+}
+.sb-toggle-top{
+  width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;
+  color:var(--text-3);font-size:15px;cursor:pointer;
+  transition:all var(--transition);flex-shrink:0;margin-left:auto;
+}
+.sb-toggle-top:hover{background:var(--gray-10);color:var(--text)}
+.sb-logo-mark{
+  width:30px;height:30px;min-width:30px;border-radius:8px;
+  background:var(--red);display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:10px;font-weight:800;letter-spacing:-0.5px;flex-shrink:0;
+}
+.sb-logo-text{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;opacity:1;transition:opacity var(--transition)}
+.sb-logo-sub{font-size:10px;color:var(--text-3);font-weight:500;margin-top:1px}
+#sidebar.collapsed .sb-logo-text,#sidebar.collapsed .sb-logo-sub{opacity:0;pointer-events:none;width:0}
+#sidebar.collapsed .sb-logo{padding:0;justify-content:center}
+#sidebar.collapsed .sb-logo-mark{display:none}
+#sidebar.collapsed .sb-toggle-top{margin:0 auto}
+
+.sb-nav{flex:1;overflow-y:auto;padding:8px 0;overflow-x:hidden}
 .sb-nav::-webkit-scrollbar{width:0}
-.sb-section{margin-bottom:4px}
-.sb-section-label{font-size:10px;font-weight:600;letter-spacing:0.8px;text-transform:uppercase;color:rgba(255,255,255,0.25);padding:8px 16px 4px;white-space:nowrap;opacity:1;transition:opacity var(--transition),height var(--transition),padding var(--transition)}
+
+.sb-section{margin-bottom:2px}
+.sb-section-label{
+  font-size:10px;font-weight:700;letter-spacing:0.7px;text-transform:uppercase;
+  color:var(--text-3);padding:10px 18px 4px;white-space:nowrap;
+  opacity:1;transition:opacity var(--transition),height var(--transition),padding var(--transition);
+}
 #sidebar.collapsed .sb-section-label{opacity:0;height:0;padding:0;overflow:hidden}
-.nav-item{display:flex;align-items:center;gap:10px;padding:0 12px;height:36px;border-radius:6px;margin:1px 8px;cursor:pointer;position:relative;color:var(--gray-30);font-size:13px;font-weight:500;transition:background var(--transition),color var(--transition);white-space:nowrap}
-.nav-item:hover{background:rgba(255,255,255,0.05);color:#fff}
-.nav-item.active{background:rgba(237,28,36,0.15);color:var(--red)}
-.nav-item .ni-icon{font-size:16px;min-width:16px;line-height:1}
-.nav-item .ni-label{opacity:1;transition:opacity var(--transition)}
-#sidebar.collapsed .nav-item .ni-label{opacity:0}
-.nav-item .ni-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:1px 5px;border-radius:10px;min-width:18px;text-align:center;opacity:1;transition:opacity var(--transition)}
+
+.nav-item{
+  display:flex;align-items:center;gap:9px;
+  padding:0 10px;height:36px;border-radius:8px;
+  margin:1px 8px;cursor:pointer;position:relative;
+  color:var(--text-2);font-size:12.5px;font-weight:500;
+  transition:background var(--transition),color var(--transition);
+  white-space:nowrap;
+}
+.nav-item:hover{background:var(--gray-10);color:var(--text)}
+.nav-item.active{background:var(--red-10);color:var(--red)}
+.nav-item.active .ni-icon{color:var(--red)}
+.nav-item .ni-icon{font-size:16px;min-width:16px;line-height:1;color:var(--text-3);transition:color var(--transition)}
+.nav-item:hover .ni-icon{color:var(--text)}
+.nav-item .ni-label{opacity:1;transition:opacity var(--transition);flex:1}
+#sidebar.collapsed .nav-item .ni-label{opacity:0;width:0}
+.nav-item .ni-badge{
+  background:var(--red);color:#fff;font-size:10px;font-weight:700;
+  padding:1px 6px;border-radius:10px;min-width:18px;text-align:center;
+  opacity:1;transition:opacity var(--transition);
+}
 #sidebar.collapsed .nav-item .ni-badge{opacity:0}
-#sidebar.collapsed .nav-item{justify-content:center}
-#sidebar.collapsed .nav-item::after{content:attr(data-label);position:absolute;left:calc(var(--sidebar-collapsed) + 8px);background:var(--gray-80);color:#fff;font-size:12px;font-weight:500;padding:5px 10px;border-radius:6px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.15s;z-index:100;border:1px solid rgba(255,255,255,0.1)}
+#sidebar.collapsed .nav-item{padding:0;justify-content:center}
+#sidebar.collapsed .nav-item::after{
+  content:attr(data-label);position:absolute;left:calc(var(--sidebar-collapsed) + 6px);
+  background:var(--gray-80);color:#fff;font-size:11.5px;font-weight:500;
+  padding:5px 10px;border-radius:6px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity 0.12s;z-index:100;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
 #sidebar.collapsed .nav-item:hover::after{opacity:1}
-#sb-toggle{height:44px;display:flex;align-items:center;justify-content:center;border-top:1px solid rgba(255,255,255,0.06);flex-shrink:0;cursor:pointer;color:var(--gray-30);font-size:16px;transition:color var(--transition)}
-#sb-toggle:hover{color:#fff}
+
+/* sb footer */
+.sb-footer{
+  border-top:1px solid var(--border);padding:10px 12px;flex-shrink:0;
+  display:flex;align-items:center;gap:10px;
+}
+.sb-user-avatar{
+  width:30px;height:30px;min-width:30px;border-radius:50%;
+  background:var(--red);color:#fff;font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.sb-user-info{flex:1;min-width:0;opacity:1;transition:opacity var(--transition)}
+#sidebar.collapsed .sb-user-info{opacity:0;width:0}
+.sb-user-name{font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sb-user-role{font-size:10px;color:var(--text-3);white-space:nowrap}
+#sidebar.collapsed .sb-toggle-top{margin:0 auto}
+
+/* ── MAIN ── */
 #main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-#navbar{height:var(--navbar-h);min-height:var(--navbar-h);background:var(--card);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px}
-.nb-title{font-size:14px;font-weight:600;color:var(--text);flex:1}
-.nb-actions{display:flex;align-items:center;gap:8px}
-.nb-btn{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--gray-40);font-size:17px;transition:background var(--transition),color var(--transition);position:relative}
-.nb-btn:hover{background:var(--surface);color:var(--text)}
-.nb-btn .dot{position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--red);border:2px solid var(--card)}
-.nb-avatar{width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;letter-spacing:-0.5px;cursor:pointer;flex-shrink:0}
-.nb-sep{width:1px;height:20px;background:var(--border)}
+
+/* ── NAVBAR ── */
+#navbar{
+  height:var(--navbar-h);min-height:var(--navbar-h);
+  background:#fff;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0 24px;gap:12px;
+}
+.nb-breadcrumb{font-size:14px;font-weight:600;color:var(--text);flex:1}
+.nb-search{
+  display:flex;align-items:center;gap:8px;
+  border:1px solid var(--border);border-radius:8px;
+  padding:0 12px;height:34px;background:var(--gray-10);
+  color:var(--text-3);font-size:12px;font-family:var(--font);
+  min-width:220px;cursor:text;transition:border-color var(--transition);
+}
+.nb-search:hover{border-color:var(--gray-30)}
+.nb-search i{font-size:14px}
+.nb-search span{flex:1}
+.nb-search kbd{
+  background:#fff;border:1px solid var(--border);border-radius:4px;
+  font-size:10px;font-family:var(--font);padding:1px 5px;color:var(--text-3);
+}
+.nb-env{
+  background:var(--green-10);color:var(--green);
+  font-size:10px;font-weight:700;letter-spacing:0.5px;
+  padding:4px 10px;border-radius:20px;display:flex;align-items:center;gap:5px;
+}
+.nb-env .dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.nb-actions{display:flex;align-items:center;gap:6px}
+.nb-btn{
+  width:34px;height:34px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text-2);font-size:18px;
+  transition:background var(--transition),color var(--transition);position:relative;
+}
+.nb-btn:hover{background:var(--gray-10);color:var(--text)}
+.nb-btn .dot{
+  position:absolute;top:7px;right:7px;width:7px;height:7px;
+  border-radius:50%;background:var(--red);border:2px solid #fff;
+}
+.nb-sep{width:1px;height:20px;background:var(--border);margin:0 2px}
+.nb-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--red) 0%,var(--red-80) 100%);
+  color:#fff;font-size:11px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;flex-shrink:0;letter-spacing:-0.3px;
+}
+
+/* ── CONTENT ── */
 #content{flex:1;overflow-y:auto;background:var(--surface)}
-#content::-webkit-scrollbar{width:6px}
+#content::-webkit-scrollbar{width:5px}
 #content::-webkit-scrollbar-thumb{background:var(--gray-20);border-radius:3px}
-.screen{display:none;padding:28px 32px;min-height:100%}
+.screen{display:none;padding:28px 28px;min-height:100%}
 .screen.active{display:block}
+
+/* ── PAGE HEADER ── */
 .page-hdr{margin-bottom:24px}
-.page-hdr h1{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-0.4px}
+.page-hdr h1{font-size:20px;font-weight:700;color:var(--text);letter-spacing:-0.3px}
 .page-hdr p{font-size:13px;color:var(--text-2);margin-top:3px}
 .page-hdr-row{display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:8px}
-.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:24px}
-.kpi-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:4px}
-.kpi-label{font-size:11px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:0.4px}
-.kpi-value{font-size:24px;font-weight:700;color:var(--text);font-family:var(--mono);letter-spacing:-1px;line-height:1.1}
-.kpi-delta{font-size:11px;font-weight:500;margin-top:2px}
-.kpi-delta.up{color:var(--green)}.kpi-delta.down{color:var(--err)}.kpi-delta.warn{color:var(--gold)}.kpi-delta.neutral{color:var(--gray-30)}
-.incident-banner{background:var(--err-10);border:1px solid var(--err);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px;margin-bottom:24px}
-.incident-icon{color:var(--err);font-size:18px;flex-shrink:0}
+
+/* ── KPI CARDS ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:24px}
+.kpi-card{
+  background:#fff;border:1px solid var(--border);border-radius:12px;
+  padding:18px 18px 16px;position:relative;overflow:hidden;
+  box-shadow:var(--shadow-card);transition:box-shadow var(--transition);
+}
+.kpi-card:hover{box-shadow:var(--shadow-card-hover)}
+.kpi-icon{
+  width:36px;height:36px;border-radius:9px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:17px;margin-bottom:14px;
+}
+.kpi-delta-badge{
+  position:absolute;top:14px;right:14px;
+  font-size:10.5px;font-weight:600;
+  display:flex;align-items:center;gap:3px;
+}
+.kpi-delta-badge.up{color:var(--green)}.kpi-delta-badge.down{color:var(--err)}.kpi-delta-badge.warn{color:var(--gold)}.kpi-delta-badge.neutral{color:var(--text-3)}
+.kpi-value{font-size:26px;font-weight:700;color:var(--text);font-family:var(--mono);letter-spacing:-1.5px;line-height:1}
+.kpi-label{font-size:11px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:0.5px;margin-top:5px}
+
+/* ── INCIDENT BANNER ── */
+.incident-banner{
+  background:#fff;border:1px solid #FECDD3;border-left:3px solid var(--err);
+  border-radius:10px;padding:14px 16px;
+  display:flex;align-items:center;gap:12px;margin-bottom:24px;
+  box-shadow:var(--shadow-card);
+}
+.incident-icon{color:var(--err);font-size:20px;flex-shrink:0}
 .incident-text{flex:1}
 .incident-title{font-size:13px;font-weight:700;color:var(--err)}
-.incident-sub{font-size:12px;color:var(--text-2);margin-top:1px}
-.incident-tag{background:var(--err);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:0.3px;flex-shrink:0}
-.btn-ghost-sm{border:1px solid var(--border);background:var(--card);color:var(--text);font-size:12px;font-weight:600;font-family:var(--font);padding:0 12px;height:30px;border-radius:6px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:background var(--transition);flex-shrink:0}
-.btn-ghost-sm:hover{background:var(--surface)}
-.two-col{display:grid;grid-template-columns:1fr 360px;gap:16px;align-items:start}
+.incident-sub{font-size:12px;color:var(--text-2);margin-top:2px}
+.incident-tag{background:var(--err);color:#fff;font-size:10px;font-weight:800;padding:3px 9px;border-radius:5px;letter-spacing:0.5px;flex-shrink:0}
+
+/* ── CARD ── */
+.card{background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow-card)}
+.card-hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--border)}
+.card-hdr-title{font-size:13px;font-weight:700;color:var(--text)}
+.card-hdr-sub{font-size:11px;color:var(--text-3);margin-top:1px}
+
+/* ── TABLE ── */
 .data-table{width:100%;border-collapse:collapse}
-.data-table th{background:var(--surface);font-size:11px;font-weight:600;letter-spacing:0.4px;text-transform:uppercase;color:var(--text-2);padding:0 16px;height:40px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
-.data-table td{padding:0 16px;height:52px;border-bottom:1px solid var(--gray-10);font-size:13px;color:var(--text);vertical-align:middle}
+.data-table th{
+  background:var(--gray-10);font-size:10.5px;font-weight:700;letter-spacing:0.5px;
+  text-transform:uppercase;color:var(--text-3);padding:0 18px;height:38px;
+  text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;
+}
+.data-table td{
+  padding:0 18px;height:54px;border-bottom:1px solid var(--gray-15);
+  font-size:13px;color:var(--text);vertical-align:middle;
+}
 .data-table tr:last-child td{border-bottom:none}
-.data-table tbody tr:hover td{background:rgba(0,0,0,0.015)}
-.badge{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.data-table tbody tr{transition:background var(--transition)}
+.data-table tbody tr:hover td{background:var(--gray-10)}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:600}
 .badge .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .badge.live{background:var(--green-10);color:var(--green)}.badge.live .dot{background:var(--green);animation:pulse-g 1.5s infinite}
 .badge.rolling{background:var(--blue-10);color:var(--blue)}.badge.rolling .dot{background:var(--blue);animation:pulse-b 1.5s infinite}
-.badge.pending{background:var(--gold-10);color:#B87A12}.badge.pending .dot{background:var(--gold);animation:pulse-y 1.5s infinite}
+.badge.pending{background:var(--gold-10);color:#92640A}.badge.pending .dot{background:var(--gold);animation:pulse-y 1.5s infinite}
 .badge.paused{background:var(--red-10);color:var(--red)}.badge.paused .dot{background:var(--red)}
 .badge.failed{background:var(--err-10);color:var(--err)}.badge.failed .dot{background:var(--err)}
-.badge.canary{background:#F3F0FF;color:#5B4FCF}.badge.canary .dot{background:#7C6FCD;animation:pulse-p 1.5s infinite}
+.badge.canary{background:var(--purple-10);color:var(--purple)}.badge.canary .dot{background:var(--purple);animation:pulse-p 1.5s infinite}
 .badge.complete{background:var(--green-10);color:var(--green)}.badge.complete .dot{background:var(--green)}
-@keyframes pulse-g{0%,100%{box-shadow:0 0 0 0 rgba(0,146,98,0.4)}50%{box-shadow:0 0 0 4px rgba(0,146,98,0)}}
-@keyframes pulse-b{0%,100%{box-shadow:0 0 0 0 rgba(50,153,197,0.4)}50%{box-shadow:0 0 0 4px rgba(50,153,197,0)}}
-@keyframes pulse-y{0%,100%{box-shadow:0 0 0 0 rgba(249,157,39,0.4)}50%{box-shadow:0 0 0 4px rgba(249,157,39,0)}}
-@keyframes pulse-p{0%,100%{box-shadow:0 0 0 0 rgba(124,111,205,0.4)}50%{box-shadow:0 0 0 4px rgba(124,111,205,0)}}
+@keyframes pulse-g{0%,100%{box-shadow:0 0 0 0 rgba(0,146,98,0.35)}60%{box-shadow:0 0 0 4px rgba(0,146,98,0)}}
+@keyframes pulse-b{0%,100%{box-shadow:0 0 0 0 rgba(50,153,197,0.35)}60%{box-shadow:0 0 0 4px rgba(50,153,197,0)}}
+@keyframes pulse-y{0%,100%{box-shadow:0 0 0 0 rgba(249,157,39,0.35)}60%{box-shadow:0 0 0 4px rgba(249,157,39,0)}}
+@keyframes pulse-p{0%,100%{box-shadow:0 0 0 0 rgba(91,79,207,0.35)}60%{box-shadow:0 0 0 4px rgba(91,79,207,0)}}
+
+/* ── PROGRESS ── */
 .prog-wrap{display:flex;align-items:center;gap:8px}
-.prog-bar{flex:1;height:4px;background:var(--gray-10);border-radius:2px;overflow:hidden;min-width:60px}
-.prog-fill{height:100%;border-radius:2px}
-.prog-fill.green{background:var(--green)}.prog-fill.blue{background:var(--blue)}.prog-fill.red{background:var(--red)}.prog-fill.gold{background:var(--gold)}.prog-fill.purple{background:#7C6FCD}
-.prog-pct{font-size:12px;font-weight:600;font-family:var(--mono);color:var(--text-2);min-width:32px;text-align:right}
+.prog-bar{flex:1;height:5px;background:var(--gray-15);border-radius:3px;overflow:hidden;min-width:64px}
+.prog-fill{height:100%;border-radius:3px}
+.prog-fill.green{background:var(--green)}.prog-fill.blue{background:var(--blue)}.prog-fill.red{background:var(--red)}.prog-fill.gold{background:var(--gold)}.prog-fill.purple{background:var(--purple)}
+.prog-pct{font-size:12px;font-weight:600;font-family:var(--mono);color:var(--text-2);min-width:34px;text-align:right}
+
+/* ── CHIPS ── */
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--gray-10);border:1px solid var(--gray-20);border-radius:5px;padding:2px 8px;font-size:11px;font-weight:500;color:var(--text-2)}
+.fw{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 8px;border-radius:5px}
+.fw.rn{background:#EFF8FF;color:#0284C7}.fw.flutter{background:#E0F2FE;color:#0369A1}.fw.cordova{background:#F0FDF4;color:#16A34A}
 .mono{font-family:var(--mono);font-size:12px}
-.chip{display:inline-flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-size:11px;font-weight:500;color:var(--text-2)}
+
+/* ── ACTIVITY ── */
 .activity-feed{display:flex;flex-direction:column}
-.activity-item{display:flex;align-items:flex-start;gap:10px;padding:12px 16px;border-bottom:1px solid var(--gray-10)}
+.activity-item{display:flex;align-items:flex-start;gap:11px;padding:13px 18px;border-bottom:1px solid var(--gray-15)}
 .activity-item:last-child{border-bottom:none}
 .activity-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
-.activity-content{flex:1}
-.activity-msg{font-size:12px;color:var(--text);line-height:1.45}
+.activity-msg{font-size:12.5px;color:var(--text);line-height:1.5}
 .activity-msg strong{font-weight:600}
-.activity-time{font-size:11px;color:var(--gray-30);margin-top:2px;font-family:var(--mono)}
-.card-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
-.card-hdr-title{font-size:13px;font-weight:700;color:var(--text)}
-.card-hdr-sub{font-size:11px;color:var(--text-2)}
-.apps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
-.app-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:14px;transition:border-color var(--transition);cursor:pointer}
-.app-card:hover{border-color:var(--gray-30)}
-.app-card-top{display:flex;align-items:flex-start;justify-content:space-between}
-.app-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0;font-weight:700}
-.app-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px}
-.app-meta{font-size:11px;color:var(--text-2)}
-.app-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.app-stat{background:var(--surface);border-radius:6px;padding:8px 10px}
-.app-stat-val{font-size:14px;font-weight:700;font-family:var(--mono);color:var(--text)}
-.app-stat-label{font-size:10px;color:var(--text-2);margin-top:1px;font-weight:500;text-transform:uppercase;letter-spacing:0.3px}
-.dep-filters{display:flex;align-items:center;gap:8px;margin-bottom:16px}
-.filter-pill{border:1px solid var(--border);background:var(--card);color:var(--text-2);font-size:12px;font-weight:500;font-family:var(--font);padding:0 12px;height:32px;border-radius:6px;cursor:pointer;transition:all var(--transition);display:inline-flex;align-items:center;gap:5px}
-.filter-pill:hover{border-color:var(--gray-30);color:var(--text)}
-.filter-pill.active{background:var(--gray-80);border-color:var(--gray-80);color:#fff}
-.filter-pill .count{background:rgba(255,255,255,0.15);color:#fff;font-size:10px;font-weight:700;padding:1px 5px;border-radius:8px}
-.filter-pill:not(.active) .count{background:var(--surface);color:var(--text-2)}
-.dep-stepper{display:flex;align-items:center;gap:0}
-.dep-step{display:flex;align-items:center;gap:4px;padding:2px 8px;font-size:11px;font-weight:600;color:var(--text-2)}
-.dep-step .s{width:6px;height:6px;border-radius:50%;background:var(--gray-20)}
-.dep-step.done .s{background:var(--green)}.dep-step.done{color:var(--green)}
-.dep-step.active-step .s{background:var(--blue);animation:pulse-b 1.5s infinite}.dep-step.active-step{color:var(--blue)}
-.dep-step-line{flex:1;height:1px;background:var(--gray-10);min-width:16px}
-.dep-step-line.done{background:var(--green)}
-.btn-primary{background:var(--red);color:#fff;font-size:12px;font-weight:700;font-family:var(--font);padding:0 14px;height:32px;border-radius:6px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;border:none;transition:background var(--transition)}
-.btn-primary:hover{background:var(--red-80)}
-.search-wrap{position:relative;flex:1;max-width:280px}
-.search-wrap i{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--gray-30);font-size:15px}
-.search-input{width:100%;height:32px;border:1px solid var(--border);border-radius:6px;background:var(--card);padding:0 10px 0 30px;font-size:12px;font-family:var(--font);color:var(--text);outline:none;transition:border-color var(--transition)}
+.activity-time{font-size:11px;color:var(--text-3);margin-top:2px;font-family:var(--mono)}
+
+/* ── TWO COL ── */
+.two-col{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+
+/* ── BTNS ── */
+.btn-primary{background:var(--red);color:#fff;font-size:12px;font-weight:700;font-family:var(--font);padding:0 16px;height:34px;border-radius:8px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;border:none;transition:background var(--transition),box-shadow var(--transition)}
+.btn-primary:hover{background:var(--red-80);box-shadow:0 4px 12px rgba(237,28,36,0.3)}
+.btn-ghost{border:1px solid var(--border);background:#fff;color:var(--text);font-size:12px;font-weight:600;font-family:var(--font);padding:0 12px;height:32px;border-radius:7px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:all var(--transition)}
+.btn-ghost:hover{border-color:var(--gray-30);background:var(--gray-10)}
+
+/* ── SEARCH BAR ── */
+.search-wrap{position:relative}
+.search-wrap i{position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--text-3);font-size:14px}
+.search-input{height:32px;border:1px solid var(--border);border-radius:7px;background:#fff;padding:0 10px 0 30px;font-size:12px;font-family:var(--font);color:var(--text);outline:none;transition:border-color var(--transition);width:220px}
 .search-input:focus{border-color:var(--gray-30)}
-.coming-soon{display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;gap:12px;color:var(--text-2)}
-.coming-soon i{font-size:40px;color:var(--gray-20)}
-.coming-soon h3{font-size:16px;font-weight:600;color:var(--text-2)}
-.coming-soon p{font-size:13px}
-.fw{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:2px 7px;border-radius:4px}
-.fw.rn{background:#E8F4FD;color:#0284C7}.fw.flutter{background:#E0F2FE;color:#0369A1}.fw.cordova{background:#F0FDF4;color:#16A34A}
+
+/* ── APPS GRID ── */
+.apps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.app-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px;box-shadow:var(--shadow-card);transition:box-shadow var(--transition),border-color var(--transition);cursor:pointer}
+.app-card:hover{box-shadow:var(--shadow-card-hover);border-color:var(--gray-20)}
+.app-card-top{display:flex;align-items:flex-start;justify-content:space-between}
+.app-icon{width:42px;height:42px;min-width:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:800;letter-spacing:-0.5px}
+.app-name{font-size:14px;font-weight:700;color:var(--text)}
+.app-meta{font-size:11px;color:var(--text-3);margin-top:2px}
+.app-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.app-stat{background:var(--gray-10);border-radius:8px;padding:10px 12px}
+.app-stat-val{font-size:15px;font-weight:700;font-family:var(--mono);color:var(--text)}
+.app-stat-label{font-size:10px;color:var(--text-3);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:0.3px}
+
+/* ── DEP SCREEN ── */
+.dep-filters{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.filter-tab{border:none;background:none;font-family:var(--font);font-size:12.5px;font-weight:500;color:var(--text-2);padding:6px 12px;border-radius:7px;cursor:pointer;transition:all var(--transition);display:inline-flex;align-items:center;gap:6px}
+.filter-tab:hover{background:var(--gray-10);color:var(--text)}
+.filter-tab.active{background:var(--red-10);color:var(--red);font-weight:600}
+.filter-tab .count{font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;background:var(--gray-15);color:var(--text-3)}
+.filter-tab.active .count{background:var(--red-20);color:var(--red)}
+
+.dep-stepper{display:flex;align-items:center}
+.dep-step-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.dep-step-dot.done{background:var(--green)}
+.dep-step-dot.active{background:var(--blue);animation:pulse-b 1.5s infinite}
+.dep-step-dot.idle{background:var(--gray-20)}
+.dep-step-line{height:2px;width:14px;flex-shrink:0}
+.dep-step-line.done{background:var(--green)}
+.dep-step-line.idle{background:var(--gray-20)}
+
+/* ── PLACEHOLDER ── */
+.coming-soon{display:flex;flex-direction:column;align-items:center;justify-content:center;height:55vh;gap:10px;color:var(--text-3)}
+.coming-soon i{font-size:36px;color:var(--gray-20)}
+.coming-soon h3{font-size:15px;font-weight:600;color:var(--text-2)}
+.coming-soon p{font-size:12.5px}
+
+/* ── RELEASES SCREEN ── */
+.health-bar{height:6px;border-radius:3px;background:var(--gray-15);overflow:hidden;min-width:80px}
+.health-fill{height:100%;border-radius:3px}
+
+/* ── ROLLOUT SCREEN ── */
+.rollout-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow-card);margin-bottom:14px}
+.rollout-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.rollout-stages{display:flex;gap:0;align-items:center;margin-bottom:14px}
+.stage{flex:1;text-align:center;position:relative}
+.stage-bar{height:6px;background:var(--gray-15);margin:0 2px;border-radius:3px;overflow:hidden}
+.stage-fill{height:100%;border-radius:3px}
+.stage-label{font-size:10px;font-weight:600;color:var(--text-3);margin-top:4px;text-transform:uppercase;letter-spacing:0.3px}
+.stage-pct{font-size:11px;font-weight:700;font-family:var(--mono);color:var(--text)}
+
+/* ── ANALYTICS ── */
+.chart-placeholder{background:var(--gray-10);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:12px}
+.metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+
+/* ── CRASH MONITOR ── */
+.sev-pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:5px;font-size:10.5px;font-weight:700;letter-spacing:0.3px}
+.sev-pill.critical{background:#FFF1F0;color:#C0392B}
+.sev-pill.high{background:var(--red-10);color:var(--red)}
+.sev-pill.medium{background:var(--gold-10);color:#92640A}
+.sev-pill.low{background:var(--green-10);color:var(--green)}
+
+/* ── TEAM ── */
+.role-badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:600}
+.role-badge.admin{background:#EDE9FE;color:#5B21B6}
+.role-badge.release{background:var(--blue-10);color:var(--blue)}
+.role-badge.viewer{background:var(--gray-10);color:var(--gray-40)}
+.role-badge.devops{background:var(--green-10);color:var(--green)}
+
+/* ── AUDIT ── */
+.audit-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+
+/* ── API ── */
+.code-block{background:var(--gray-80);color:#E5E5E5;border-radius:8px;padding:14px 16px;font-family:var(--mono);font-size:12px;line-height:1.6;overflow-x:auto}
+.token-row{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--gray-15)}
+.token-row:last-child{border-bottom:none}
+
+/* ── SETTINGS ── */
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--gray-15)}
+.setting-row:last-child{border-bottom:none}
+.toggle{width:38px;height:22px;border-radius:11px;background:var(--gray-20);position:relative;cursor:pointer;transition:background var(--transition)}
+.toggle.on{background:var(--green)}
+.toggle::after{content:'';position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;top:3px;left:3px;transition:transform var(--transition);box-shadow:0 1px 3px rgba(0,0,0,0.15)}
+.toggle.on::after{transform:translateX(16px)}
 </style>
 </head>
 <body>
 <div id="app">
+
+<!-- ═══ SIDEBAR ═══ -->
 <nav id="sidebar">
   <div class="sb-logo">
     <div class="sb-logo-mark">OTA</div>
-    <span class="sb-logo-text">IFG OTA Deploy</span>
+    <div style="min-width:0;flex:1">
+      <div class="sb-logo-text">IFG OTA Deploy</div>
+      <div class="sb-logo-sub">Enterprise Platform</div>
+    </div>
+    <div class="sb-toggle-top" onclick="toggleSidebar()" id="sb-toggle-btn" title="Collapse sidebar">
+      <i class="ti ti-layout-sidebar-left-collapse" id="sb-toggle-icon"></i>
+    </div>
   </div>
+
   <div class="sb-nav">
     <div class="sb-section">
       <div class="sb-section-label">Platform</div>
@@ -192,20 +423,32 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
       <div class="nav-item" data-screen="settings" data-label="Settings" onclick="nav(this)"><i class="ti ti-settings ni-icon"></i><span class="ni-label">Settings</span></div>
     </div>
   </div>
-  <div id="sb-toggle" onclick="toggleSidebar()"><i class="ti ti-layout-sidebar-left-collapse" id="sb-toggle-icon"></i></div>
+
+  <div class="sb-footer">
+    <div class="sb-user-avatar">RA</div>
+    <div class="sb-user-info">
+      <div class="sb-user-name">R. Ananda</div>
+      <div class="sb-user-role">Platform Admin</div>
+    </div>
+  </div>
 </nav>
+
+<!-- ═══ MAIN ═══ -->
 <div id="main">
   <div id="navbar">
-    <span class="nb-title" id="nb-title">Overview</span>
+    <span class="nb-breadcrumb" id="nb-title">Overview</span>
+    <div class="nb-search"><i class="ti ti-search"></i><span style="flex:1;color:var(--text-3)">Search apps, deployments…</span><kbd>⌘K</kbd></div>
+    <div class="nb-env"><span class="dot"></span>PRODUCTION</div>
+    <div class="nb-sep"></div>
     <div class="nb-actions">
-      <button class="nb-btn"><i class="ti ti-search"></i></button>
-      <div class="nb-sep"></div>
       <button class="nb-btn"><i class="ti ti-bell"></i><span class="dot"></span></button>
       <div class="nb-avatar">RA</div>
     </div>
   </div>
+
   <div id="content">
-    <!-- OVERVIEW -->
+
+    <!-- ══════════ OVERVIEW ══════════ -->
     <div id="screen-overview" class="screen active">
       <div class="page-hdr">
         <div class="page-hdr-row">
@@ -213,6 +456,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
           <button class="btn-primary"><i class="ti ti-plus"></i>New Deployment</button>
         </div>
       </div>
+
       <div class="incident-banner">
         <i class="ti ti-alert-triangle incident-icon"></i>
         <div class="incident-text">
@@ -220,20 +464,56 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
           <div class="incident-sub">Rollout paused at 24% · 1,847 affected devices · Opened 23m ago by AutoDetect</div>
         </div>
         <span class="incident-tag">P1</span>
-        <button class="btn-ghost-sm"><i class="ti ti-external-link"></i>View incident</button>
+        <button class="btn-ghost"><i class="ti ti-external-link"></i>View incident</button>
       </div>
+
       <div class="kpi-grid">
-        <div class="kpi-card"><div class="kpi-label">Active Deployments</div><div class="kpi-value">7</div><div class="kpi-delta up"><i class="ti ti-trending-up" style="font-size:10px"></i> +3 from yesterday</div></div>
-        <div class="kpi-card"><div class="kpi-label">Success Rate</div><div class="kpi-value">98.3%</div><div class="kpi-delta down"><i class="ti ti-trending-down" style="font-size:10px"></i> −0.4% vs 7d avg</div></div>
-        <div class="kpi-card"><div class="kpi-label">Crash-Free Rate</div><div class="kpi-value">99.7%</div><div class="kpi-delta up"><i class="ti ti-trending-up" style="font-size:10px"></i> +0.1% today</div></div>
-        <div class="kpi-card"><div class="kpi-label">Active Devices</div><div class="kpi-value">2.4M</div><div class="kpi-delta neutral">Stable</div></div>
-        <div class="kpi-card"><div class="kpi-label">Rollbacks</div><div class="kpi-value">2</div><div class="kpi-delta warn"><i class="ti ti-trending-up" style="font-size:10px"></i> +2 vs 24h</div></div>
-        <div class="kpi-card"><div class="kpi-label">Release Velocity</div><div class="kpi-value">4.8/d</div><div class="kpi-delta up"><i class="ti ti-trending-up" style="font-size:10px"></i> +1.2 this sprint</div></div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:var(--red-10)"><i class="ti ti-rocket" style="color:var(--red)"></i></div>
+          <div class="kpi-delta-badge up"><i class="ti ti-trending-up" style="font-size:11px"></i>+3</div>
+          <div class="kpi-value">7</div>
+          <div class="kpi-label">Active Deployments</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:var(--green-10)"><i class="ti ti-circle-check" style="color:var(--green)"></i></div>
+          <div class="kpi-delta-badge down"><i class="ti ti-trending-down" style="font-size:11px"></i>−0.4%</div>
+          <div class="kpi-value">98.3%</div>
+          <div class="kpi-label">Success Rate</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:var(--green-10)"><i class="ti ti-shield-check" style="color:var(--green)"></i></div>
+          <div class="kpi-delta-badge up"><i class="ti ti-trending-up" style="font-size:11px"></i>+0.1%</div>
+          <div class="kpi-value">99.7%</div>
+          <div class="kpi-label">Crash-Free Rate</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:var(--blue-10)"><i class="ti ti-devices" style="color:var(--blue)"></i></div>
+          <div class="kpi-delta-badge neutral">Stable</div>
+          <div class="kpi-value">2.4M</div>
+          <div class="kpi-label">Active Devices</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:var(--gold-10)"><i class="ti ti-rotate-clockwise-2" style="color:var(--gold)"></i></div>
+          <div class="kpi-delta-badge warn"><i class="ti ti-trending-up" style="font-size:11px"></i>+2</div>
+          <div class="kpi-value">2</div>
+          <div class="kpi-label">Rollbacks (24h)</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon" style="background:var(--red-10)"><i class="ti ti-gauge" style="color:var(--red)"></i></div>
+          <div class="kpi-delta-badge up"><i class="ti ti-trending-up" style="font-size:11px"></i>+1.2</div>
+          <div class="kpi-value">4.8/d</div>
+          <div class="kpi-label">Release Velocity</div>
+        </div>
       </div>
+
       <div class="two-col">
         <div class="card">
-          <div class="card-hdr"><div><div class="card-hdr-title">Active Deployments</div><div class="card-hdr-sub">5 in progress</div></div><button class="btn-ghost-sm" onclick="nav(document.querySelector('[data-screen=deployments]'))">See all</button></div>
-          <table class="data-table"><thead><tr><th>App</th><th>Version</th><th>Status</th><th>Progress</th></tr></thead><tbody>
+          <div class="card-hdr">
+            <div><div class="card-hdr-title">Active Deployments</div><div class="card-hdr-sub">5 in progress</div></div>
+            <button class="btn-ghost" onclick="nav(document.querySelector('[data-screen=deployments]'))">See all</button>
+          </div>
+          <table class="data-table"><thead><tr><th>App</th><th>Version</th><th>Status</th><th>Progress</th></tr></thead>
+          <tbody>
             <tr><td><strong>BRImo SuperApp</strong></td><td><span class="mono">v8.4.1</span></td><td><span class="badge paused"><span class="dot"></span>Paused</span></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill red" style="width:24%"></div></div><span class="prog-pct">24%</span></div></td></tr>
             <tr><td><strong>IFG Life Portal</strong></td><td><span class="mono">v3.12.0</span></td><td><span class="badge rolling"><span class="dot"></span>Rolling</span></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill blue" style="width:68%"></div></div><span class="prog-pct">68%</span></div></td></tr>
             <tr><td><strong>Askrindo Mobile</strong></td><td><span class="mono">v2.4.5</span></td><td><span class="badge rolling"><span class="dot"></span>Rolling</span></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill blue" style="width:91%"></div></div><span class="prog-pct">91%</span></div></td></tr>
@@ -244,66 +524,305 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
         <div class="card">
           <div class="card-hdr"><div class="card-hdr-title">Activity</div><span class="card-hdr-sub">Last 2 hours</span></div>
           <div class="activity-feed">
-            <div class="activity-item"><div class="activity-dot" style="background:var(--err)"></div><div class="activity-content"><div class="activity-msg"><strong>AutoDetect</strong> paused BRImo v8.4.1 rollout — install failure rate above threshold</div><div class="activity-time">23 min ago</div></div></div>
-            <div class="activity-item"><div class="activity-dot" style="background:var(--blue)"></div><div class="activity-content"><div class="activity-msg"><strong>IFG Life Portal</strong> v3.12.0 rollout reached 68% — on schedule</div><div class="activity-time">41 min ago</div></div></div>
-            <div class="activity-item"><div class="activity-dot" style="background:var(--green)"></div><div class="activity-content"><div class="activity-msg"><strong>IFG InvestNow</strong> v1.8.3 deployment complete — 310K devices updated</div><div class="activity-time">1h 12m ago</div></div></div>
-            <div class="activity-item"><div class="activity-dot" style="background:var(--green)"></div><div class="activity-content"><div class="activity-msg"><strong>Askrindo Mobile</strong> v2.4.5 entered final stage — 91% rollout</div><div class="activity-time">1h 38m ago</div></div></div>
-            <div class="activity-item"><div class="activity-dot" style="background:var(--gray-30)"></div><div class="activity-content"><div class="activity-msg"><strong>R. Ananda</strong> created canary deployment for PNM Mekaar v4.1.0</div><div class="activity-time">2h 05m ago</div></div></div>
+            <div class="activity-item"><div class="activity-dot" style="background:var(--err)"></div><div><div class="activity-msg"><strong>AutoDetect</strong> paused BRImo v8.4.1 — install failure above threshold</div><div class="activity-time">23 min ago</div></div></div>
+            <div class="activity-item"><div class="activity-dot" style="background:var(--blue)"></div><div><div class="activity-msg"><strong>IFG Life Portal</strong> v3.12.0 reached 68% — on schedule</div><div class="activity-time">41 min ago</div></div></div>
+            <div class="activity-item"><div class="activity-dot" style="background:var(--green)"></div><div><div class="activity-msg"><strong>IFG InvestNow</strong> v1.8.3 complete — 310K devices updated</div><div class="activity-time">1h 12m ago</div></div></div>
+            <div class="activity-item"><div class="activity-dot" style="background:var(--green)"></div><div><div class="activity-msg"><strong>Askrindo Mobile</strong> v2.4.5 entered final stage — 91%</div><div class="activity-time">1h 38m ago</div></div></div>
+            <div class="activity-item"><div class="activity-dot" style="background:var(--gray-20)"></div><div><div class="activity-msg"><strong>R. Ananda</strong> created canary deployment for PNM Mekaar v4.1.0</div><div class="activity-time">2h 05m ago</div></div></div>
           </div>
         </div>
       </div>
     </div>
-    <!-- APPS -->
+
+    <!-- ══════════ APPS ══════════ -->
     <div id="screen-apps" class="screen">
-      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Apps</h1><p>6 applications registered · 13.51M total users</p></div><button class="btn-primary"><i class="ti ti-plus"></i>Register App</button></div></div>
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Apps</h1><p>6 applications · 13.51M total users</p></div><button class="btn-primary"><i class="ti ti-plus"></i>Register App</button></div></div>
       <div class="apps-grid">
-        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#005BAC">BR</div><div><div class="app-name">BRImo SuperApp</div><div class="app-meta">PT Bank Rakyat Indonesia</div></div></div><span class="badge paused"><span class="dot"></span>Paused</span></div><div style="display:flex;align-items:center;gap:6px"><span class="chip"><i class="ti ti-brand-android" style="font-size:12px;color:#3DDC84"></i>Android</span><span class="fw rn">React Native</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">8.2M</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v8.4.1</div><div class="app-stat-label">Live version</div></div></div></div>
-        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:var(--red)">IFG</div><div><div class="app-name">IFG Life Portal</div><div class="app-meta">IFG Life Insurance</div></div></div><span class="badge rolling"><span class="dot"></span>Rolling</span></div><div style="display:flex;align-items:center;gap:6px"><span class="chip"><i class="ti ti-devices" style="font-size:12px"></i>iOS + Android</span><span class="fw flutter">Flutter</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">1.1M</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v3.12.0</div><div class="app-stat-label">Live version</div></div></div></div>
-        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#E67E22">AS</div><div><div class="app-name">Askrindo Mobile</div><div class="app-meta">PT Askrindo</div></div></div><span class="badge rolling"><span class="dot"></span>Rolling</span></div><div style="display:flex;align-items:center;gap:6px"><span class="chip"><i class="ti ti-devices" style="font-size:12px"></i>iOS + Android</span><span class="fw flutter">Flutter</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">420K</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v2.4.5</div><div class="app-stat-label">Live version</div></div></div></div>
-        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#1E6FA8">JW</div><div><div class="app-name">Jiwasraya Connect</div><div class="app-meta">PT Asuransi Jiwasraya</div></div></div><span class="badge live"><span class="dot"></span>Live</span></div><div style="display:flex;align-items:center;gap:6px"><span class="chip"><i class="ti ti-devices" style="font-size:12px"></i>iOS + Android</span><span class="fw rn">React Native</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">680K</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v5.2.1</div><div class="app-stat-label">Live version</div></div></div></div>
-        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#16A34A">PM</div><div><div class="app-name">PNM Mekaar</div><div class="app-meta">PT Permodalan Nasional</div></div></div><span class="badge canary"><span class="dot"></span>Canary</span></div><div style="display:flex;align-items:center;gap:6px"><span class="chip"><i class="ti ti-devices" style="font-size:12px"></i>iOS + Android</span><span class="fw flutter">Flutter</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">2.8M</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v4.1.0</div><div class="app-stat-label">Live version</div></div></div></div>
-        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#7C3AED">IN</div><div><div class="app-name">IFG InvestNow</div><div class="app-meta">IFG Securities</div></div></div><span class="badge complete"><span class="dot"></span>Complete</span></div><div style="display:flex;align-items:center;gap:6px"><span class="chip"><i class="ti ti-devices" style="font-size:12px"></i>iOS + Android</span><span class="fw rn">React Native</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">310K</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v1.8.3</div><div class="app-stat-label">Live version</div></div></div></div>
+        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#005BAC">BR</div><div><div class="app-name">BRImo SuperApp</div><div class="app-meta">PT Bank Rakyat Indonesia</div></div></div><span class="badge paused"><span class="dot"></span>Paused</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-brand-android" style="font-size:11px;color:#3DDC84"></i>Android</span><span class="fw rn">React Native</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">8.2M</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v8.4.1</div><div class="app-stat-label">Live version</div></div></div></div>
+        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:var(--red)">IFG</div><div><div class="app-name">IFG Life Portal</div><div class="app-meta">IFG Life Insurance</div></div></div><span class="badge rolling"><span class="dot"></span>Rolling</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw flutter">Flutter</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">1.1M</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v3.12.0</div><div class="app-stat-label">Live version</div></div></div></div>
+        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#E67E22">AS</div><div><div class="app-name">Askrindo Mobile</div><div class="app-meta">PT Askrindo</div></div></div><span class="badge rolling"><span class="dot"></span>Rolling</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw flutter">Flutter</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">420K</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v2.4.5</div><div class="app-stat-label">Live version</div></div></div></div>
+        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#1E6FA8">JW</div><div><div class="app-name">Jiwasraya Connect</div><div class="app-meta">PT Asuransi Jiwasraya</div></div></div><span class="badge live"><span class="dot"></span>Live</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw rn">React Native</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">680K</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v5.2.1</div><div class="app-stat-label">Live version</div></div></div></div>
+        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#16A34A">PM</div><div><div class="app-name">PNM Mekaar</div><div class="app-meta">PT Permodalan Nasional</div></div></div><span class="badge canary"><span class="dot"></span>Canary</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw flutter">Flutter</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">2.8M</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v4.1.0</div><div class="app-stat-label">Live version</div></div></div></div>
+        <div class="app-card"><div class="app-card-top"><div style="display:flex;align-items:center;gap:12px"><div class="app-icon" style="background:#7C3AED">IN</div><div><div class="app-name">IFG InvestNow</div><div class="app-meta">IFG Securities</div></div></div><span class="badge complete"><span class="dot"></span>Complete</span></div><div style="display:flex;gap:6px;flex-wrap:wrap"><span class="chip"><i class="ti ti-devices" style="font-size:11px"></i>iOS + Android</span><span class="fw rn">React Native</span></div><div class="app-stats"><div class="app-stat"><div class="app-stat-val">310K</div><div class="app-stat-label">Active users</div></div><div class="app-stat"><div class="app-stat-val">v1.8.3</div><div class="app-stat-label">Live version</div></div></div></div>
       </div>
     </div>
-    <!-- DEPLOYMENTS -->
+
+    <!-- ══════════ DEPLOYMENTS ══════════ -->
     <div id="screen-deployments" class="screen">
-      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Deployments</h1><p>3 active · 2 completed today</p></div><div style="display:flex;gap:8px"><div class="search-wrap"><i class="ti ti-search"></i><input class="search-input" placeholder="Search deployments…"></div><button class="btn-primary"><i class="ti ti-plus"></i>New Deployment</button></div></div></div>
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Deployments</h1><p>3 active · 2 completed today</p></div><div style="display:flex;gap:8px;align-items:center"><div class="search-wrap"><i class="ti ti-search"></i><input class="search-input" placeholder="Search deployments…"></div><button class="btn-primary"><i class="ti ti-plus"></i>New Deployment</button></div></div></div>
       <div class="dep-filters">
-        <button class="filter-pill active">All <span class="count">8</span></button>
-        <button class="filter-pill">Active <span class="count" style="background:var(--surface);color:var(--text-2)">5</span></button>
-        <button class="filter-pill">Completed <span class="count" style="background:var(--surface);color:var(--text-2)">2</span></button>
-        <button class="filter-pill">Failed <span class="count" style="background:var(--surface);color:var(--text-2)">1</span></button>
+        <button class="filter-tab active" onclick="filterTab(this)">All <span class="count">8</span></button>
+        <button class="filter-tab" onclick="filterTab(this)">Active <span class="count">5</span></button>
+        <button class="filter-tab" onclick="filterTab(this)">Completed <span class="count">2</span></button>
+        <button class="filter-tab" onclick="filterTab(this)">Failed <span class="count">1</span></button>
       </div>
       <div class="card">
-        <table class="data-table"><thead><tr><th>App / Version</th><th>Status</th><th>Pipeline</th><th>Progress</th><th>Devices</th><th>Started</th><th></th></tr></thead><tbody>
-          <tr style="background:rgba(224,43,29,0.03)"><td><div style="font-weight:600">BRImo SuperApp</div><div class="mono" style="color:var(--text-2)">v8.4.1 · DEP-4821</div></td><td><span class="badge paused"><span class="dot"></span>Paused</span></td><td><div class="dep-stepper"><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step active-step"><span class="s"></span></div><div class="dep-step-line"></div><div class="dep-step"><span class="s"></span></div><div class="dep-step-line"></div><div class="dep-step"><span class="s"></span></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill red" style="width:24%"></div></div><span class="prog-pct">24%</span></div></td><td><span style="font-family:var(--mono);font-size:12px">1,847 <span style="color:var(--err)">err</span></span></td><td><span style="font-size:12px;color:var(--text-2)">2h 31m ago</span></td><td><button class="btn-ghost-sm" style="color:var(--err);border-color:var(--err-10)"><i class="ti ti-player-play"></i>Resume</button></td></tr>
-          <tr><td><div style="font-weight:600">IFG Life Portal</div><div class="mono" style="color:var(--text-2)">v3.12.0 · DEP-4819</div></td><td><span class="badge rolling"><span class="dot"></span>Rolling</span></td><td><div class="dep-stepper"><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step active-step"><span class="s"></span></div><div class="dep-step-line"></div><div class="dep-step"><span class="s"></span></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill blue" style="width:68%"></div></div><span class="prog-pct">68%</span></div></td><td><span style="font-family:var(--mono);font-size:12px">748K</span></td><td><span style="font-size:12px;color:var(--text-2)">3h 14m ago</span></td><td><button class="btn-ghost-sm"><i class="ti ti-player-pause"></i>Pause</button></td></tr>
-          <tr><td><div style="font-weight:600">Askrindo Mobile</div><div class="mono" style="color:var(--text-2)">v2.4.5 · DEP-4817</div></td><td><span class="badge rolling"><span class="dot"></span>Rolling</span></td><td><div class="dep-stepper"><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step active-step"><span class="s"></span></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill blue" style="width:91%"></div></div><span class="prog-pct">91%</span></div></td><td><span style="font-family:var(--mono);font-size:12px">382K</span></td><td><span style="font-size:12px;color:var(--text-2)">5h 02m ago</span></td><td><button class="btn-ghost-sm"><i class="ti ti-player-pause"></i>Pause</button></td></tr>
-          <tr><td><div style="font-weight:600">PNM Mekaar</div><div class="mono" style="color:var(--text-2)">v4.1.0 · DEP-4816</div></td><td><span class="badge canary"><span class="dot"></span>Canary</span></td><td><div class="dep-stepper"><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step active-step"><span class="s"></span></div><div class="dep-step-line"></div><div class="dep-step"><span class="s"></span></div><div class="dep-step-line"></div><div class="dep-step"><span class="s"></span></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill purple" style="width:5%"></div></div><span class="prog-pct">5%</span></div></td><td><span style="font-family:var(--mono);font-size:12px">140K</span></td><td><span style="font-size:12px;color:var(--text-2)">6h 30m ago</span></td><td><button class="btn-ghost-sm"><i class="ti ti-player-pause"></i>Pause</button></td></tr>
-          <tr><td><div style="font-weight:600">IFG InvestNow</div><div class="mono" style="color:var(--text-2)">v1.8.3 · DEP-4812</div></td><td><span class="badge complete"><span class="dot"></span>Complete</span></td><td><div class="dep-stepper"><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step done"><span class="s"></span></div><div class="dep-step-line done"></div><div class="dep-step done"><span class="s"></span></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill green" style="width:100%"></div></div><span class="prog-pct">100%</span></div></td><td><span style="font-family:var(--mono);font-size:12px">310K</span></td><td><span style="font-size:12px;color:var(--text-2)">8h 15m ago</span></td><td><button class="btn-ghost-sm"><i class="ti ti-file-text"></i>Report</button></td></tr>
+        <table class="data-table"><thead><tr><th>App / Version</th><th>Status</th><th>Pipeline</th><th>Progress</th><th>Devices</th><th>Started</th><th></th></tr></thead>
+        <tbody>
+          <tr style="background:rgba(255,241,240,0.4)">
+            <td><div style="font-weight:600">BRImo SuperApp</div><div class="mono" style="color:var(--text-3)">v8.4.1 · DEP-4821</div></td>
+            <td><span class="badge paused"><span class="dot"></span>Paused</span></td>
+            <td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div></div></td>
+            <td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill red" style="width:24%"></div></div><span class="prog-pct">24%</span></div></td>
+            <td><span class="mono" style="color:var(--err)">1,847 err</span></td>
+            <td><span style="font-size:12px;color:var(--text-3)">2h 31m ago</span></td>
+            <td><button class="btn-ghost" style="color:var(--red);border-color:var(--red-10)"><i class="ti ti-player-play"></i>Resume</button></td>
+          </tr>
+          <tr><td><div style="font-weight:600">IFG Life Portal</div><div class="mono" style="color:var(--text-3)">v3.12.0 · DEP-4819</div></td><td><span class="badge rolling"><span class="dot"></span>Rolling</span></td><td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill blue" style="width:68%"></div></div><span class="prog-pct">68%</span></div></td><td><span class="mono">748K</span></td><td><span style="font-size:12px;color:var(--text-3)">3h 14m ago</span></td><td><button class="btn-ghost"><i class="ti ti-player-pause"></i>Pause</button></td></tr>
+          <tr><td><div style="font-weight:600">Askrindo Mobile</div><div class="mono" style="color:var(--text-3)">v2.4.5 · DEP-4817</div></td><td><span class="badge rolling"><span class="dot"></span>Rolling</span></td><td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill blue" style="width:91%"></div></div><span class="prog-pct">91%</span></div></td><td><span class="mono">382K</span></td><td><span style="font-size:12px;color:var(--text-3)">5h 02m ago</span></td><td><button class="btn-ghost"><i class="ti ti-player-pause"></i>Pause</button></td></tr>
+          <tr><td><div style="font-weight:600">PNM Mekaar</div><div class="mono" style="color:var(--text-3)">v4.1.0 · DEP-4816</div></td><td><span class="badge canary"><span class="dot"></span>Canary</span></td><td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill purple" style="width:5%"></div></div><span class="prog-pct">5%</span></div></td><td><span class="mono">140K</span></td><td><span style="font-size:12px;color:var(--text-3)">6h 30m ago</span></td><td><button class="btn-ghost"><i class="ti ti-player-pause"></i>Pause</button></td></tr>
+          <tr><td><div style="font-weight:600">IFG InvestNow</div><div class="mono" style="color:var(--text-3)">v1.8.3 · DEP-4812</div></td><td><span class="badge complete"><span class="dot"></span>Complete</span></td><td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill green" style="width:100%"></div></div><span class="prog-pct">100%</span></div></td><td><span class="mono">310K</span></td><td><span style="font-size:12px;color:var(--text-3)">8h 15m ago</span></td><td><button class="btn-ghost"><i class="ti ti-file-text"></i>Report</button></td></tr>
         </tbody></table>
       </div>
     </div>
-    <!-- PLACEHOLDERS -->
-    <div id="screen-releases" class="screen"><div class="coming-soon"><i class="ti ti-tag"></i><h3>Releases</h3><p>Version table &amp; health scores — coming next</p></div></div>
-    <div id="screen-rollouts" class="screen"><div class="coming-soon"><i class="ti ti-git-branch"></i><h3>Rollouts</h3><p>Rollout controls &amp; automation rules — coming next</p></div></div>
-    <div id="screen-analytics" class="screen"><div class="coming-soon"><i class="ti ti-chart-line"></i><h3>Analytics</h3><p>Install adoption &amp; crash-free charts — coming next</p></div></div>
-    <div id="screen-crash" class="screen"><div class="coming-soon"><i class="ti ti-bug"></i><h3>Crash Monitor</h3><p>Error list, severity &amp; regression tracking — coming next</p></div></div>
-    <div id="screen-devices" class="screen"><div class="coming-soon"><i class="ti ti-devices"></i><h3>Devices</h3><p>Device fleet management — coming next</p></div></div>
-    <div id="screen-integrations" class="screen"><div class="coming-soon"><i class="ti ti-plug"></i><h3>Integrations</h3><p>GitHub, Slack, Datadog &amp; more — coming next</p></div></div>
-    <div id="screen-team" class="screen"><div class="coming-soon"><i class="ti ti-users"></i><h3>Team &amp; Permissions</h3><p>RBAC matrix &amp; approvals — coming next</p></div></div>
-    <div id="screen-audit" class="screen"><div class="coming-soon"><i class="ti ti-clipboard-list"></i><h3>Audit Logs</h3><p>Immutable event log — coming next</p></div></div>
-    <div id="screen-api" class="screen"><div class="coming-soon"><i class="ti ti-key"></i><h3>API Access</h3><p>Tokens, webhooks &amp; CLI reference — coming next</p></div></div>
-    <div id="screen-settings" class="screen"><div class="coming-soon"><i class="ti ti-settings"></i><h3>Settings</h3><p>Platform configuration — coming next</p></div></div>
+
+    <!-- ══════════ RELEASES ══════════ -->
+    <div id="screen-releases" class="screen">
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Releases</h1><p>Version history & health scores</p></div><button class="btn-primary"><i class="ti ti-plus"></i>New Release</button></div></div>
+      <div class="card">
+        <table class="data-table"><thead><tr><th>App</th><th>Version</th><th>Platform</th><th>Health Score</th><th>Crash-Free</th><th>Installs</th><th>Released</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>BRImo SuperApp</strong></td><td><span class="mono">v8.4.1</span></td><td><span class="chip">Android</span></td><td><div style="display:flex;align-items:center;gap:8px"><div class="health-bar" style="width:80px"><div class="health-fill" style="width:42%;background:var(--err)"></div></div><span style="font-size:12px;font-weight:600;color:var(--err)">42</span></div></td><td><span style="font-family:var(--mono);font-size:12px;color:var(--err)">94.1%</span></td><td><span class="mono">1.96M</span></td><td><span style="font-size:12px;color:var(--text-3)">Today</span></td><td><span class="badge paused"><span class="dot"></span>Paused</span></td></tr>
+          <tr><td><strong>BRImo SuperApp</strong></td><td><span class="mono">v8.4.0</span></td><td><span class="chip">Android</span></td><td><div style="display:flex;align-items:center;gap:8px"><div class="health-bar" style="width:80px"><div class="health-fill" style="width:96%;background:var(--green)"></div></div><span style="font-size:12px;font-weight:600;color:var(--green)">96</span></div></td><td><span style="font-family:var(--mono);font-size:12px">99.8%</span></td><td><span class="mono">8.2M</span></td><td><span style="font-size:12px;color:var(--text-3)">14 Jun</span></td><td><span class="badge live"><span class="dot"></span>Live</span></td></tr>
+          <tr><td><strong>IFG Life Portal</strong></td><td><span class="mono">v3.12.0</span></td><td><span class="chip">iOS + Android</span></td><td><div style="display:flex;align-items:center;gap:8px"><div class="health-bar" style="width:80px"><div class="health-fill" style="width:88%;background:var(--green)"></div></div><span style="font-size:12px;font-weight:600;color:var(--green)">88</span></div></td><td><span style="font-family:var(--mono);font-size:12px">99.6%</span></td><td><span class="mono">748K</span></td><td><span style="font-size:12px;color:var(--text-3)">Today</span></td><td><span class="badge rolling"><span class="dot"></span>Rolling</span></td></tr>
+          <tr><td><strong>Askrindo Mobile</strong></td><td><span class="mono">v2.4.5</span></td><td><span class="chip">iOS + Android</span></td><td><div style="display:flex;align-items:center;gap:8px"><div class="health-bar" style="width:80px"><div class="health-fill" style="width:91%;background:var(--green)"></div></div><span style="font-size:12px;font-weight:600;color:var(--green)">91</span></div></td><td><span style="font-family:var(--mono);font-size:12px">99.9%</span></td><td><span class="mono">382K</span></td><td><span style="font-size:12px;color:var(--text-3)">16 Jun</span></td><td><span class="badge rolling"><span class="dot"></span>Rolling</span></td></tr>
+          <tr><td><strong>PNM Mekaar</strong></td><td><span class="mono">v4.1.0</span></td><td><span class="chip">iOS + Android</span></td><td><div style="display:flex;align-items:center;gap:8px"><div class="health-bar" style="width:80px"><div class="health-fill" style="width:95%;background:var(--green)"></div></div><span style="font-size:12px;font-weight:600;color:var(--green)">95</span></div></td><td><span style="font-family:var(--mono);font-size:12px">100%</span></td><td><span class="mono">140K</span></td><td><span style="font-size:12px;color:var(--text-3)">17 Jun</span></td><td><span class="badge canary"><span class="dot"></span>Canary</span></td></tr>
+          <tr><td><strong>IFG InvestNow</strong></td><td><span class="mono">v1.8.3</span></td><td><span class="chip">iOS + Android</span></td><td><div style="display:flex;align-items:center;gap:8px"><div class="health-bar" style="width:80px"><div class="health-fill" style="width:99%;background:var(--green)"></div></div><span style="font-size:12px;font-weight:600;color:var(--green)">99</span></div></td><td><span style="font-family:var(--mono);font-size:12px">99.9%</span></td><td><span class="mono">310K</span></td><td><span style="font-size:12px;color:var(--text-3)">15 Jun</span></td><td><span class="badge complete"><span class="dot"></span>Complete</span></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- ══════════ ROLLOUTS ══════════ -->
+    <div id="screen-rollouts" class="screen">
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Rollouts</h1><p>Staged rollout controls & automation rules</p></div><button class="btn-primary"><i class="ti ti-plus"></i>New Rollout</button></div></div>
+
+      <div class="rollout-card">
+        <div class="rollout-header">
+          <div style="display:flex;align-items:center;gap:10px"><div class="app-icon" style="background:#005BAC;width:34px;height:34px;border-radius:8px;font-size:10px">BR</div><div><div style="font-size:14px;font-weight:700">BRImo SuperApp · v8.4.1</div><div style="font-size:12px;color:var(--text-3);margin-top:1px">DEP-4821 · Started 2h 31m ago</div></div></div>
+          <div style="display:flex;gap:8px;align-items:center"><span class="badge paused"><span class="dot"></span>Paused at 24%</span><button class="btn-primary" style="background:var(--err)"><i class="ti ti-rotate-clockwise-2"></i>Rollback</button><button class="btn-ghost" style="color:var(--red);border-color:var(--red-10)"><i class="ti ti-player-play"></i>Resume</button></div>
+        </div>
+        <div class="rollout-stages">
+          <div class="stage"><div class="stage-bar"><div class="stage-fill" style="width:100%;background:var(--green)"></div></div><div class="stage-label">Canary</div><div class="stage-pct">5%</div></div>
+          <div class="dep-step-line done" style="width:20px;flex:none;margin-bottom:18px"></div>
+          <div class="stage"><div class="stage-bar"><div class="stage-fill" style="width:100%;background:var(--green)"></div></div><div class="stage-label">Stage 1</div><div class="stage-pct">10%</div></div>
+          <div class="dep-step-line done" style="width:20px;flex:none;margin-bottom:18px"></div>
+          <div class="stage"><div class="stage-bar"><div class="stage-fill" style="width:48%;background:var(--err)"></div></div><div class="stage-label">Stage 2</div><div class="stage-pct" style="color:var(--err)">24% ⚠</div></div>
+          <div class="dep-step-line idle" style="width:20px;flex:none;margin-bottom:18px"></div>
+          <div class="stage"><div class="stage-bar"></div><div class="stage-label">Stage 3</div><div class="stage-pct" style="color:var(--text-3)">50%</div></div>
+          <div class="dep-step-line idle" style="width:20px;flex:none;margin-bottom:18px"></div>
+          <div class="stage"><div class="stage-bar"></div><div class="stage-label">Full</div><div class="stage-pct" style="color:var(--text-3)">100%</div></div>
+        </div>
+        <div style="background:var(--err-10);border:1px solid #FECDD3;border-radius:8px;padding:10px 14px;font-size:12px;color:var(--err)"><i class="ti ti-alert-circle"></i> Rollout paused automatically: install failure rate 5.9% (threshold: 2.0%) · 1,847 devices affected</div>
+      </div>
+
+      <div class="rollout-card">
+        <div class="rollout-header">
+          <div style="display:flex;align-items:center;gap:10px"><div class="app-icon" style="background:var(--red);width:34px;height:34px;border-radius:8px;font-size:10px">IFG</div><div><div style="font-size:14px;font-weight:700">IFG Life Portal · v3.12.0</div><div style="font-size:12px;color:var(--text-3);margin-top:1px">DEP-4819 · Est. complete in ~3h</div></div></div>
+          <div style="display:flex;gap:8px;align-items:center"><span class="badge rolling"><span class="dot"></span>Rolling 68%</span><button class="btn-ghost"><i class="ti ti-player-pause"></i>Pause</button></div>
+        </div>
+        <div class="rollout-stages">
+          <div class="stage"><div class="stage-bar"><div class="stage-fill" style="width:100%;background:var(--green)"></div></div><div class="stage-label">Canary</div><div class="stage-pct">5%</div></div>
+          <div class="dep-step-line done" style="width:20px;flex:none;margin-bottom:18px"></div>
+          <div class="stage"><div class="stage-bar"><div class="stage-fill" style="width:100%;background:var(--green)"></div></div><div class="stage-label">Stage 1</div><div class="stage-pct">10%</div></div>
+          <div class="dep-step-line done" style="width:20px;flex:none;margin-bottom:18px"></div>
+          <div class="stage"><div class="stage-bar"><div class="stage-fill" style="width:100%;background:var(--green)"></div></div><div class="stage-label">Stage 2</div><div class="stage-pct">25%</div></div>
+          <div class="dep-step-line done" style="width:20px;flex:none;margin-bottom:18px"></div>
+          <div class="stage"><div class="stage-bar"><div class="stage-fill" style="width:72%;background:var(--blue)"></div></div><div class="stage-label">Stage 3</div><div class="stage-pct" style="color:var(--blue)">68%</div></div>
+          <div class="dep-step-line idle" style="width:20px;flex:none;margin-bottom:18px"></div>
+          <div class="stage"><div class="stage-bar"></div><div class="stage-label">Full</div><div class="stage-pct" style="color:var(--text-3)">100%</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ ANALYTICS ══════════ -->
+    <div id="screen-analytics" class="screen">
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Analytics</h1><p>Install adoption & platform health</p></div><div style="display:flex;gap:8px"><button class="btn-ghost">7 Days</button><button class="btn-ghost">30 Days</button><button class="btn-primary">90 Days</button></div></div></div>
+      <div class="metric-row">
+        <div class="kpi-card"><div class="kpi-icon" style="background:var(--blue-10)"><i class="ti ti-download" style="color:var(--blue)"></i></div><div class="kpi-delta-badge up"><i class="ti ti-trending-up" style="font-size:11px"></i>+12%</div><div class="kpi-value">4.2M</div><div class="kpi-label">Total Installs (90d)</div></div>
+        <div class="kpi-card"><div class="kpi-icon" style="background:var(--green-10)"><i class="ti ti-users" style="color:var(--green)"></i></div><div class="kpi-delta-badge up"><i class="ti ti-trending-up" style="font-size:11px"></i>+8.3%</div><div class="kpi-value">78.4%</div><div class="kpi-label">Adoption Rate</div></div>
+        <div class="kpi-card"><div class="kpi-icon" style="background:var(--green-10)"><i class="ti ti-shield" style="color:var(--green)"></i></div><div class="kpi-delta-badge up"><i class="ti ti-trending-up" style="font-size:11px"></i>+0.3%</div><div class="kpi-value">99.7%</div><div class="kpi-label">Avg Crash-Free</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:2fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-hdr"><div class="card-hdr-title">Install Volume</div><span class="card-hdr-sub">Daily installs across all apps</span></div>
+          <div style="padding:20px">
+            <svg width="100%" height="160" viewBox="0 0 600 160" preserveAspectRatio="none">
+              <defs><linearGradient id="gblue" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3299C5" stop-opacity="0.15"/><stop offset="100%" stop-color="#3299C5" stop-opacity="0"/></linearGradient>
+              <linearGradient id="gred" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ED1C24" stop-opacity="0.12"/><stop offset="100%" stop-color="#ED1C24" stop-opacity="0"/></linearGradient></defs>
+              <path d="M0,120 C50,110 100,90 150,85 C200,80 250,95 300,70 C350,45 400,60 450,40 C500,20 550,30 600,15" fill="none" stroke="#3299C5" stroke-width="2.5"/>
+              <path d="M0,120 C50,110 100,90 150,85 C200,80 250,95 300,70 C350,45 400,60 450,40 C500,20 550,30 600,15 L600,160 L0,160Z" fill="url(#gblue)"/>
+              <path d="M0,140 C50,135 100,130 150,125 C200,120 250,128 300,115 C350,102 400,110 450,95 C500,80 550,88 600,75" fill="none" stroke="#ED1C24" stroke-width="2" stroke-dasharray="5,3"/>
+              <line x1="0" y1="155" x2="600" y2="155" stroke="#E5E5E5" stroke-width="1"/>
+              <text x="0" y="155" font-size="10" fill="#9B9B9B" font-family="Montserrat">Jun 1</text>
+              <text x="280" y="155" font-size="10" fill="#9B9B9B" font-family="Montserrat">Jun 17</text>
+              <text x="570" y="155" font-size="10" fill="#9B9B9B" font-family="Montserrat">Jun 30</text>
+            </svg>
+            <div style="display:flex;gap:16px;margin-top:8px">
+              <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-2)"><div style="width:16px;height:2px;background:var(--blue);border-radius:1px"></div>Total installs</div>
+              <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-2)"><div style="width:16px;height:2px;background:var(--red);border-radius:1px;border-top:1px dashed var(--red)"></div>Previous period</div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hdr"><div class="card-hdr-title">Adoption by App</div><span class="card-hdr-sub">% users on latest version</span></div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:600">BRImo SuperApp</span><span class="mono" style="font-size:12px;color:var(--err)">62%</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill red" style="width:62%"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:600">IFG Life Portal</span><span class="mono" style="font-size:12px;color:var(--blue)">68%</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill blue" style="width:68%"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:600">Askrindo Mobile</span><span class="mono" style="font-size:12px;color:var(--blue)">91%</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill blue" style="width:91%"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:600">PNM Mekaar</span><span class="mono" style="font-size:12px;color:var(--purple)">5%</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill purple" style="width:5%"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span style="font-size:12px;font-weight:600">IFG InvestNow</span><span class="mono" style="font-size:12px;color:var(--green)">100%</span></div><div class="prog-bar" style="min-width:unset"><div class="prog-fill green" style="width:100%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ CRASH MONITOR ══════════ -->
+    <div id="screen-crash" class="screen">
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Crash Monitor</h1><p>12 active issues · 3 regressions</p></div><button class="btn-ghost"><i class="ti ti-filter"></i>Filter</button></div></div>
+      <div class="card">
+        <table class="data-table"><thead><tr><th>Error</th><th>App / Version</th><th>Severity</th><th>Occurrences</th><th>Users Affected</th><th>Regression</th><th>First seen</th></tr></thead>
+        <tbody>
+          <tr style="background:rgba(255,241,240,0.4)"><td><div style="font-weight:600;font-size:12.5px">InstallPackageException: APK verification failed</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">PackageInstaller.java:284</div></td><td><div style="font-weight:500">BRImo SuperApp</div><div class="mono" style="color:var(--text-3)">v8.4.1</div></td><td><span class="sev-pill critical">Critical</span></td><td><span class="mono" style="color:var(--err);font-weight:700">4,821</span></td><td><span class="mono">1,847</span></td><td><span style="background:var(--err-10);color:var(--err);font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:4px">NEW</span></td><td><span style="font-size:12px;color:var(--text-3)">23m ago</span></td></tr>
+          <tr><td><div style="font-weight:600;font-size:12.5px">NetworkTimeoutException: Connection reset</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">OkHttpClient.kt:142</div></td><td><div style="font-weight:500">IFG Life Portal</div><div class="mono" style="color:var(--text-3)">v3.11.2</div></td><td><span class="sev-pill high">High</span></td><td><span class="mono">892</span></td><td><span class="mono">341</span></td><td><span style="font-size:11px;color:var(--text-3)">—</span></td><td><span style="font-size:12px;color:var(--text-3)">2d ago</span></td></tr>
+          <tr><td><div style="font-weight:600;font-size:12.5px">NullPointerException: User session nil</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">AuthManager.swift:67</div></td><td><div style="font-weight:500">IFG InvestNow</div><div class="mono" style="color:var(--text-3)">v1.8.2</div></td><td><span class="sev-pill medium">Medium</span></td><td><span class="mono">234</span></td><td><span class="mono">89</span></td><td><span style="background:var(--gold-10);color:#92640A;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:4px">↑ REG</span></td><td><span style="font-size:12px;color:var(--text-3)">5d ago</span></td></tr>
+          <tr><td><div style="font-weight:600;font-size:12.5px">RenderException: Widget overflow 12px</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">HomePage.dart:203</div></td><td><div style="font-weight:500">PNM Mekaar</div><div class="mono" style="color:var(--text-3)">v4.0.9</div></td><td><span class="sev-pill low">Low</span></td><td><span class="mono">67</span></td><td><span class="mono">21</span></td><td><span style="font-size:11px;color:var(--text-3)">—</span></td><td><span style="font-size:12px;color:var(--text-3)">1w ago</span></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- ══════════ DEVICES ══════════ -->
+    <div id="screen-devices" class="screen"><div class="coming-soon"><i class="ti ti-devices"></i><h3>Devices</h3><p>Device fleet management — coming soon</p></div></div>
+
+    <!-- ══════════ INTEGRATIONS ══════════ -->
+    <div id="screen-integrations" class="screen">
+      <div class="page-hdr"><h1>Integrations</h1><p>Connect your tools and services</p></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+        <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:8px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;font-size:18px">🐙</div><div><div style="font-size:13px;font-weight:700">GitHub</div><div style="font-size:11px;color:var(--text-3)">Source control</div></div></div><span class="badge live"><span class="dot"></span>Connected</span></div>
+          <div style="font-size:12px;color:var(--text-2)">Push-triggered deployments from main branch. Last sync 4m ago.</div>
+          <button class="btn-ghost" style="width:fit-content">Configure</button>
+        </div>
+        <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:8px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;font-size:18px">💬</div><div><div style="font-size:13px;font-weight:700">Slack</div><div style="font-size:11px;color:var(--text-3)">Notifications</div></div></div><span class="badge live"><span class="dot"></span>Connected</span></div>
+          <div style="font-size:12px;color:var(--text-2)">Deployment alerts to #platform-ops. Incident escalations to #incidents-p1.</div>
+          <button class="btn-ghost" style="width:fit-content">Configure</button>
+        </div>
+        <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:8px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;font-size:18px">📊</div><div><div style="font-size:13px;font-weight:700">Datadog</div><div style="font-size:11px;color:var(--text-3)">Observability</div></div></div><span class="badge live"><span class="dot"></span>Connected</span></div>
+          <div style="font-size:12px;color:var(--text-2)">APM metrics and crash telemetry forwarded to Datadog dashboards.</div>
+          <button class="btn-ghost" style="width:fit-content">Configure</button>
+        </div>
+        <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:14px;opacity:0.6">
+          <div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:8px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;font-size:18px">🔵</div><div><div style="font-size:13px;font-weight:700">Jira</div><div style="font-size:11px;color:var(--text-3)">Issue tracking</div></div></div><span style="font-size:11px;color:var(--text-3);background:var(--gray-10);padding:3px 9px;border-radius:20px;font-weight:600">Not connected</span></div>
+          <div style="font-size:12px;color:var(--text-2)">Automatically create Jira issues for P1 incidents and failed deployments.</div>
+          <button class="btn-primary" style="width:fit-content">Connect</button>
+        </div>
+        <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:14px;opacity:0.6">
+          <div style="display:flex;align-items:center;justify-content:space-between"><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:8px;background:#F5F5F5;display:flex;align-items:center;justify-content:center;font-size:18px">🟠</div><div><div style="font-size:13px;font-weight:700">PagerDuty</div><div style="font-size:11px;color:var(--text-3)">On-call alerts</div></div></div><span style="font-size:11px;color:var(--text-3);background:var(--gray-10);padding:3px 9px;border-radius:20px;font-weight:600">Not connected</span></div>
+          <div style="font-size:12px;color:var(--text-2)">Route critical deployment failures to on-call engineers via PagerDuty.</div>
+          <button class="btn-primary" style="width:fit-content">Connect</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ TEAM & PERMISSIONS ══════════ -->
+    <div id="screen-team" class="screen">
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Team & Permissions</h1><p>5 members · 3 roles</p></div><button class="btn-primary"><i class="ti ti-plus"></i>Invite Member</button></div></div>
+      <div class="card">
+        <table class="data-table"><thead><tr><th>Member</th><th>Role</th><th>Apps Access</th><th>Last Active</th><th>Status</th><th></th></tr></thead>
+        <tbody>
+          <tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">RA</div><div><div style="font-weight:600">R. Ananda</div><div style="font-size:11px;color:var(--text-3)">r.ananda@ifg.co.id</div></div></div></td><td><span class="role-badge admin">Platform Admin</span></td><td><span style="font-size:12px;color:var(--text-2)">All apps</span></td><td><span style="font-size:12px;color:var(--text-3)">Now</span></td><td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td><td><button class="btn-ghost">Edit</button></td></tr>
+          <tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:var(--blue);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">BW</div><div><div style="font-weight:600">B. Wicaksono</div><div style="font-size:11px;color:var(--text-3)">b.wicaksono@ifg.co.id</div></div></div></td><td><span class="role-badge release">Release Manager</span></td><td><span style="font-size:12px;color:var(--text-2)">BRImo, IFG Life, PNM</span></td><td><span style="font-size:12px;color:var(--text-3)">12m ago</span></td><td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td><td><button class="btn-ghost">Edit</button></td></tr>
+          <tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:#16A34A;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">SH</div><div><div style="font-weight:600">S. Hartono</div><div style="font-size:11px;color:var(--text-3)">s.hartono@ifg.co.id</div></div></div></td><td><span class="role-badge devops">DevOps Engineer</span></td><td><span style="font-size:12px;color:var(--text-2)">All apps</span></td><td><span style="font-size:12px;color:var(--text-3)">2h ago</span></td><td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td><td><button class="btn-ghost">Edit</button></td></tr>
+          <tr><td><div style="display:flex;align-items:center;gap:10px"><div style="width:32px;height:32px;border-radius:50%;background:var(--gray-30);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">DM</div><div><div style="font-weight:600">D. Maulana</div><div style="font-size:11px;color:var(--text-3)">d.maulana@bri.co.id</div></div></div></td><td><span class="role-badge viewer">Viewer</span></td><td><span style="font-size:12px;color:var(--text-2)">BRImo only</span></td><td><span style="font-size:12px;color:var(--text-3)">1d ago</span></td><td><span class="badge live" style="font-size:10px"><span class="dot"></span>Active</span></td><td><button class="btn-ghost">Edit</button></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- ══════════ AUDIT LOGS ══════════ -->
+    <div id="screen-audit" class="screen">
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Audit Logs</h1><p>Immutable event log · All actions recorded</p></div><button class="btn-ghost"><i class="ti ti-download"></i>Export CSV</button></div></div>
+      <div class="card">
+        <table class="data-table"><thead><tr><th>Timestamp</th><th>Actor</th><th>Action</th><th>Target</th><th>IP</th></tr></thead>
+        <tbody>
+          <tr><td><span class="mono" style="font-size:11px;color:var(--text-3)">2026-06-17 16:23:41</span></td><td><span style="font-size:12px;font-weight:600">AutoDetect</span></td><td><span style="background:var(--err-10);color:var(--err);font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px">DEPLOYMENT_PAUSED</span></td><td><span class="mono" style="font-size:12px">BRImo v8.4.1 · DEP-4821</span></td><td><span class="mono" style="font-size:11px;color:var(--text-3)">system</span></td></tr>
+          <tr><td><span class="mono" style="font-size:11px;color:var(--text-3)">2026-06-17 15:52:10</span></td><td><span style="font-size:12px;font-weight:600">R. Ananda</span></td><td><span style="background:var(--blue-10);color:var(--blue);font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px">DEPLOYMENT_CREATED</span></td><td><span class="mono" style="font-size:12px">PNM Mekaar v4.1.0 · DEP-4816</span></td><td><span class="mono" style="font-size:11px;color:var(--text-3)">180.241.x.x</span></td></tr>
+          <tr><td><span class="mono" style="font-size:11px;color:var(--text-3)">2026-06-17 15:44:30</span></td><td><span style="font-size:12px;font-weight:600">B. Wicaksono</span></td><td><span style="background:var(--green-10);color:var(--green);font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px">ROLLOUT_APPROVED</span></td><td><span class="mono" style="font-size:12px">IFG Life Portal v3.12.0</span></td><td><span class="mono" style="font-size:11px;color:var(--text-3)">36.82.x.x</span></td></tr>
+          <tr><td><span class="mono" style="font-size:11px;color:var(--text-3)">2026-06-17 14:12:08</span></td><td><span style="font-size:12px;font-weight:600">R. Ananda</span></td><td><span style="background:var(--gold-10);color:#92640A;font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px">MEMBER_INVITED</span></td><td><span class="mono" style="font-size:12px">d.maulana@bri.co.id</span></td><td><span class="mono" style="font-size:11px;color:var(--text-3)">180.241.x.x</span></td></tr>
+          <tr><td><span class="mono" style="font-size:11px;color:var(--text-3)">2026-06-17 08:30:00</span></td><td><span style="font-size:12px;font-weight:600">S. Hartono</span></td><td><span style="background:var(--green-10);color:var(--green);font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px">DEPLOYMENT_COMPLETE</span></td><td><span class="mono" style="font-size:12px">IFG InvestNow v1.8.3 · DEP-4812</span></td><td><span class="mono" style="font-size:11px;color:var(--text-3)">114.122.x.x</span></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+
+    <!-- ══════════ API ACCESS ══════════ -->
+    <div id="screen-api" class="screen">
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>API Access</h1><p>Tokens, webhooks & CLI reference</p></div><button class="btn-primary"><i class="ti ti-plus"></i>New Token</button></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-hdr"><div class="card-hdr-title">API Tokens</div></div>
+          <div>
+            <div class="token-row"><div style="flex:1"><div style="font-size:13px;font-weight:600">CI/CD Pipeline Token</div><div class="mono" style="font-size:11px;color:var(--text-3);margin-top:2px">ota_live_••••••••••••4f2a</div></div><span style="font-size:11px;color:var(--text-3)">Expires 90d</span><button class="btn-ghost" style="height:28px;font-size:11px">Revoke</button></div>
+            <div class="token-row"><div style="flex:1"><div style="font-size:13px;font-weight:600">Monitoring Token</div><div class="mono" style="font-size:11px;color:var(--text-3);margin-top:2px">ota_live_••••••••••••8c91</div></div><span style="font-size:11px;color:var(--text-3)">Expires 30d</span><button class="btn-ghost" style="height:28px;font-size:11px">Revoke</button></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-hdr"><div class="card-hdr-title">CLI Quick Reference</div></div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+            <div class="code-block">$ ota deploy --app brimo --version 8.4.2<br>$ ota rollout pause DEP-4821<br>$ ota rollback --app brimo --to 8.4.0<br>$ ota logs --app ifglife --tail 100</div>
+            <a href="#" style="font-size:12px;color:var(--red);font-weight:600;display:flex;align-items:center;gap:4px"><i class="ti ti-external-link"></i>Full CLI documentation</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════════ SETTINGS ══════════ -->
+    <div id="screen-settings" class="screen">
+      <div class="page-hdr"><h1>Settings</h1><p>Platform configuration</p></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-hdr"><div class="card-hdr-title">Deployment Automation</div></div>
+          <div class="setting-row"><div><div style="font-size:13px;font-weight:600">Auto-pause on failure threshold</div><div style="font-size:12px;color:var(--text-3);margin-top:2px">Pause rollout if crash rate exceeds 2%</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="setting-row"><div><div style="font-size:13px;font-weight:600">Canary auto-promotion</div><div style="font-size:12px;color:var(--text-3);margin-top:2px">Promote canary if healthy after 30 min</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="setting-row"><div><div style="font-size:13px;font-weight:600">Require approval for full rollout</div><div style="font-size:12px;color:var(--text-3);margin-top:2px">Stage 3 → Full requires Release Manager sign-off</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="setting-row"><div><div style="font-size:13px;font-weight:600">Automatic rollback on P1</div><div style="font-size:12px;color:var(--text-3);margin-top:2px">Roll back immediately if incident P1 is triggered</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+        </div>
+        <div class="card">
+          <div class="card-hdr"><div class="card-hdr-title">Notification Preferences</div></div>
+          <div class="setting-row"><div><div style="font-size:13px;font-weight:600">Slack alerts</div><div style="font-size:12px;color:var(--text-3);margin-top:2px">Send deployment events to #platform-ops</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="setting-row"><div><div style="font-size:13px;font-weight:600">Email on failure</div><div style="font-size:12px;color:var(--text-3);margin-top:2px">Send email when deployment fails or pauses</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="setting-row"><div><div style="font-size:13px;font-weight:600">Weekly digest</div><div style="font-size:12px;color:var(--text-3);margin-top:2px">Summary report every Monday 08:00 WIB</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+          <div class="setting-row"><div><div style="font-size:13px;font-weight:600">SMS for P1 incidents</div><div style="font-size:12px;color:var(--text-3);margin-top:2px">SMS to on-call number on P1 only</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 </div>
+</div>
+
 <script>
 const titles={overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
-function nav(el){document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));el.classList.add('active');const sc=el.dataset.screen;document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+sc).classList.add('active');document.getElementById('nb-title').textContent=titles[sc]||sc}
+function nav(el){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  const sc=el.dataset.screen;
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+sc).classList.add('active');
+  document.getElementById('nb-title').textContent=titles[sc]||sc;
+  document.getElementById('content').scrollTop=0;
+}
 let collapsed=false;
-function toggleSidebar(){collapsed=!collapsed;const sb=document.getElementById('sidebar');const icon=document.getElementById('sb-toggle-icon');sb.classList.toggle('collapsed',collapsed);icon.className=collapsed?'ti ti-layout-sidebar-left-expand':'ti ti-layout-sidebar-left-collapse'}
-document.querySelectorAll('.filter-pill').forEach(pill=>{pill.addEventListener('click',function(){this.closest('.dep-filters').querySelectorAll('.filter-pill').forEach(p=>p.classList.remove('active'));this.classList.add('active')})});
+function toggleSidebar(){
+  collapsed=!collapsed;
+  document.getElementById('sidebar').classList.toggle('collapsed',collapsed);
+  document.getElementById('sb-toggle-icon').className=collapsed?'ti ti-layout-sidebar-left-expand':'ti ti-layout-sidebar-left-collapse';
+  document.getElementById('sb-toggle-btn').title=collapsed?'Expand sidebar':'Collapse sidebar';
+}
+function filterTab(el){
+  el.closest('.dep-filters').querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
 </script>
 </body>
 </html>
