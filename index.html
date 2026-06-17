@@ -591,7 +591,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 
     <!-- ══════════ DEPLOYMENTS ══════════ -->
     <div id="screen-deployments" class="screen">
-      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Deployments</h1><p>3 active · 2 completed today</p></div><div style="display:flex;gap:8px;align-items:center"><div class="search-wrap"><i class="ti ti-search"></i><input class="search-input" placeholder="Search deployments…"></div><button class="btn-primary"><i class="ti ti-plus"></i>New Deployment</button></div></div></div>
+      <div class="page-hdr"><div class="page-hdr-row"><div><h1>Deployments</h1><p>3 active · 2 completed today</p></div><div style="display:flex;gap:8px;align-items:center"><div class="search-wrap"><i class="ti ti-search"></i><input class="search-input" placeholder="Search deployments…"></div><button class="btn-primary" onclick="openModal('modal-new-deploy')"><i class="ti ti-plus"></i>New Deployment</button></div></div></div>
       <div class="dep-filters">
         <button class="filter-tab active" onclick="filterTab(this)">All <span class="count">8</span></button>
         <button class="filter-tab" onclick="filterTab(this)">Active <span class="count">5</span></button>
@@ -608,12 +608,12 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
             <td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill red" style="width:24%"></div></div><span class="prog-pct">24%</span></div></td>
             <td><span class="mono" style="color:var(--err)">1,847 err</span></td>
             <td><span style="font-size:12px;color:var(--text-3)">2h 31m ago</span></td>
-            <td><button class="btn-ghost" style="color:var(--red);border-color:var(--red-10)"><i class="ti ti-player-play"></i>Resume</button></td>
+            <td><button class="btn-ghost" style="color:var(--red);border-color:var(--red-10)" onclick="openConfirm('resume','DEP-4821','BRImo v8.4.1')"><i class="ti ti-player-play"></i>Resume</button></td>
           </tr>
-          <tr><td><div style="font-weight:600">IFG Life Portal</div><div class="mono" style="color:var(--text-3)">v3.12.0 · DEP-4819</div></td><td><span class="badge rolling"><span class="dot"></span>Rolling</span></td><td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill blue" style="width:68%"></div></div><span class="prog-pct">68%</span></div></td><td><span class="mono">748K</span></td><td><span style="font-size:12px;color:var(--text-3)">3h 14m ago</span></td><td><button class="btn-ghost"><i class="ti ti-player-pause"></i>Pause</button></td></tr>
-          <tr><td><div style="font-weight:600">Askrindo Mobile</div><div class="mono" style="color:var(--text-3)">v2.4.5 · DEP-4817</div></td><td><span class="badge rolling"><span class="dot"></span>Rolling</span></td><td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill blue" style="width:91%"></div></div><span class="prog-pct">91%</span></div></td><td><span class="mono">382K</span></td><td><span style="font-size:12px;color:var(--text-3)">5h 02m ago</span></td><td><button class="btn-ghost"><i class="ti ti-player-pause"></i>Pause</button></td></tr>
-          <tr><td><div style="font-weight:600">PNM Mekaar</div><div class="mono" style="color:var(--text-3)">v4.1.0 · DEP-4816</div></td><td><span class="badge canary"><span class="dot"></span>Canary</span></td><td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill purple" style="width:5%"></div></div><span class="prog-pct">5%</span></div></td><td><span class="mono">140K</span></td><td><span style="font-size:12px;color:var(--text-3)">6h 30m ago</span></td><td><button class="btn-ghost"><i class="ti ti-player-pause"></i>Pause</button></td></tr>
-          <tr><td><div style="font-weight:600">IFG InvestNow</div><div class="mono" style="color:var(--text-3)">v1.8.3 · DEP-4812</div></td><td><span class="badge complete"><span class="dot"></span>Complete</span></td><td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill green" style="width:100%"></div></div><span class="prog-pct">100%</span></div></td><td><span class="mono">310K</span></td><td><span style="font-size:12px;color:var(--text-3)">8h 15m ago</span></td><td><button class="btn-ghost"><i class="ti ti-file-text"></i>Report</button></td></tr>
+          <tr><td><div style="font-weight:600">IFG Life Portal</div><div class="mono" style="color:var(--text-3)">v3.12.0 · DEP-4819</div></td><td><span class="badge rolling"><span class="dot"></span>Rolling</span></td><td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill blue" style="width:68%"></div></div><span class="prog-pct">68%</span></div></td><td><span class="mono">748K</span></td><td><span style="font-size:12px;color:var(--text-3)">3h 14m ago</span></td><td><button class="btn-ghost" onclick="openConfirm('pause','DEP-4819','IFG Life Portal v3.12.0')"><i class="ti ti-player-pause"></i>Pause</button></td></tr>
+          <tr><td><div style="font-weight:600">Askrindo Mobile</div><div class="mono" style="color:var(--text-3)">v2.4.5 · DEP-4817</div></td><td><span class="badge rolling"><span class="dot"></span>Rolling</span></td><td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill blue" style="width:91%"></div></div><span class="prog-pct">91%</span></div></td><td><span class="mono">382K</span></td><td><span style="font-size:12px;color:var(--text-3)">5h 02m ago</span></td><td><button class="btn-ghost" onclick="openConfirm('pause','DEP-4817','Askrindo v2.4.5')"><i class="ti ti-player-pause"></i>Pause</button></td></tr>
+          <tr><td><div style="font-weight:600">PNM Mekaar</div><div class="mono" style="color:var(--text-3)">v4.1.0 · DEP-4816</div></td><td><span class="badge canary"><span class="dot"></span>Canary</span></td><td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill purple" style="width:5%"></div></div><span class="prog-pct">5%</span></div></td><td><span class="mono">140K</span></td><td><span style="font-size:12px;color:var(--text-3)">6h 30m ago</span></td><td><button class="btn-ghost" onclick="openConfirm('pause','DEP-4816','PNM Mekaar v4.1.0')"><i class="ti ti-player-pause"></i>Pause</button></td></tr>
+          <tr><td><div style="font-weight:600">IFG InvestNow</div><div class="mono" style="color:var(--text-3)">v1.8.3 · DEP-4812</div></td><td><span class="badge complete"><span class="dot"></span>Complete</span></td><td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div></div></td><td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill green" style="width:100%"></div></div><span class="prog-pct">100%</span></div></td><td><span class="mono">310K</span></td><td><span style="font-size:12px;color:var(--text-3)">8h 15m ago</span></td><td><button class="btn-ghost" onclick="openDrawer('drawer-dep-report')"><i class="ti ti-file-text"></i>Report</button></td></tr>
         </tbody></table>
       </div>
     </div>
@@ -1264,6 +1264,87 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
+
+<!-- ══ MODAL: CONFIRM ACTION ══ -->
+<div class="modal-overlay" id="modal-confirm" onclick="if(event.target===this)closeModal('modal-confirm')">
+  <div class="modal" style="width:400px">
+    <div class="modal-hdr">
+      <h2 id="confirm-title">Confirm Action</h2>
+      <div class="modal-close" onclick="closeModal('modal-confirm')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body" style="gap:12px">
+      <div id="confirm-body" style="font-size:13px;color:var(--text-2);line-height:1.6"></div>
+      <div id="confirm-warning" style="display:none;background:var(--gold-10);border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;font-size:12px;color:#92640A;display:flex;align-items:center;gap:8px">
+        <i class="ti ti-alert-circle"></i><span id="confirm-warning-text"></span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-confirm')">Cancel</button>
+      <button class="btn-primary" id="confirm-cta" onclick="submitConfirm()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DRAWER: DEPLOYMENT REPORT ══ -->
+<div class="drawer-overlay" id="drawer-dep-report" onclick="if(event.target===this)closeDrawer('drawer-dep-report')">
+  <div class="drawer">
+    <div class="drawer-hdr">
+      <div>
+        <div style="font-size:12px;font-weight:700;font-family:var(--mono);color:var(--text-3);margin-bottom:3px">DEP-4812 · IFG InvestNow</div>
+        <div style="font-size:15px;font-weight:700;color:var(--text)">Deployment Report</div>
+      </div>
+      <div class="modal-close" onclick="closeDrawer('drawer-dep-report')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="drawer-body">
+      <div style="background:var(--green-10);border:1px solid #BBF7D0;border-radius:8px;padding:12px 14px;font-size:12px;color:var(--green);display:flex;align-items:center;gap:8px">
+        <i class="ti ti-circle-check" style="font-size:16px"></i>
+        <span>Deployment completed successfully · 310K devices · 100% adoption</span>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-box-val">100%</div><div class="stat-box-label">Completion</div></div>
+        <div class="stat-box"><div class="stat-box-val">310K</div><div class="stat-box-label">Devices Updated</div></div>
+        <div class="stat-box"><div class="stat-box-val" style="color:var(--green)">99.9%</div><div class="stat-box-label">Crash-Free Rate</div></div>
+        <div class="stat-box"><div class="stat-box-val">6h 42m</div><div class="stat-box-label">Total Duration</div></div>
+      </div>
+      <div class="drawer-section">
+        <div class="drawer-section-title">Stage Completion</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--gray-10);border-radius:7px">
+            <span style="font-size:12.5px;font-weight:600">Canary (5%)</span>
+            <div style="display:flex;align-items:center;gap:10px"><span class="mono" style="font-size:11px;color:var(--text-3)">30 min</span><span class="badge complete"><span class="dot"></span>Passed</span></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--gray-10);border-radius:7px">
+            <span style="font-size:12.5px;font-weight:600">Stage 1 (10%)</span>
+            <div style="display:flex;align-items:center;gap:10px"><span class="mono" style="font-size:11px;color:var(--text-3)">45 min</span><span class="badge complete"><span class="dot"></span>Passed</span></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--gray-10);border-radius:7px">
+            <span style="font-size:12.5px;font-weight:600">Stage 2 (25%)</span>
+            <div style="display:flex;align-items:center;gap:10px"><span class="mono" style="font-size:11px;color:var(--text-3)">1h 12m</span><span class="badge complete"><span class="dot"></span>Passed</span></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--gray-10);border-radius:7px">
+            <span style="font-size:12.5px;font-weight:600">Stage 3 (50%)</span>
+            <div style="display:flex;align-items:center;gap:10px"><span class="mono" style="font-size:11px;color:var(--text-3)">1h 58m</span><span class="badge complete"><span class="dot"></span>Passed</span></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--gray-10);border-radius:7px">
+            <span style="font-size:12.5px;font-weight:600">Full (100%)</span>
+            <div style="display:flex;align-items:center;gap:10px"><span class="mono" style="font-size:11px;color:var(--text-3)">2h 17m</span><span class="badge complete"><span class="dot"></span>Passed</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="drawer-section">
+        <div class="drawer-section-title">Timeline</div>
+        <div class="timeline-item"><div class="timeline-dot" style="background:var(--green)"></div><div><div style="font-size:12.5px;font-weight:600">Deployment complete</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">08:30:00 · 310K devices updated</div></div></div>
+        <div class="timeline-item"><div class="timeline-dot" style="background:var(--green)"></div><div><div style="font-size:12.5px;font-weight:600">Full rollout approved</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">06:00:00 · B. Wicaksono</div></div></div>
+        <div class="timeline-item"><div class="timeline-dot" style="background:var(--blue)"></div><div><div style="font-size:12.5px;font-weight:600">Deployment started</div><div style="font-size:11px;color:var(--text-3);font-family:var(--mono)">01:48:00 · R. Ananda · DEP-4812</div></div></div>
+      </div>
+    </div>
+    <div class="drawer-footer">
+      <button class="btn-ghost"><i class="ti ti-download"></i>Export PDF</button>
+      <button class="btn-ghost" onclick="closeDrawer('drawer-dep-report')">Close</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const titles={overview:'Overview',apps:'Apps',deployments:'Deployments',releases:'Releases',rollouts:'Rollouts',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
@@ -1430,6 +1511,68 @@ function submitRegisterApp() {
   document.body.appendChild(banner);
   setTimeout(() => banner.remove(), 3500);
 }
+
+
+let _confirmAction = null;
+function openConfirm(action, depId, depName) {
+  _confirmAction = {action, depId, depName};
+  const titles = {resume:'Resume Rollout', pause:'Pause Rollout', rollback:'Rollback Deployment'};
+  const bodies = {
+    resume: `Resume rollout for <strong>${depName}</strong>? The deployment will continue from where it was paused.`,
+    pause: `Pause rollout for <strong>${depName}</strong>? You can resume at any time.`,
+    rollback: `Roll back <strong>${depName}</strong> to the previous stable version? This action cannot be undone.`
+  };
+  const warnings = {
+    resume: '1,847 devices affected by the current incident. Ensure the root cause is resolved before resuming.',
+    rollback: 'All devices currently on this version will be downgraded.'
+  };
+  document.getElementById('confirm-title').textContent = titles[action];
+  document.getElementById('confirm-body').innerHTML = `<p style="margin-bottom:8px">${bodies[action]}</p><p style="font-family:var(--mono);font-size:12px;color:var(--text-3)">${depId}</p>`;
+  const warnEl = document.getElementById('confirm-warning');
+  const warnText = document.getElementById('confirm-warning-text');
+  if (warnings[action]) {
+    warnEl.style.display = 'flex';
+    warnText.textContent = warnings[action];
+  } else {
+    warnEl.style.display = 'none';
+  }
+  const cta = document.getElementById('confirm-cta');
+  cta.textContent = titles[action];
+  cta.style.background = action === 'rollback' ? 'var(--err)' : 'var(--red)';
+  openModal('modal-confirm');
+}
+
+function submitConfirm() {
+  closeModal('modal-confirm');
+  const {action, depName} = _confirmAction;
+  const msgs = {
+    resume: `Rollout resumed — ${depName}`,
+    pause: `Rollout paused — ${depName}`,
+    rollback: `Rollback initiated — ${depName}`
+  };
+  showToast(msgs[action] || 'Action completed');
+}
+
+function showToast(msg, isError) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:#1A1A1A;color:#fff;padding:12px 18px;border-radius:10px;font-size:13px;font-weight:500;z-index:9999;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,0.2);animation:fadeUp 0.3s ease';
+  t.innerHTML = `<i class="ti ti-circle-check" style="color:#32C997;font-size:18px"></i>${msg}`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+// Search filter for deployments table
+document.addEventListener('DOMContentLoaded', () => {
+  const searchInput = document.querySelector('.search-input');
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      const q = this.value.toLowerCase();
+      document.querySelectorAll('#screen-deployments .data-table tbody tr').forEach(row => {
+        row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    });
+  }
+});
 
 function filterTab(el){
   el.closest('.dep-filters').querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
