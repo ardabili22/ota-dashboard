@@ -73,6 +73,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 .sb-nav::-webkit-scrollbar{width:0}
 
 .sb-section{margin-bottom:2px}
+#sidebar.collapsed .sb-section{margin-bottom:0}
 .sb-section-label{
   font-size:10px;font-weight:700;letter-spacing:0.7px;text-transform:uppercase;
   color:var(--text-3);padding:10px 18px 4px;white-space:nowrap;
@@ -91,7 +92,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 .nav-item:hover{background:var(--gray-10);color:var(--text)}
 .nav-item.active{background:var(--red-10);color:var(--red)}
 .nav-item.active .ni-icon{color:var(--red)}
-.nav-item .ni-icon{font-size:17px;min-width:18px;line-height:1;color:var(--text-3);transition:color var(--transition)}
+.nav-item .ni-icon{font-size:18px;min-width:20px;text-align:center;line-height:1;color:var(--text-3);transition:color var(--transition)}
 .nav-item:hover .ni-icon{color:var(--text)}
 .nav-item .ni-label{opacity:1;transition:opacity var(--transition);flex:1}
 #sidebar.collapsed .nav-item .ni-label{opacity:0;width:0}
@@ -101,13 +102,13 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   opacity:1;transition:opacity var(--transition);
 }
 #sidebar.collapsed .nav-item .ni-badge{opacity:0}
-#sidebar.collapsed .nav-item{padding:0;justify-content:center;margin:2px auto;width:42px;}
+#sidebar.collapsed .nav-item{padding:0 !important;justify-content:center !important;margin:2px 6px !important;width:44px;}
 #sidebar.collapsed .nav-item::after{
-  content:attr(data-label);position:absolute;left:calc(var(--sidebar-collapsed) + 6px);
-  background:var(--gray-80);color:#fff;font-size:11.5px;font-weight:500;
-  padding:5px 10px;border-radius:6px;white-space:nowrap;
-  opacity:0;pointer-events:none;transition:opacity 0.12s;z-index:100;
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  content:attr(data-label);position:absolute;left:calc(var(--sidebar-collapsed) + 8px);
+  background:var(--gray-80);color:#fff;font-size:12px;font-weight:500;
+  padding:6px 12px;border-radius:7px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity 0.12s;z-index:1000;
+  box-shadow:0 4px 16px rgba(0,0,0,0.2);
 }
 #sidebar.collapsed .nav-item:hover::after{opacity:1}
 
@@ -580,27 +581,27 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   <div class="sb-nav">
     <div class="sb-section">
       <div class="sb-section-label">Platform</div>
-      <div class="nav-item active" data-screen="overview" data-label="Overview" onclick="nav(this)"><i class="ti ti-layout-dashboard ni-icon"></i><span class="ni-label">Overview</span></div>
-      <div class="nav-item" data-screen="apps" data-label="Apps" onclick="nav(this)"><i class="ti ti-apps ni-icon"></i><span class="ni-label">Apps</span></div>
-      <div class="nav-item" data-screen="deployments" data-label="Deployments" onclick="nav(this)"><i class="ti ti-rocket ni-icon"></i><span class="ni-label">Deployments</span><span class="ni-badge">3</span></div>
-      <div class="nav-item" data-screen="releases" data-label="Releases" onclick="nav(this)"><i class="ti ti-tag ni-icon"></i><span class="ni-label">Releases</span></div>
-      <div class="nav-item" data-screen="rollouts" data-label="Rollouts" onclick="nav(this)"><i class="ti ti-git-branch ni-icon"></i><span class="ni-label">Rollouts</span></div>
+      <div class="nav-item active" data-screen="overview" data-label="Overview" onclick="nav(this)"><i class="ti ti-home-2 ni-icon"></i><span class="ni-label">Overview</span></div>
+      <div class="nav-item" data-screen="apps" data-label="Apps" onclick="nav(this)"><i class="ti ti-device-mobile ni-icon"></i><span class="ni-label">Apps</span></div>
+      <div class="nav-item" data-screen="deployments" data-label="Deployments" onclick="nav(this)"><i class="ti ti-send ni-icon"></i><span class="ni-label">Deployments</span><span class="ni-badge">3</span></div>
+      <div class="nav-item" data-screen="releases" data-label="Releases" onclick="nav(this)"><i class="ti ti-package ni-icon"></i><span class="ni-label">Releases</span></div>
+      <div class="nav-item" data-screen="rollouts" data-label="Rollouts" onclick="nav(this)"><i class="ti ti-git-merge ni-icon"></i><span class="ni-label">Rollouts</span></div>
     </div>
     <div class="sb-section">
       <div class="sb-section-label">Monitor</div>
-      <div class="nav-item" data-screen="analytics" data-label="Analytics" onclick="nav(this)"><i class="ti ti-chart-line ni-icon"></i><span class="ni-label">Analytics</span></div>
-      <div class="nav-item" data-screen="crash" data-label="Crash Monitor" onclick="nav(this)"><i class="ti ti-bug ni-icon"></i><span class="ni-label">Crash Monitor</span><span class="ni-badge">12</span></div>
-      <div class="nav-item" data-screen="devices" data-label="Devices" onclick="nav(this)"><i class="ti ti-devices ni-icon"></i><span class="ni-label">Devices</span></div>
+      <div class="nav-item" data-screen="analytics" data-label="Analytics" onclick="nav(this)"><i class="ti ti-chart-bar ni-icon"></i><span class="ni-label">Analytics</span></div>
+      <div class="nav-item" data-screen="crash" data-label="Crash Monitor" onclick="nav(this)"><i class="ti ti-alert-octagon ni-icon"></i><span class="ni-label">Crash Monitor</span><span class="ni-badge">12</span></div>
+      <div class="nav-item" data-screen="devices" data-label="Devices" onclick="nav(this)"><i class="ti ti-cpu ni-icon"></i><span class="ni-label">Devices</span></div>
     </div>
     <div class="sb-section">
       <div class="sb-section-label">Configure</div>
-      <div class="nav-item" data-screen="masterdata" data-label="Master Data" onclick="nav(this)"><i class="ti ti-database ni-icon"></i><span class="ni-label">Master Data</span></div>
-      <div class="nav-item" data-screen="integrations" data-label="Integrations" onclick="nav(this)"><i class="ti ti-plug ni-icon"></i><span class="ni-label">Integrations</span></div>
-      <div class="nav-item" data-screen="team" data-label="Team & Permissions" onclick="nav(this)"><i class="ti ti-users ni-icon"></i><span class="ni-label">Team & Permissions</span></div>
-      <div class="nav-item" data-screen="audit" data-label="Audit Logs" onclick="nav(this)"><i class="ti ti-clipboard-list ni-icon"></i><span class="ni-label">Audit Logs</span></div>
-      <div class="nav-item" data-screen="api" data-label="API Access" onclick="nav(this)"><i class="ti ti-key ni-icon"></i><span class="ni-label">API Access</span></div>
-      <div class="nav-item" data-screen="billing" data-label="Billing" onclick="nav(this)"><i class="ti ti-credit-card ni-icon"></i><span class="ni-label">Billing</span></div>
-      <div class="nav-item" data-screen="settings" data-label="Settings" onclick="nav(this)"><i class="ti ti-settings ni-icon"></i><span class="ni-label">Settings</span></div>
+      <div class="nav-item" data-screen="masterdata" data-label="Master Data" onclick="nav(this)"><i class="ti ti-table ni-icon"></i><span class="ni-label">Master Data</span></div>
+      <div class="nav-item" data-screen="integrations" data-label="Integrations" onclick="nav(this)"><i class="ti ti-puzzle ni-icon"></i><span class="ni-label">Integrations</span></div>
+      <div class="nav-item" data-screen="team" data-label="Team & Permissions" onclick="nav(this)"><i class="ti ti-shield-lock ni-icon"></i><span class="ni-label">Team & Permissions</span></div>
+      <div class="nav-item" data-screen="audit" data-label="Audit Logs" onclick="nav(this)"><i class="ti ti-file-description ni-icon"></i><span class="ni-label">Audit Logs</span></div>
+      <div class="nav-item" data-screen="api" data-label="API Access" onclick="nav(this)"><i class="ti ti-terminal-2 ni-icon"></i><span class="ni-label">API Access</span></div>
+      <div class="nav-item" data-screen="billing" data-label="Billing" onclick="nav(this)"><i class="ti ti-receipt ni-icon"></i><span class="ni-label">Billing</span></div>
+      <div class="nav-item" data-screen="settings" data-label="Settings" onclick="nav(this)"><i class="ti ti-adjustments-horizontal ni-icon"></i><span class="ni-label">Settings</span></div>
     </div>
   </div>
 
