@@ -1228,7 +1228,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 <div class="modal-overlay" id="modal-new-deploy" onclick="if(event.target===this)closeModal('modal-new-deploy')">
   <div class="modal">
     <div class="modal-hdr">
-      <h2><i class="ti ti-rocket" style="color:var(--red);margin-right:8px"></i>New Deployment</h2>
+      <h2><i class="ti ti-rocket" style="color:var(--red);margin-right:8px"></i>New Release</h2>
       <div class="modal-close" onclick="closeModal('modal-new-deploy')"><i class="ti ti-x"></i></div>
     </div>
     <div class="modal-body">
@@ -2451,6 +2451,97 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
     <div class="modal-footer">
       <button class="btn-ghost" onclick="closeModal('modal-promote')">Cancel</button>
       <button class="btn-primary" style="background:var(--green)" onclick="submitPromote()"><i class="ti ti-rocket"></i>Start Rollout</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══ DRAWER: RELEASE METRICS ══ -->
+<div class="drawer-overlay" id="drawer-rel-metrics" onclick="if(event.target===this)closeDrawer('drawer-rel-metrics')">
+  <div class="drawer">
+    <div class="drawer-hdr">
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--text)" id="metrics-drawer-title">v375 — BRImo SuperApp</div>
+        <div style="font-size:12px;color:var(--text-3);margin-top:2px">Production · Active deployment</div>
+      </div>
+      <div class="modal-close" onclick="closeDrawer('drawer-rel-metrics')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="drawer-body">
+      <!-- KPI row -->
+      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-box" style="text-align:center">
+          <div class="stat-box-val" id="metrics-active" style="color:var(--green)">0.20%</div>
+          <div class="stat-box-label">Active installs</div>
+        </div>
+        <div class="stat-box" style="text-align:center">
+          <div class="stat-box-val" id="metrics-total">1,136</div>
+          <div class="stat-box-label">Total installs</div>
+        </div>
+        <div class="stat-box" style="text-align:center">
+          <div class="stat-box-val" id="metrics-rollbacks" style="color:var(--green)">0</div>
+          <div class="stat-box-label">Rollbacks</div>
+        </div>
+      </div>
+
+      <!-- Install progress -->
+      <div class="drawer-section">
+        <div class="drawer-section-title">Rollout Progress</div>
+        <div style="background:var(--gray-10);border-radius:var(--radius-sm);padding:14px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:8px">
+            <span style="font-size:12px;font-weight:600">Current rollout</span>
+            <span class="mono" style="font-size:12px" id="metrics-pct">0.20%</span>
+          </div>
+          <div class="prog-bar" style="height:8px;min-width:unset">
+            <div class="prog-fill" id="metrics-prog-fill" style="width:0.2%;background:var(--green)"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px">
+            <span style="font-size:11px;color:var(--text-3)">0</span>
+            <span style="font-size:11px;color:var(--text-3)" id="metrics-total-devices">562,534 devices</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Install timeline -->
+      <div class="drawer-section">
+        <div class="drawer-section-title">Install Timeline (last 24h)</div>
+        <div style="background:var(--gray-10);border-radius:var(--radius-sm);padding:14px;display:flex;flex-direction:column;gap:8px">
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:var(--green)"></div>
+            <div><div style="font-size:12.5px;font-weight:600">1,136 active installs</div><div style="font-size:11px;color:var(--text-3);margin-top:2px;font-family:var(--mono)">19h ago · Rollout started</div></div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-dot" style="background:var(--blue)"></div>
+            <div><div style="font-size:12.5px;font-weight:600">1,868 pending installs</div><div style="font-size:11px;color:var(--text-3);margin-top:2px;font-family:var(--mono)">Awaiting download</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Release info -->
+      <div class="drawer-section">
+        <div class="drawer-section-title">Release Info</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--gray-15)">
+            <span style="font-size:12px;color:var(--text-2)">App Version</span>
+            <span class="mono" style="font-size:12px;font-weight:600" id="metrics-appver">1.5.5</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--gray-15)">
+            <span style="font-size:12px;color:var(--text-2)">Mandatory update</span>
+            <span style="font-size:12px;font-weight:600" id="metrics-mandatory">No</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--gray-15)">
+            <span style="font-size:12px;color:var(--text-2)">Released</span>
+            <span style="font-size:12px;font-weight:600" id="metrics-time">19 hours ago</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:10px 0">
+            <span style="font-size:12px;color:var(--text-2)">Description</span>
+            <span style="font-size:12px;font-weight:600;text-align:right;max-width:200px" id="metrics-desc">Hotfix: crash on transfer page</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="drawer-footer">
+      <button class="btn-ghost" onclick="closeDrawer('drawer-rel-metrics')">Close</button>
+      <button class="btn-primary" style="background:var(--err)" onclick="closeDrawer('drawer-rel-metrics');showToast('Rolling back…')"><i class="ti ti-arrow-back-up"></i>Rollback this version</button>
     </div>
   </div>
 </div>
@@ -4029,9 +4120,19 @@ function renderRelRows(tbodyId, rows, env) {
     } else {
       actions = '<div style="display:flex;gap:6px">';
       if (!r.current) {
-        actions += '<button class="btn-ghost" style="height:28px;font-size:11px;color:var(--err)" data-label="' + r.label + '" onclick="showToast(this.dataset.label+\' rolled back\')"><i class="ti ti-arrow-back-up"></i>Rollback</button>';
+        actions += '<button class="btn-ghost" style="height:28px;font-size:11px;color:var(--err)" data-label="' + r.label + '" onclick="confirmRollback(this)"><i class="ti ti-arrow-back-up"></i>Rollback</button>';
       } else {
-        actions += '<button class="btn-ghost" style="height:28px;font-size:11px" data-label="' + r.label + '" onclick="showToast(\'Metrics: \'+this.dataset.label)"><i class="ti ti-chart-bar"></i>Metrics</button>';
+        actions += '<button class="btn-ghost" style="height:28px;font-size:11px" '
+          + 'data-label="' + r.label + '" '
+          + 'data-active="' + r.active + '" '
+          + 'data-total="' + r.total + '" '
+          + 'data-rollbacks="' + r.rollbacks + '" '
+          + 'data-appver="' + r.appVer + '" '
+          + 'data-mandatory="' + r.mandatory + '" '
+          + 'data-time="' + r.time + '" '
+          + 'data-desc="' + (r.desc||'') + '" '
+          + 'onclick="openMetricsDrawer(this)">'
+          + '<i class="ti ti-chart-bar"></i>Metrics</button>';
       }
       actions += '</div>';
     }
@@ -4086,6 +4187,38 @@ function submitPromote() {
 document.addEventListener('DOMContentLoaded', function() {
   renderRelTable();
 });
+
+
+function openMetricsDrawer(btn) {
+  var label = btn.dataset.label;
+  var appName = REL_DATA[currentRelApp] ? REL_DATA[currentRelApp].name : '';
+  document.getElementById('metrics-drawer-title').textContent = label + ' — ' + appName;
+  document.getElementById('metrics-active').textContent = btn.dataset.active;
+  document.getElementById('metrics-total').textContent = btn.dataset.total;
+  document.getElementById('metrics-rollbacks').textContent = btn.dataset.rollbacks;
+  document.getElementById('metrics-rollbacks').style.color = parseInt(btn.dataset.rollbacks) > 0 ? 'var(--err)' : 'var(--green)';
+  document.getElementById('metrics-pct').textContent = btn.dataset.active;
+  document.getElementById('metrics-appver').textContent = btn.dataset.appver;
+  document.getElementById('metrics-mandatory').textContent = btn.dataset.mandatory;
+  document.getElementById('metrics-time').textContent = btn.dataset.time;
+  document.getElementById('metrics-desc').textContent = btn.dataset.desc || '—';
+  // estimate progress bar width from active %
+  var pctMatch = btn.dataset.active.match(/([\d.]+)%/);
+  var pct = pctMatch ? parseFloat(pctMatch[1]) : 0;
+  document.getElementById('metrics-prog-fill').style.width = Math.max(pct, 0.5) + '%';
+  var totalMatch = btn.dataset.total.match(/([\d,]+)/);
+  if (totalMatch) document.getElementById('metrics-total-devices').textContent = btn.dataset.total.split('(')[0].trim() + ' of total';
+  openDrawer('drawer-rel-metrics');
+}
+
+function confirmRollback(btn) {
+  var label = btn.dataset.label;
+  var appName = REL_DATA[currentRelApp] ? REL_DATA[currentRelApp].name : 'app';
+  if (confirm('Roll back ' + appName + ' to ' + label + '? This will immediately promote this version to current.')) {
+    showToast(appName + ' rolled back to ' + label);
+    renderRelTable();
+  }
+}
 
 function filterTab(el){
   el.closest('.dep-filters').querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
