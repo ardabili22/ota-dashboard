@@ -681,6 +681,103 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   /* ── OVERVIEW: activity feed hidden on mobile for cleanliness ── */
   .overview-grid > div:last-child { display: none; }
 }
+
+@media (max-width: 768px) {
+  /* ── Integrations: 1 column ── */
+  #screen-integrations > div:last-child {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── Crash Monitor: cards instead of table ── */
+  #screen-crash .data-table thead { display: none; }
+  #screen-crash .data-table,
+  #screen-crash .data-table tbody,
+  #screen-crash .data-table tr { display: block; width: 100%; }
+  #screen-crash .data-table tr {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 14px;
+    background: #fff;
+    height: auto !important;
+  }
+  #screen-crash .data-table td {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 4px 0 !important;
+    height: auto !important;
+    border: none !important;
+    font-size: 12.5px;
+  }
+  #screen-crash .data-table td:first-child {
+    flex-direction: column;
+    margin-bottom: 8px;
+  }
+  #screen-crash .data-table td::before {
+    content: attr(data-label);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-3);
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+  #screen-crash .data-table td:first-child::before { content: ''; min-width: 0; }
+
+  /* ── Team table: cards ── */
+  #screen-team .data-table thead { display: none; }
+  #screen-team .data-table,
+  #screen-team .data-table tbody,
+  #screen-team .data-table tr { display: block; width: 100%; }
+  #screen-team .data-table tr {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 14px 16px;
+    background: #fff;
+    height: auto !important;
+  }
+  #screen-team .data-table td {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0 !important;
+    height: auto !important;
+    border: none !important;
+    font-size: 13px;
+  }
+  #screen-team .data-table td:first-child { margin-bottom: 6px; }
+  #screen-team .data-table td::before {
+    content: attr(data-label);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-3);
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+  #screen-team .data-table td:first-child::before { content: ''; }
+  #screen-team .data-table td:last-child { justify-content: flex-end; }
+
+  /* ── API Access token rows ── */
+  .token-row { flex-wrap: wrap; gap: 8px; }
+
+  /* ── Settings rows ── */
+  .setting-row { flex-wrap: wrap; gap: 10px; }
+
+  /* ── Devices screen ── */
+  #screen-devices .coming-soon { height: 40vh; }
+
+  /* ── Hide scrollbar on releases table but keep scroll ── */
+  #rel-production > .card,
+  #rel-staging > .card { overflow-x: auto; }
+
+  /* ── Rollout card ── */
+  .rollout-card { padding: 14px; }
+}
 </style>
 </head>
 <body>
