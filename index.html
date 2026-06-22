@@ -3557,6 +3557,7 @@ function doSSO(provider) {
   setTimeout(() => {
     document.getElementById('login-page').classList.add('hidden');
     document.body.style.overflow = '';
+    initMobileSidebar();
     // Show onboarding for first-time users
     if (!localStorage.getItem('ob_done')) { setTimeout(startOnboarding, 400); }
   }, 2000);
