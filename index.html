@@ -804,7 +804,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 <!-- ═══ MAIN ═══ -->
 <div id="main">
   <div id="navbar">
-    <span class="nb-breadcrumb" id="nb-title">Overview</span>
+    <button id="mobile-menu-btn" onclick="toggleMobileSidebar()" style="display:none;width:36px;height:36px;border-radius:9px;border:none;background:none;font-size:22px;color:var(--text);cursor:pointer;align-items:center;justify-content:center;flex-shrink:0;padding:0"><i class="ti ti-menu-2"></i></button><span class="nb-breadcrumb" id="nb-title">Overview</span>
     <div class="nb-search"><i class="ti ti-search"></i><span style="flex:1;color:var(--text-3)">Search apps, deployments…</span><kbd>⌘K</kbd></div>
     <div class="nb-env" id="env-badge" onclick="openModal('modal-env-switch')" style="cursor:pointer"><span class="dot" id="env-dot"></span><span id="env-label">PRODUCTION</span></div>
     <div class="nb-sep"></div>
