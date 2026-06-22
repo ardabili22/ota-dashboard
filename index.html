@@ -2546,6 +2546,48 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
+
+<!-- ══ MODAL: CONFIRM ROLLBACK ══ -->
+<div class="modal-overlay" id="modal-confirm-rollback" onclick="if(event.target===this)closeModal('modal-confirm-rollback')">
+  <div class="modal" style="width:440px">
+    <div class="modal-hdr">
+      <h2><i class="ti ti-arrow-back-up" style="color:var(--err);margin-right:8px"></i>Confirm Rollback</h2>
+      <div class="modal-close" onclick="closeModal('modal-confirm-rollback')"><i class="ti ti-x"></i></div>
+    </div>
+    <div class="modal-body">
+      <div style="background:var(--err-10);border:1.5px solid rgba(224,43,29,0.2);border-radius:var(--radius-sm);padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+        <i class="ti ti-alert-triangle" style="color:var(--err);font-size:20px;flex-shrink:0;margin-top:1px"></i>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--err)" id="rollback-modal-title">Roll back to v373?</div>
+          <div style="font-size:12px;color:var(--text-2);margin-top:4px;line-height:1.6">This will immediately promote <strong id="rollback-modal-app">BRImo SuperApp</strong> <strong id="rollback-modal-label">v373</strong> as the current version. All devices will receive this update.</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--gray-15)">
+          <span style="font-size:12px;color:var(--text-2)">Target version</span>
+          <span class="mono" style="font-size:12px;font-weight:700" id="rollback-modal-ver">v373 (1.5.5)</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--gray-15)">
+          <span style="font-size:12px;color:var(--text-2)">Released</span>
+          <span style="font-size:12px;font-weight:600" id="rollback-modal-time">6 days ago</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding:10px 0">
+          <span style="font-size:12px;color:var(--text-2)">Rollbacks on this version</span>
+          <span style="font-size:12px;font-weight:700" id="rollback-modal-rollbacks" style="color:var(--text)">1</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">Reason for rollback</div>
+        <textarea class="form-textarea" id="rollback-reason" placeholder="Describe why you are rolling back…" style="min-height:72px"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('modal-confirm-rollback')">Cancel</button>
+      <button class="btn-primary" style="background:var(--err)" onclick="submitRollback()"><i class="ti ti-arrow-back-up"></i>Confirm Rollback</button>
+    </div>
+  </div>
+</div>
+
 <script>
 const titles={billing:'Billing',overview:'Overview',apps:'Apps',releases:'Releases',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
@@ -4212,12 +4254,27 @@ function openMetricsDrawer(btn) {
 }
 
 function confirmRollback(btn) {
-  var label = btn.dataset.label;
+  var label    = btn.dataset.label;
+  var appVer   = btn.closest('tr').querySelector('.mono') ? btn.closest('tr').querySelectorAll('.mono')[1].textContent : '';
+  var time     = btn.closest('tr').querySelectorAll('td')[2].textContent.trim();
+  var rollbacks = btn.closest('tr').querySelectorAll('td')[6].textContent.trim();
+  var appName  = REL_DATA[currentRelApp] ? REL_DATA[currentRelApp].name : 'app';
+  document.getElementById('rollback-modal-title').textContent = 'Roll back to ' + label + '?';
+  document.getElementById('rollback-modal-app').textContent   = appName;
+  document.getElementById('rollback-modal-label').textContent = label;
+  document.getElementById('rollback-modal-ver').textContent   = label + ' (' + appVer + ')';
+  document.getElementById('rollback-modal-time').textContent  = time;
+  document.getElementById('rollback-modal-rollbacks').textContent = rollbacks;
+  document.getElementById('rollback-reason').value = '';
+  openModal('modal-confirm-rollback');
+}
+
+function submitRollback() {
   var appName = REL_DATA[currentRelApp] ? REL_DATA[currentRelApp].name : 'app';
-  if (confirm('Roll back ' + appName + ' to ' + label + '? This will immediately promote this version to current.')) {
-    showToast(appName + ' rolled back to ' + label);
-    renderRelTable();
-  }
+  var label   = document.getElementById('rollback-modal-label').textContent;
+  closeModal('modal-confirm-rollback');
+  showToast(appName + ' rolled back to ' + label);
+  renderRelTable();
 }
 
 function filterTab(el){
