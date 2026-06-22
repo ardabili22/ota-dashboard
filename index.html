@@ -653,6 +653,34 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   .nb-breadcrumb { font-size: 13px; }
   .stat-grid { grid-template-columns: 1fr; }
 }
+
+@media (max-width: 768px) {
+  /* ── LOGIN PAGE: full white, no split layout ── */
+  .login-wrap { flex-direction: column; }
+  .login-left { display: none; }
+  .login-right {
+    width: 100%;
+    padding: 48px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .login-right-header { margin-bottom: 28px; }
+
+  /* ── NAVBAR: hide PRODUCTION badge, show hamburger ── */
+  .nb-env { display: none !important; }
+  #mobile-menu-btn { display: flex !important; }
+  .nb-actions .nb-sep { display: none; }
+  .nb-breadcrumb { flex: 1; }
+
+  /* ── OVERVIEW: incident banner stack ── */
+  .incident-banner { flex-direction: column; align-items: flex-start; }
+  .incident-tag { align-self: flex-start; }
+
+  /* ── OVERVIEW: activity feed hidden on mobile for cleanliness ── */
+  .overview-grid > div:last-child { display: none; }
+}
 </style>
 </head>
 <body>
