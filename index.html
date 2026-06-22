@@ -4426,8 +4426,9 @@ function isMobile() { return window.innerWidth <= 768; }
 function initMobileSidebar() {
   var menuBtn = document.getElementById('mobile-menu-btn');
   var overlay = document.getElementById('sidebar-overlay');
+  var envBadge = document.getElementById('env-badge');
   if (isMobile()) {
-    if (menuBtn) menuBtn.style.display = 'flex';
+    if (menuBtn) menuBtn.style.cssText = 'width:36px;height:36px;border-radius:9px;border:none;background:none;font-size:20px;color:var(--text-2);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0';
     document.getElementById('sidebar').classList.remove('mobile-open');
     if (overlay) overlay.style.display = 'none';
   } else {
