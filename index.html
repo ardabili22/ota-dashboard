@@ -507,6 +507,9 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 .ob-dots{display:flex;gap:6px}
 .ob-dot{width:6px;height:6px;border-radius:50%;background:var(--gray-20);transition:all var(--transition)}
 .ob-dot.active{background:var(--red);width:18px;border-radius:3px}
+
+/* ── RELEASES ── */
+.rel-app-btn:hover{border-color:var(--gray-30) !important;color:var(--text) !important;background:var(--gray-10) !important}
 </style>
 </head>
 <body>
@@ -742,158 +745,71 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
     <div id="screen-releases" class="screen">
       <div class="page-hdr">
         <div class="page-hdr-row">
-          <div>
-            <h1>Releases</h1>
-            <p>Manage deployments, rollouts, and promote builds across environments</p>
-          </div>
+          <div><h1>Releases</h1><p>Manage and promote builds across Staging and Production environments</p></div>
           <button class="btn-primary" onclick="openModal('modal-new-dep')"><i class="ti ti-plus"></i>New Release</button>
         </div>
       </div>
 
-      <!-- Environment tabs -->
-      <div style="display:flex;border-bottom:1px solid var(--border);margin-bottom:20px;gap:0">
+      <!-- App selector -->
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap">
+        <div style="font-size:12px;font-weight:600;color:var(--text-2)">App:</div>
+        <div id="rel-app-tabs" style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="rel-app-btn active" onclick="selectRelApp(this,'brimo')" data-app="brimo" style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;font-family:var(--font);border:1.5px solid var(--red);background:var(--red-10);color:var(--red);cursor:pointer">BRImo SuperApp</button>
+          <button class="rel-app-btn" onclick="selectRelApp(this,'ifglife')" data-app="ifglife" style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;font-family:var(--font);border:1.5px solid var(--border);background:#fff;color:var(--text-2);cursor:pointer">IFG Life Portal</button>
+          <button class="rel-app-btn" onclick="selectRelApp(this,'askrindo')" data-app="askrindo" style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;font-family:var(--font);border:1.5px solid var(--border);background:#fff;color:var(--text-2);cursor:pointer">Askrindo Mobile</button>
+          <button class="rel-app-btn" onclick="selectRelApp(this,'jiwasraya')" data-app="jiwasraya" style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;font-family:var(--font);border:1.5px solid var(--border);background:#fff;color:var(--text-2);cursor:pointer">Jiwasraya Connect</button>
+          <button class="rel-app-btn" onclick="selectRelApp(this,'pnm')" data-app="pnm" style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;font-family:var(--font);border:1.5px solid var(--border);background:#fff;color:var(--text-2);cursor:pointer">PNM Mekaar</button>
+          <button class="rel-app-btn" onclick="selectRelApp(this,'investnow')" data-app="investnow" style="padding:6px 14px;border-radius:20px;font-size:12px;font-weight:600;font-family:var(--font);border:1.5px solid var(--border);background:#fff;color:var(--text-2);cursor:pointer">IFG InvestNow</button>
+        </div>
+      </div>
+
+      <!-- Env tabs -->
+      <div style="display:flex;border-bottom:1px solid var(--border);margin-bottom:20px">
         <button class="rel-env-tab active" onclick="relEnvTab(this,'rel-production')" style="padding:10px 20px;border:none;background:none;font-family:var(--font);font-size:13px;font-weight:600;color:var(--red);border-bottom:2px solid var(--red);cursor:pointer;display:flex;align-items:center;gap:8px">
-          <span class="dot" style="width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block"></span>Production
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--green);display:inline-block"></span>Production
         </button>
         <button class="rel-env-tab" onclick="relEnvTab(this,'rel-staging')" style="padding:10px 20px;border:none;background:none;font-family:var(--font);font-size:13px;font-weight:500;color:var(--text-2);border-bottom:2px solid transparent;cursor:pointer;display:flex;align-items:center;gap:8px">
-          <span class="dot" style="width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block"></span>Staging
+          <span style="width:7px;height:7px;border-radius:50%;background:var(--gold);display:inline-block"></span>Staging
         </button>
       </div>
 
-      <!-- PRODUCTION TAB -->
+      <!-- PRODUCTION -->
       <div id="rel-production">
-        <!-- Active deployments pipeline -->
-        <div class="card" style="margin-bottom:16px">
-          <div class="card-hdr">
-            <div><div class="card-hdr-title">Active Deployments</div><div class="card-hdr-sub">Live rollouts in progress</div></div>
-            <div style="display:flex;gap:8px">
-              <button class="btn-ghost" style="font-size:11.5px;height:32px">Filter</button>
-            </div>
-          </div>
-          <table class="data-table">
-            <thead><tr><th>App</th><th>Version</th><th>Stage</th><th>Progress</th><th>Status</th><th>CFR</th><th>Started</th><th></th></tr></thead>
-            <tbody>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:8px;background:#005BAC;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">BR</div><span style="font-weight:600">BRImo SuperApp</span></div></td>
-                <td><span class="mono" style="font-size:12px">v8.4.1</span></td>
-                <td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div></div></td>
-                <td><div class="prog-wrap"><div class="prog-bar" style="min-width:80px"><div class="prog-fill" style="width:24%;background:var(--red)"></div></div><span class="mono" style="font-size:11px">24%</span></div></td>
-                <td><span class="badge paused"><span class="dot"></span>Paused</span></td>
-                <td><span class="mono" style="font-size:12px;color:var(--err)">94.1%</span></td>
-                <td><span style="font-size:12px;color:var(--text-3)">2h ago</span></td>
-                <td><div style="display:flex;gap:6px">
-                  <button class="btn-ghost" style="height:28px;font-size:11.5px" onclick="showToast('Resuming BRImo v8.4.1…')"><i class="ti ti-player-play"></i>Resume</button>
-                  <button class="btn-ghost" style="height:28px;font-size:11.5px;color:var(--err)" onclick="showToast('Rolling back to v8.4.0…')"><i class="ti ti-arrow-back-up"></i>Rollback</button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:8px;background:#ED1C24;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">IFG</div><span style="font-weight:600">IFG Life Portal</span></div></td>
-                <td><span class="mono" style="font-size:12px">v3.12.0</span></td>
-                <td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div></div></td>
-                <td><div class="prog-wrap"><div class="prog-bar" style="min-width:80px"><div class="prog-fill" style="width:68%;background:var(--blue)"></div></div><span class="mono" style="font-size:11px">68%</span></div></td>
-                <td><span class="badge rolling"><span class="dot"></span>Rolling</span></td>
-                <td><span class="mono" style="font-size:12px;color:var(--green)">99.6%</span></td>
-                <td><span style="font-size:12px;color:var(--text-3)">41m ago</span></td>
-                <td><div style="display:flex;gap:6px">
-                  <button class="btn-ghost" style="height:28px;font-size:11.5px" onclick="showToast('IFG Life Portal paused')"><i class="ti ti-player-pause"></i>Pause</button>
-                  <button class="btn-primary" style="height:28px;font-size:11.5px" onclick="showToast('Promoting to 100%…')"><i class="ti ti-rocket"></i>Promote</button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:8px;background:#16A34A;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">PM</div><span style="font-weight:600">PNM Mekaar</span></div></td>
-                <td><span class="mono" style="font-size:12px">v4.1.0</span></td>
-                <td><div class="dep-stepper"><div class="dep-step-dot done"></div><div class="dep-step-line done"></div><div class="dep-step-dot active"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div><div class="dep-step-line idle"></div><div class="dep-step-dot idle"></div></div></td>
-                <td><div class="prog-wrap"><div class="prog-bar" style="min-width:80px"><div class="prog-fill" style="width:5%;background:var(--purple)"></div></div><span class="mono" style="font-size:11px">5%</span></div></td>
-                <td><span class="badge canary"><span class="dot"></span>Canary</span></td>
-                <td><span class="mono" style="font-size:12px;color:var(--green)">100%</span></td>
-                <td><span style="font-size:12px;color:var(--text-3)">12m ago</span></td>
-                <td><div style="display:flex;gap:6px">
-                  <button class="btn-primary" style="height:28px;font-size:11.5px" onclick="showToast('PNM Mekaar promoted to Stage 1')"><i class="ti ti-arrow-up"></i>Promote</button>
-                </div></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Release history -->
         <div class="card">
           <div class="card-hdr">
-            <div><div class="card-hdr-title">Release History</div><div class="card-hdr-sub">Completed and failed releases</div></div>
+            <div>
+              <div class="card-hdr-title" id="rel-prod-title">BRImo SuperApp — Production Deployments</div>
+              <div class="card-hdr-sub">deployment h OneByIfg_Prd_Android</div>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button class="btn-ghost" style="height:32px;font-size:11.5px" onclick="showToast('Refreshing deployment data…')"><i class="ti ti-refresh"></i>Refresh</button>
+            </div>
           </div>
-          <table class="data-table">
-            <thead><tr><th>App</th><th>Version</th><th>Health</th><th>Devices</th><th>CFR</th><th>Completed</th><th>By</th><th></th></tr></thead>
-            <tbody>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:8px;background:#7C3AED;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">IN</div><span style="font-weight:600">IFG InvestNow</span></div></td>
-                <td><span class="mono" style="font-size:12px">v1.8.3</span></td>
-                <td><div style="display:flex;align-items:center;gap:8px"><div class="health-bar"><div class="health-fill" style="width:99%;background:var(--green)"></div></div><span class="mono" style="font-size:11px">99</span></div></td>
-                <td><span class="mono" style="font-size:12px">310K</span></td>
-                <td><span class="mono" style="font-size:12px;color:var(--green)">99.9%</span></td>
-                <td><span style="font-size:12px;color:var(--text-3)">2h ago</span></td>
-                <td><span style="font-size:12px">B. Wicaksono</span></td>
-                <td><span class="badge complete"><span class="dot"></span>Complete</span></td>
-              </tr>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:8px;background:#E67E22;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">AS</div><span style="font-weight:600">Askrindo Mobile</span></div></td>
-                <td><span class="mono" style="font-size:12px">v2.4.5</span></td>
-                <td><div style="display:flex;align-items:center;gap:8px"><div class="health-bar"><div class="health-fill" style="width:100%;background:var(--green)"></div></div><span class="mono" style="font-size:11px">100</span></div></td>
-                <td><span class="mono" style="font-size:12px">420K</span></td>
-                <td><span class="mono" style="font-size:12px;color:var(--green)">99.9%</span></td>
-                <td><span style="font-size:12px;color:var(--text-3)">16 Jun</span></td>
-                <td><span style="font-size:12px">S. Hartono</span></td>
-                <td><span class="badge complete"><span class="dot"></span>Complete</span></td>
-              </tr>
-            </tbody>
+          <table class="data-table" id="rel-prod-table">
+            <thead><tr><th>Label</th><th>App Version</th><th>Release Time</th><th>Mandatory</th><th>Active Installs</th><th>Total Installs</th><th>Rollbacks</th><th>Description</th><th></th></tr></thead>
+            <tbody id="rel-prod-tbody"></tbody>
           </table>
         </div>
       </div>
 
-      <!-- STAGING TAB -->
+      <!-- STAGING -->
       <div id="rel-staging" style="display:none">
-        <div style="background:var(--gold-10);border:1.5px solid rgba(249,157,39,0.3);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px">
-          <i class="ti ti-flask" style="color:var(--gold);font-size:20px"></i>
-          <div><div style="font-size:13px;font-weight:700;color:#92640A">Staging Environment</div><div style="font-size:12px;color:var(--text-2);margin-top:2px">Apps in staging must pass QA before promote to Production</div></div>
-        </div>
-        <div class="card" style="margin-bottom:16px">
-          <div class="card-hdr">
-            <div><div class="card-hdr-title">Staging Queue</div><div class="card-hdr-sub">Pending QA validation</div></div>
-            <button class="btn-ghost" style="font-size:11.5px;height:32px" onclick="showToast('Refresh staging queue')"><i class="ti ti-refresh"></i>Refresh</button>
+        <div style="background:var(--gold-10);border:1.5px solid rgba(249,157,39,0.3);border-radius:var(--radius);padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between">
+          <div style="display:flex;align-items:center;gap:12px">
+            <i class="ti ti-flask" style="color:var(--gold);font-size:20px"></i>
+            <div><div style="font-size:13px;font-weight:700;color:#92640A">Staging Environment</div><div style="font-size:12px;color:var(--text-2);margin-top:2px">Validate builds here before promoting to Production</div></div>
           </div>
-          <table class="data-table">
-            <thead><tr><th>App</th><th>Version</th><th>Build</th><th>Status</th><th>Uploaded</th><th></th></tr></thead>
-            <tbody>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:8px;background:#005BAC;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">BR</div><span style="font-weight:600">BRImo SuperApp</span></div></td>
-                <td><span class="mono" style="font-size:12px">v8.5.0</span></td>
-                <td><span class="mono" style="font-size:11px;color:var(--text-3)">#1847</span></td>
-                <td><span class="badge rolling"><span class="dot"></span>In Review</span></td>
-                <td><span style="font-size:12px;color:var(--text-3)">Today, 14:30</span></td>
-                <td><div style="display:flex;gap:6px">
-                  <button class="btn-ghost" style="height:28px;font-size:11.5px" onclick="showToast('Opening test report…')"><i class="ti ti-report"></i>Test Report</button>
-                  <button class="btn-primary" style="height:28px;font-size:11.5px" onclick="openPromoteModal('BRImo SuperApp','v8.5.0')"><i class="ti ti-arrow-up"></i>Promote to Prod</button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:8px;background:#1E6FA8;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">JW</div><span style="font-weight:600">Jiwasraya Connect</span></div></td>
-                <td><span class="mono" style="font-size:12px">v5.3.0</span></td>
-                <td><span class="mono" style="font-size:11px;color:var(--text-3)">#892</span></td>
-                <td><span class="badge live"><span class="dot"></span>QA Passed</span></td>
-                <td><span style="font-size:12px;color:var(--text-3)">Today, 11:15</span></td>
-                <td><div style="display:flex;gap:6px">
-                  <button class="btn-primary" style="height:28px;font-size:11.5px" onclick="openPromoteModal('Jiwasraya Connect','v5.3.0')"><i class="ti ti-arrow-up"></i>Promote to Prod</button>
-                </div></td>
-              </tr>
-              <tr>
-                <td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:8px;background:#16A34A;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">PM</div><span style="font-weight:600">PNM Mekaar</span></div></td>
-                <td><span class="mono" style="font-size:12px">v4.2.0</span></td>
-                <td><span class="mono" style="font-size:11px;color:var(--text-3)">#441</span></td>
-                <td><span class="badge paused"><span class="dot"></span>QA Failed</span></td>
-                <td><span style="font-size:12px;color:var(--text-3)">Yesterday</span></td>
-                <td><div style="display:flex;gap:6px">
-                  <button class="btn-ghost" style="height:28px;font-size:11.5px;color:var(--err)" onclick="showToast('Opening failure report…')"><i class="ti ti-bug"></i>View Issues</button>
-                </div></td>
-              </tr>
-            </tbody>
+        </div>
+        <div class="card">
+          <div class="card-hdr">
+            <div>
+              <div class="card-hdr-title" id="rel-stg-title">BRImo SuperApp — Staging Deployments</div>
+              <div class="card-hdr-sub">deployment h OneByIfg_Stg_Android</div>
+            </div>
+          </div>
+          <table class="data-table" id="rel-stg-table">
+            <thead><tr><th>Label</th><th>App Version</th><th>Release Time</th><th>Mandatory</th><th>Active Installs</th><th>Total Installs</th><th>Rollbacks</th><th>Description</th><th></th></tr></thead>
+          <tbody id="rel-stg-tbody"></tbody>
           </table>
         </div>
       </div>
@@ -2549,7 +2465,7 @@ function nav(el){
   document.getElementById('screen-'+sc).classList.add('active');
   document.getElementById('nb-title').textContent=titles[sc]||sc;
   document.getElementById('content').scrollTop=0;
-  if(sc==='masterdata'){renderMDApps();}
+  if(sc==='releases'){renderRelTable();}
 }
 let collapsed=false;
 function toggleSidebar(){
@@ -3970,16 +3886,170 @@ function deleteMDWorkspace(id) {
 }
 
 
-function openPromoteModal(appName, version) {
-  document.getElementById('promote-app-name').textContent = appName + ' ' + version;
-  openModal('modal-promote');
+
+
+// ── RELEASE DATA ──
+const REL_DATA = {
+  brimo: {
+    name: 'BRImo SuperApp',
+    prodKey: 'OneByIfg_Prd_Android',
+    stgKey:  'OneByIfg_Stg_Android',
+    prod: [
+      {label:'v375', appVer:'1.5.5', time:'19 hours ago', mandatory:'No', active:'0.20% (1,136 of 562,534)', total:'1,136 (1,868 pending)', rollbacks:0, desc:'Hotfix: crash on transfer page', current:true},
+      {label:'v374', appVer:'1.5.4', time:'20 hours ago', mandatory:'No', active:'0.00036% (2 of 562,534)', total:'2', rollbacks:0, desc:'', current:false},
+      {label:'v373', appVer:'1.5.5', time:'6 days ago',   mandatory:'No', active:'1.2% (6,766 of 562,534)', total:'6,767 (5,111 pending)', rollbacks:1, desc:'Performance improvements', current:false},
+      {label:'v372', appVer:'1.5.4', time:'6 days ago',   mandatory:'No', active:'0.00036% (2 of 562,534)', total:'2', rollbacks:0, desc:'', current:false},
+      {label:'v371', appVer:'1.5.4', time:'6 days ago',   mandatory:'No', active:'0.00018% (1 of 562,534)', total:'1 (1 pending)', rollbacks:0, desc:'', current:false},
+      {label:'v370', appVer:'1.5.5', time:'13 days ago',  mandatory:'No', active:'2.1% (11,746 of 562,534)', total:'11,749 (4,836 pending)', rollbacks:3, desc:'UI refresh homepage', current:false},
+    ],
+    stg: [
+      {label:'v1',   appVer:'1.2.27', time:'Mar 13, 2025', mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'Initial staging build', current:true},
+    ],
+  },
+  ifglife: {
+    name: 'IFG Life Portal',
+    prodKey: 'OneByIfg_Prd_iOS',
+    stgKey:  'OneByIfg_Stg_iOS',
+    prod: [
+      {label:'v48', appVer:'3.12.0', time:'41 min ago',  mandatory:'No', active:'68% (748,000 of 1.1M)', total:'748,000', rollbacks:0, desc:'Dashboard redesign v2', current:true},
+      {label:'v47', appVer:'3.11.2', time:'3 days ago',  mandatory:'Yes', active:'31% (341,000 of 1.1M)', total:'341,000', rollbacks:0, desc:'Security patch', current:false},
+      {label:'v46', appVer:'3.11.1', time:'8 days ago',  mandatory:'No', active:'0.4% (4,400 of 1.1M)', total:'4,400', rollbacks:1, desc:'Minor bug fixes', current:false},
+    ],
+    stg: [
+      {label:'v3',  appVer:'3.13.0', time:'Today, 09:00', mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'New claims flow', current:true},
+      {label:'v2',  appVer:'3.12.1', time:'Yesterday',    mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'Hotfix candidate', current:false},
+    ],
+  },
+  askrindo: {
+    name: 'Askrindo Mobile',
+    prodKey: 'Askrindo_Prd',
+    stgKey:  'Askrindo_Stg',
+    prod: [
+      {label:'v12', appVer:'2.4.5', time:'16 Jun', mandatory:'No', active:'99.9% (419,580 of 420K)', total:'420K', rollbacks:0, desc:'OTA stable release', current:true},
+      {label:'v11', appVer:'2.4.4', time:'2 Jun',  mandatory:'No', active:'0.1% (420 of 420K)',      total:'420', rollbacks:0, desc:'', current:false},
+    ],
+    stg: [
+      {label:'v2',  appVer:'2.5.0', time:'Today',  mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'New policy flow', current:true},
+    ],
+  },
+  jiwasraya: {
+    name: 'Jiwasraya Connect',
+    prodKey: 'Jiwasraya_Prd',
+    stgKey:  'Jiwasraya_Stg',
+    prod: [
+      {label:'v22', appVer:'5.2.1', time:'10 Jun', mandatory:'No', active:'99.7% (678,160 of 680K)', total:'680K', rollbacks:0, desc:'Live — stable', current:true},
+      {label:'v21', appVer:'5.2.0', time:'1 Jun',  mandatory:'No', active:'0.3% (2,040 of 680K)',   total:'2,040', rollbacks:1, desc:'', current:false},
+    ],
+    stg: [
+      {label:'v2',  appVer:'5.3.0', time:'Today, 11:15', mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'QA Passed — ready to promote', current:true},
+      {label:'v1',  appVer:'5.2.2', time:'Yesterday',    mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'Superseded by v2', current:false},
+    ],
+  },
+  pnm: {
+    name: 'PNM Mekaar',
+    prodKey: 'PNM_Prd',
+    stgKey:  'PNM_Stg',
+    prod: [
+      {label:'v8',  appVer:'4.1.0', time:'12 min ago', mandatory:'No', active:'5% (140,000 of 2.8M)',  total:'140,000 (1,868 pending)', rollbacks:0, desc:'Canary — monitoring', current:true},
+      {label:'v7',  appVer:'4.0.3', time:'7 days ago', mandatory:'No', active:'95% (2.66M of 2.8M)',   total:'2.66M', rollbacks:0, desc:'Stable', current:false},
+    ],
+    stg: [
+      {label:'v3',  appVer:'4.2.0', time:'Yesterday', mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'QA Failed — see issues', current:true},
+    ],
+  },
+  investnow: {
+    name: 'IFG InvestNow',
+    prodKey: 'InvestNow_Prd',
+    stgKey:  'InvestNow_Stg',
+    prod: [
+      {label:'v31', appVer:'1.8.3', time:'2h ago',    mandatory:'No', active:'99.9% (309,690 of 310K)', total:'310K', rollbacks:0, desc:'Stable release', current:true},
+      {label:'v30', appVer:'1.8.2', time:'5 days ago',mandatory:'No', active:'0.1% (310 of 310K)',      total:'310', rollbacks:0, desc:'', current:false},
+    ],
+    stg: [
+      {label:'v4',  appVer:'1.9.0', time:'Today',  mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'New portfolio view', current:true},
+    ],
+  },
+};
+
+var currentRelApp = 'brimo';
+
+function selectRelApp(el, appId) {
+  currentRelApp = appId;
+  document.querySelectorAll('.rel-app-btn').forEach(function(b) {
+    b.style.border = '1.5px solid var(--border)';
+    b.style.background = '#fff';
+    b.style.color = 'var(--text-2)';
+  });
+  el.style.border = '1.5px solid var(--red)';
+  el.style.background = 'var(--red-10)';
+  el.style.color = 'var(--red)';
+  renderRelTable();
 }
-function submitPromote() {
-  closeModal('modal-promote');
-  var name = document.getElementById('promote-app-name').textContent;
-  showToast(name + ' rollout started in Production');
-  relEnvTab(document.querySelector('.rel-env-tab'), 'rel-production');
+
+function renderRelTable() {
+  var app = REL_DATA[currentRelApp];
+  if (!app) return;
+
+  // Update titles
+  var prodTitle = document.getElementById('rel-prod-title');
+  var stgTitle  = document.getElementById('rel-stg-title');
+  if (prodTitle) prodTitle.textContent = app.name + ' — Production Deployments';
+  if (stgTitle)  stgTitle.textContent  = app.name + ' — Staging Deployments';
+
+  // Update deployment key subtitles
+  var prodSub = document.querySelector('#rel-production .card-hdr .card-hdr-sub');
+  var stgSub  = document.querySelector('#rel-staging .card-hdr .card-hdr-sub');
+  if (prodSub) prodSub.textContent = 'deployment h ' + app.prodKey;
+  if (stgSub)  stgSub.textContent  = 'deployment h ' + app.stgKey;
+
+  renderRelRows('rel-prod-tbody', app.prod, 'prod');
+  renderRelRows('rel-stg-tbody',  app.stg,  'stg');
 }
+
+function renderRelRows(tbodyId, rows, env) {
+  var tbody = document.getElementById(tbodyId);
+  if (!tbody) return;
+  var appName = REL_DATA[currentRelApp] ? REL_DATA[currentRelApp].name : '';
+  tbody.innerHTML = rows.map(function(r) {
+    var labelCell = r.current
+      ? '<span class="mono" style="font-size:12px;font-weight:700;color:var(--red)">' + r.label + '</span> <span style="font-size:10px;background:var(--red);color:#fff;padding:1px 6px;border-radius:10px;font-weight:700;vertical-align:middle">CURRENT</span>'
+      : '<span class="mono" style="font-size:12px;color:var(--text-2)">' + r.label + '</span>';
+
+    var rollbackCell = r.rollbacks > 0
+      ? '<span style="color:var(--err);font-weight:700;font-family:var(--mono);font-size:12px">' + r.rollbacks + '</span>'
+      : '<span style="color:var(--text-3);font-family:var(--mono);font-size:12px">0</span>';
+
+    var activeColor = parseFloat(r.active) > 50 ? 'var(--green)' : parseFloat(r.active) > 5 ? 'var(--blue)' : 'var(--text-2)';
+
+    var actions = '';
+    if (env === 'stg') {
+      actions = '<div style="display:flex;gap:6px">'
+        + '<button class="btn-primary" style="height:28px;font-size:11px" data-app="' + appName + '" data-label="' + r.label + '" data-ver="' + r.appVer + '" onclick="openPromoteModal(this)"><i class="ti ti-arrow-up"></i>Promote to Prod</button>'
+        + '</div>';
+    } else {
+      actions = '<div style="display:flex;gap:6px">';
+      if (!r.current) {
+        actions += '<button class="btn-ghost" style="height:28px;font-size:11px;color:var(--err)" data-label="' + r.label + '" onclick="showToast(this.dataset.label+\' rolled back\')"><i class="ti ti-arrow-back-up"></i>Rollback</button>';
+      } else {
+        actions += '<button class="btn-ghost" style="height:28px;font-size:11px" data-label="' + r.label + '" onclick="showToast(\'Metrics: \'+this.dataset.label)"><i class="ti ti-chart-bar"></i>Metrics</button>';
+      }
+      actions += '</div>';
+    }
+
+    return '<tr>'
+      + '<td>' + labelCell + '</td>'
+      + '<td><span class="mono" style="font-size:12px">' + r.appVer + '</span></td>'
+      + '<td><span style="font-size:12px;color:var(--text-3)">' + r.time + '</span></td>'
+      + '<td><span style="font-size:12px;color:var(--text-2)">' + r.mandatory + '</span></td>'
+      + '<td><span style="font-size:12px;font-family:var(--mono);color:' + activeColor + '">' + r.active + '</span></td>'
+      + '<td><span style="font-size:12px;font-family:var(--mono);color:var(--text-2)">' + r.total + '</span></td>'
+      + '<td>' + rollbackCell + '</td>'
+      + '<td><span style="font-size:12px;color:var(--text-3);max-width:160px;display:inline-block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (r.desc || '—') + '</span></td>'
+      + '<td>' + actions + '</td>'
+      + '</tr>';
+  }).join('');
+}
+
 function relEnvTab(el, tabId) {
   document.querySelectorAll('.rel-env-tab').forEach(function(t) {
     t.style.color = 'var(--text-2)';
@@ -3994,6 +4064,28 @@ function relEnvTab(el, tabId) {
     if (el2) el2.style.display = id === tabId ? '' : 'none';
   });
 }
+
+function openPromoteModal(btn) {
+  var appName = btn.dataset.app;
+  var label   = btn.dataset.label;
+  var version = btn.dataset.ver;
+  document.getElementById('promote-app-name').textContent = appName + ' ' + label + ' (v' + version + ')';
+  openModal('modal-promote');
+}
+
+function submitPromote() {
+  var name = document.getElementById('promote-app-name').textContent;
+  closeModal('modal-promote');
+  showToast(name + ' — rollout started in Production');
+  // Switch to production tab
+  var prodTab = document.querySelector('.rel-env-tab');
+  relEnvTab(prodTab, 'rel-production');
+}
+
+// Init on nav to releases
+document.addEventListener('DOMContentLoaded', function() {
+  renderRelTable();
+});
 
 function filterTab(el){
   el.closest('.dep-filters').querySelectorAll('.filter-tab').forEach(t=>t.classList.remove('active'));
