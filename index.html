@@ -617,7 +617,6 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
       <div class="nav-item" data-screen="team" data-label="Team & Permissions" onclick="nav(this)"><i class="ti ti-shield-lock ni-icon"></i><span class="ni-label">Team & Permissions</span></div>
       <div class="nav-item" data-screen="audit" data-label="Audit Logs" onclick="nav(this)"><i class="ti ti-file-description ni-icon"></i><span class="ni-label">Audit Logs</span></div>
       <div class="nav-item" data-screen="api" data-label="API Access" onclick="nav(this)"><i class="ti ti-terminal-2 ni-icon"></i><span class="ni-label">API Access</span></div>
-      <div class="nav-item" data-screen="billing" data-label="Billing" onclick="nav(this)"><i class="ti ti-receipt ni-icon"></i><span class="ni-label">Billing</span></div>
       <div class="nav-item" data-screen="settings" data-label="Settings" onclick="nav(this)"><i class="ti ti-adjustments-horizontal ni-icon"></i><span class="ni-label">Settings</span></div>
     </div>
   </div>
@@ -786,7 +785,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
             </div>
           </div>
           <table class="data-table" id="rel-prod-table">
-            <thead><tr><th>Label</th><th>App Version</th><th>Release Time</th><th>Mandatory</th><th>Active Installs</th><th>Total Installs</th><th>Rollbacks</th><th>Description</th><th></th></tr></thead>
+            <thead><tr><th>Label</th><th>App Version</th><th>Release Time</th><th>Mandatory</th><th>Active Installs</th><th>Total Installs</th><th>Rollbacks</th><th>Notes</th><th></th></tr></thead>
             <tbody id="rel-prod-tbody"></tbody>
           </table>
         </div>
@@ -808,7 +807,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
             </div>
           </div>
           <table class="data-table" id="rel-stg-table">
-            <thead><tr><th>Label</th><th>App Version</th><th>Release Time</th><th>Mandatory</th><th>Active Installs</th><th>Total Installs</th><th>Rollbacks</th><th>Description</th><th></th></tr></thead>
+            <thead><tr><th>Label</th><th>App Version</th><th>Release Time</th><th>Mandatory</th><th>Active Installs</th><th>Total Installs</th><th>Rollbacks</th><th>Notes</th><th></th></tr></thead>
           <tbody id="rel-stg-tbody"></tbody>
           </table>
         </div>
@@ -2542,8 +2541,8 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
         </div>
       </div>
       <div class="form-group">
-        <div class="form-label">Reason for rollback</div>
-        <textarea class="form-textarea" id="rollback-reason" placeholder="Describe why you are rolling back…" style="min-height:72px"></textarea>
+        <div class="form-label">Notes <span style="font-weight:400;color:var(--text-3)">(optional)</span></div>
+        <textarea class="form-textarea" id="rollback-reason" placeholder="Add a note for this rollback…" style="min-height:64px"></textarea>
       </div>
     </div>
     <div class="modal-footer">
@@ -2554,7 +2553,7 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
 </div>
 
 <script>
-const titles={billing:'Billing',overview:'Overview',apps:'Apps',releases:'Releases',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
+const titles={overview:'Overview',apps:'Apps',releases:'Releases',analytics:'Analytics',crash:'Crash Monitor',devices:'Devices',integrations:'Integrations',team:'Team & Permissions',audit:'Audit Logs',api:'API Access',settings:'Settings'};
 function nav(el){
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   el.classList.add('active');
@@ -3993,15 +3992,15 @@ const REL_DATA = {
     prodKey: 'OneByIfg_Prd_Android',
     stgKey:  'OneByIfg_Stg_Android',
     prod: [
-      {label:'v375', appVer:'1.5.5', time:'19 hours ago', mandatory:'No', active:'0.20% (1,136 of 562,534)', total:'1,136 (1,868 pending)', rollbacks:0, desc:'Hotfix: crash on transfer page', current:true},
-      {label:'v374', appVer:'1.5.4', time:'20 hours ago', mandatory:'No', active:'0.00036% (2 of 562,534)', total:'2', rollbacks:0, desc:'', current:false},
-      {label:'v373', appVer:'1.5.5', time:'6 days ago',   mandatory:'No', active:'1.2% (6,766 of 562,534)', total:'6,767 (5,111 pending)', rollbacks:1, desc:'Performance improvements', current:false},
-      {label:'v372', appVer:'1.5.4', time:'6 days ago',   mandatory:'No', active:'0.00036% (2 of 562,534)', total:'2', rollbacks:0, desc:'', current:false},
-      {label:'v371', appVer:'1.5.4', time:'6 days ago',   mandatory:'No', active:'0.00018% (1 of 562,534)', total:'1 (1 pending)', rollbacks:0, desc:'', current:false},
-      {label:'v370', appVer:'1.5.5', time:'13 days ago',  mandatory:'No', active:'2.1% (11,746 of 562,534)', total:'11,749 (4,836 pending)', rollbacks:3, desc:'UI refresh homepage', current:false},
+      {label:'v375', appVer:'1.5.5', time:'19 hours ago', mandatory:'No', active:'0.20% (1,136 of 562,534)', total:'1,136 (1,868 pending)', rollbacks:0, notes:'Hotfix: crash on transfer page', current:true},
+      {label:'v374', appVer:'1.5.4', time:'20 hours ago', mandatory:'No', active:'0.00036% (2 of 562,534)', total:'2', rollbacks:0, notes:'', current:false},
+      {label:'v373', appVer:'1.5.5', time:'6 days ago',   mandatory:'No', active:'1.2% (6,766 of 562,534)', total:'6,767 (5,111 pending)', rollbacks:1, notes:'Performance improvements', current:false},
+      {label:'v372', appVer:'1.5.4', time:'6 days ago',   mandatory:'No', active:'0.00036% (2 of 562,534)', total:'2', rollbacks:0, notes:'', current:false},
+      {label:'v371', appVer:'1.5.4', time:'6 days ago',   mandatory:'No', active:'0.00018% (1 of 562,534)', total:'1 (1 pending)', rollbacks:0, notes:'', current:false},
+      {label:'v370', appVer:'1.5.5', time:'13 days ago',  mandatory:'No', active:'2.1% (11,746 of 562,534)', total:'11,749 (4,836 pending)', rollbacks:3, notes:'UI refresh homepage', current:false},
     ],
     stg: [
-      {label:'v1',   appVer:'1.2.27', time:'Mar 13, 2025', mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'Initial staging build', current:true},
+      {label:'v1',   appVer:'1.2.27', time:'Mar 13, 2025', mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, notes:'Initial staging build', current:true},
     ],
   },
   ifglife: {
@@ -4009,13 +4008,13 @@ const REL_DATA = {
     prodKey: 'OneByIfg_Prd_iOS',
     stgKey:  'OneByIfg_Stg_iOS',
     prod: [
-      {label:'v48', appVer:'3.12.0', time:'41 min ago',  mandatory:'No', active:'68% (748,000 of 1.1M)', total:'748,000', rollbacks:0, desc:'Dashboard redesign v2', current:true},
-      {label:'v47', appVer:'3.11.2', time:'3 days ago',  mandatory:'Yes', active:'31% (341,000 of 1.1M)', total:'341,000', rollbacks:0, desc:'Security patch', current:false},
-      {label:'v46', appVer:'3.11.1', time:'8 days ago',  mandatory:'No', active:'0.4% (4,400 of 1.1M)', total:'4,400', rollbacks:1, desc:'Minor bug fixes', current:false},
+      {label:'v48', appVer:'3.12.0', time:'41 min ago',  mandatory:'No', active:'68% (748,000 of 1.1M)', total:'748,000', rollbacks:0, notes:'Dashboard redesign v2', current:true},
+      {label:'v47', appVer:'3.11.2', time:'3 days ago',  mandatory:'Yes', active:'31% (341,000 of 1.1M)', total:'341,000', rollbacks:0, notes:'Security patch', current:false},
+      {label:'v46', appVer:'3.11.1', time:'8 days ago',  mandatory:'No', active:'0.4% (4,400 of 1.1M)', total:'4,400', rollbacks:1, notes:'Minor bug fixes', current:false},
     ],
     stg: [
-      {label:'v3',  appVer:'3.13.0', time:'Today, 09:00', mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'New claims flow', current:true},
-      {label:'v2',  appVer:'3.12.1', time:'Yesterday',    mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'Hotfix candidate', current:false},
+      {label:'v3',  appVer:'3.13.0', time:'Today, 09:00', mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, notes:'New claims flow', current:true},
+      {label:'v2',  appVer:'3.12.1', time:'Yesterday',    mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, notes:'Hotfix candidate', current:false},
     ],
   },
   askrindo: {
@@ -4023,11 +4022,11 @@ const REL_DATA = {
     prodKey: 'Askrindo_Prd',
     stgKey:  'Askrindo_Stg',
     prod: [
-      {label:'v12', appVer:'2.4.5', time:'16 Jun', mandatory:'No', active:'99.9% (419,580 of 420K)', total:'420K', rollbacks:0, desc:'OTA stable release', current:true},
-      {label:'v11', appVer:'2.4.4', time:'2 Jun',  mandatory:'No', active:'0.1% (420 of 420K)',      total:'420', rollbacks:0, desc:'', current:false},
+      {label:'v12', appVer:'2.4.5', time:'16 Jun', mandatory:'No', active:'99.9% (419,580 of 420K)', total:'420K', rollbacks:0, notes:'OTA stable release', current:true},
+      {label:'v11', appVer:'2.4.4', time:'2 Jun',  mandatory:'No', active:'0.1% (420 of 420K)',      total:'420', rollbacks:0, notes:'', current:false},
     ],
     stg: [
-      {label:'v2',  appVer:'2.5.0', time:'Today',  mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'New policy flow', current:true},
+      {label:'v2',  appVer:'2.5.0', time:'Today',  mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, notes:'New policy flow', current:true},
     ],
   },
   jiwasraya: {
@@ -4035,12 +4034,12 @@ const REL_DATA = {
     prodKey: 'Jiwasraya_Prd',
     stgKey:  'Jiwasraya_Stg',
     prod: [
-      {label:'v22', appVer:'5.2.1', time:'10 Jun', mandatory:'No', active:'99.7% (678,160 of 680K)', total:'680K', rollbacks:0, desc:'Live — stable', current:true},
-      {label:'v21', appVer:'5.2.0', time:'1 Jun',  mandatory:'No', active:'0.3% (2,040 of 680K)',   total:'2,040', rollbacks:1, desc:'', current:false},
+      {label:'v22', appVer:'5.2.1', time:'10 Jun', mandatory:'No', active:'99.7% (678,160 of 680K)', total:'680K', rollbacks:0, notes:'Live — stable', current:true},
+      {label:'v21', appVer:'5.2.0', time:'1 Jun',  mandatory:'No', active:'0.3% (2,040 of 680K)',   total:'2,040', rollbacks:1, notes:'', current:false},
     ],
     stg: [
-      {label:'v2',  appVer:'5.3.0', time:'Today, 11:15', mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'QA Passed — ready to promote', current:true},
-      {label:'v1',  appVer:'5.2.2', time:'Yesterday',    mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'Superseded by v2', current:false},
+      {label:'v2',  appVer:'5.3.0', time:'Today, 11:15', mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, notes:'QA Passed — ready to promote', current:true},
+      {label:'v1',  appVer:'5.2.2', time:'Yesterday',    mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, notes:'Superseded by v2', current:false},
     ],
   },
   pnm: {
@@ -4048,11 +4047,11 @@ const REL_DATA = {
     prodKey: 'PNM_Prd',
     stgKey:  'PNM_Stg',
     prod: [
-      {label:'v8',  appVer:'4.1.0', time:'12 min ago', mandatory:'No', active:'5% (140,000 of 2.8M)',  total:'140,000 (1,868 pending)', rollbacks:0, desc:'Canary — monitoring', current:true},
-      {label:'v7',  appVer:'4.0.3', time:'7 days ago', mandatory:'No', active:'95% (2.66M of 2.8M)',   total:'2.66M', rollbacks:0, desc:'Stable', current:false},
+      {label:'v8',  appVer:'4.1.0', time:'12 min ago', mandatory:'No', active:'5% (140,000 of 2.8M)',  total:'140,000 (1,868 pending)', rollbacks:0, notes:'Canary — monitoring', current:true},
+      {label:'v7',  appVer:'4.0.3', time:'7 days ago', mandatory:'No', active:'95% (2.66M of 2.8M)',   total:'2.66M', rollbacks:0, notes:'Stable', current:false},
     ],
     stg: [
-      {label:'v3',  appVer:'4.2.0', time:'Yesterday', mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'QA Failed — see issues', current:true},
+      {label:'v3',  appVer:'4.2.0', time:'Yesterday', mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, notes:'QA Failed — see issues', current:true},
     ],
   },
   investnow: {
@@ -4060,11 +4059,11 @@ const REL_DATA = {
     prodKey: 'InvestNow_Prd',
     stgKey:  'InvestNow_Stg',
     prod: [
-      {label:'v31', appVer:'1.8.3', time:'2h ago',    mandatory:'No', active:'99.9% (309,690 of 310K)', total:'310K', rollbacks:0, desc:'Stable release', current:true},
-      {label:'v30', appVer:'1.8.2', time:'5 days ago',mandatory:'No', active:'0.1% (310 of 310K)',      total:'310', rollbacks:0, desc:'', current:false},
+      {label:'v31', appVer:'1.8.3', time:'2h ago',    mandatory:'No', active:'99.9% (309,690 of 310K)', total:'310K', rollbacks:0, notes:'Stable release', current:true},
+      {label:'v30', appVer:'1.8.2', time:'5 days ago',mandatory:'No', active:'0.1% (310 of 310K)',      total:'310', rollbacks:0, notes:'', current:false},
     ],
     stg: [
-      {label:'v4',  appVer:'1.9.0', time:'Today',  mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, desc:'New portfolio view', current:true},
+      {label:'v4',  appVer:'1.9.0', time:'Today',  mandatory:'No', active:'0% (0 of 0)', total:'0', rollbacks:0, notes:'New portfolio view', current:true},
     ],
   },
 };
@@ -4237,6 +4236,13 @@ function confirmRollback(btn) {
 function submitRollback() {
   var appName = REL_DATA[currentRelApp] ? REL_DATA[currentRelApp].name : 'app';
   var label   = document.getElementById('rollback-modal-label').textContent;
+  var notes   = document.getElementById('rollback-reason').value.trim();
+  // Save notes into REL_DATA for the row
+  var app = REL_DATA[currentRelApp];
+  if (app) {
+    var row = app.prod.find(function(r){return r.label===label;});
+    if (row && notes) row.notes = notes;
+  }
   closeModal('modal-confirm-rollback');
   showToast(appName + ' rolled back to ' + label);
   renderRelTable();
