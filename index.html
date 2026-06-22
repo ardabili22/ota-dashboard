@@ -2184,41 +2184,6 @@ button{cursor:pointer;border:none;background:none;font-family:var(--font)}
   </div>
 </div>
 
-<!-- ══ MODAL: ENVIRONMENT SWITCHER ══ -->
-<div class="modal-overlay" id="modal-env-switch" onclick="if(event.target===this)closeModal('modal-env-switch')">
-  <div class="modal" style="width:400px">
-    <div class="modal-hdr">
-      <h2><i class="ti ti-server" style="color:var(--red);margin-right:8px"></i>Switch Environment</h2>
-      <div class="modal-close" onclick="closeModal('modal-env-switch')"><i class="ti ti-x"></i></div>
-    </div>
-    <div class="modal-body" style="gap:10px">
-      <div onclick="switchEnv('production')" id="env-prod" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;border:2px solid var(--red);background:var(--red-10);cursor:pointer">
-        <div style="width:10px;height:10px;border-radius:50%;background:var(--green)"></div>
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:700;color:var(--text)">Production</div>
-          <div style="font-size:11px;color:var(--text-3);margin-top:2px">Live environment · 13.5M devices · ardabili22.github.io/ota-dashboard</div>
-        </div>
-        <i class="ti ti-circle-check" style="color:var(--red);font-size:18px"></i>
-      </div>
-      <div onclick="switchEnv('staging')" id="env-staging" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;border:2px solid var(--border);cursor:pointer" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
-        <div style="width:10px;height:10px;border-radius:50%;background:var(--gold)"></div>
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:700;color:var(--text)">Staging</div>
-          <div style="font-size:11px;color:var(--text-3);margin-top:2px">Pre-release testing · 50K devices · staging.ota.ifg.co.id</div>
-        </div>
-      </div>
-      <div onclick="switchEnv('development')" id="env-dev" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:10px;border:2px solid var(--border);cursor:pointer" onmouseover="this.style.background='var(--gray-10)'" onmouseout="this.style.background=''">
-        <div style="width:10px;height:10px;border-radius:50%;background:var(--blue)"></div>
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:700;color:var(--text)">Development</div>
-          <div style="font-size:11px;color:var(--text-3);margin-top:2px">Internal testing · dev.ota.ifg.co.id</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 <!-- ══ MODAL: WORKSPACE SWITCHER ══ -->
 <div class="modal-overlay" id="modal-workspace" onclick="if(event.target===this)closeModal('modal-workspace')">
   <div class="modal" style="width:420px">
